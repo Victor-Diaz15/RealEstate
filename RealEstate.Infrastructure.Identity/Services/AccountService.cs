@@ -56,7 +56,7 @@ namespace RealEstate.Infrastructure.Identity.Services
             if (!user.IsVerified)
             {
                 res.HasError = true;
-                res.Error = $"Cuenta inactiva comuniquese con el administrador.";
+                res.Error = $"Cuenta inactiva asegurese de que su cuenta este activa.";
                 return res;
             }
 
@@ -79,7 +79,7 @@ namespace RealEstate.Infrastructure.Identity.Services
         }
 
         //method for create a new basic user
-        public async Task<RegisterResponse> RegisterUserAsync(RegisterRequest req)
+        public async Task<RegisterResponse> RegisterUserAsync(RegisterRequest req, string origin)
         {
             RegisterResponse res = new();
             res.HasError = false;
@@ -102,14 +102,14 @@ namespace RealEstate.Infrastructure.Identity.Services
 
             var user = new ApplicationUser
             {
-                Email = req.Email,
                 FirstName = req.FirstName,
                 LastName = req.LastName,
                 UserName = req.UserName,
+                Email = req.Email,
                 PhoneNumber = req.PhoneNumber,
                 IsVerified = req.IsVerified,
-                TypeUser = req.TypeUser
-
+                TypeUser = req.TypeUser,
+                ProfilePicture = req.ProfilePicture
             };
 
             var result = await _userManager.CreateAsync(user, req.Password);
@@ -120,27 +120,22 @@ namespace RealEstate.Infrastructure.Identity.Services
                 return res;
             }
 
-            if (user.TypeUser == (int)Roles.Admin)
-            {
-                await _userManager.AddToRoleAsync(user, Roles.Admin.ToString());
-                await _userManager.AddToRoleAsync(user, Roles.Agent.ToString());
-                await _userManager.AddToRoleAsync(user, Roles.Client.ToString());
-            }
-            else if (user.TypeUser == (int)Roles.Agent)
+            if (user.TypeUser == (int)Roles.Agent)
             {
                 await _userManager.AddToRoleAsync(user, Roles.Agent.ToString());
             }
-            else
+            else if (user.TypeUser == (int)Roles.Client)
             {
                 await _userManager.AddToRoleAsync(user, Roles.Client.ToString());
-            }
+                var verificacionUri = SendVerificationEmailUri(user, origin);
+                await _emailService.SendAsync(new EmailRequest()
+                {
+                    To = user.Email,
+                    Body = $"Se ha creado su cuenta con exito, ahora solo debe acceder a este link para que active su usuario!!. {verificacionUri}",
+                    Subject = "Bienevenido a Real Estate App"
+                });
 
-            await _emailService.SendAsync(new EmailRequest()
-            {
-                To = user.Email,
-                Body = $"Se ha creado su cuenta con exito, ahora solo debe esperar que el administrador active su cuenta!!",
-                Subject = "Bienevenido a Real Estate App"
-            });
+            }
 
             return res;
         }
@@ -206,7 +201,7 @@ namespace RealEstate.Infrastructure.Identity.Services
                     if (!userUpdated.Succeeded)
                     {
                         res.HasError = true;
-                        res.Error = "Error when trying desactive the user";
+                        res.Error = "Error when trying active the user";
                         return res;
 
                     }
@@ -235,7 +230,11 @@ namespace RealEstate.Infrastructure.Identity.Services
             {
                 return $"An error occurred while confirming {user.Email}.";
             }
-
+            var isActive = await ActivedUserAsync(user.Id);
+            if (isActive.HasError)
+            {
+                return isActive.Error;
+            }
             return $"Account confirmed for {user.Email}. You can now use the app";
         }
 

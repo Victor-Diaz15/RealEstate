@@ -17,6 +17,7 @@ namespace RealEstate.Core.Application.Dtos.Account
         public string ConfirmPassword { get; set; }
         public string PhoneNumber { get; set; }
         public bool IsVerified { get; set; } = false;
+        public string ProfilePicture { get; set; }
         public int TypeUser { get; set; }
     }
 }

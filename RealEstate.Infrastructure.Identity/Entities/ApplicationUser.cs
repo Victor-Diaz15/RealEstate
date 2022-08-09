@@ -13,6 +13,7 @@ namespace RealEstate.Infrastructure.Identity.Entities
         public string LastName { get; set; }
         public bool IsVerified { get; set; } = false;
         public int TypeUser { get; set; }
+        public string ProfilePicture { get; set; }
 
     }
 }

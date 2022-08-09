@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -39,6 +40,11 @@ namespace RealEstate.Core.Application.ViewModels.User
         [Required(ErrorMessage = "Phone is required")]
         [DataType(DataType.Text)]
         public string PhoneNumber { get; set; }
+
+        [Required(ErrorMessage = "Profile picture is required")]
+        [DataType(DataType.Upload)]
+        public IFormFile ProfilePictureFile { get; set; }
+        public string ProfilePicture { get; set; }
         public int TypeUser { get; set; }
         public bool HasError { get; set; }
         public string Error { get; set; }

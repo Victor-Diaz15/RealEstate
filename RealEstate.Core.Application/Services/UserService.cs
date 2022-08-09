@@ -49,7 +49,7 @@ namespace RealEstate.Core.Application.Services
         public async Task<RegisterResponse> RegisterAsync(UserSaveViewModel vm, string origin)
         {
             RegisterRequest request = _mapper.Map<RegisterRequest>(vm);
-            return await _accountService.RegisterUserAsync(request);
+            return await _accountService.RegisterUserAsync(request, origin);
         }
         public async Task<UpdateResponse> UpdateUserAsync(UserSaveViewModel vm, string id)
         {
