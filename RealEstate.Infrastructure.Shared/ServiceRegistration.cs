@@ -18,7 +18,7 @@ namespace RealEstate.Infrastructure.Shared
         {
             service.Configure<MailSettings>(config.GetSection("MailSettings"));
             service.AddTransient<IEmailService, EmailService>();
-            //service.AddTransient<IUploadFileService, UploadFileService>();
+            service.AddTransient<IUploadFileService, UploadFileService>();
         }
     }
 }
