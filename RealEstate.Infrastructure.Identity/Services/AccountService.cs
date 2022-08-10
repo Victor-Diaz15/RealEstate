@@ -79,9 +79,9 @@ namespace RealEstate.Infrastructure.Identity.Services
         }
 
         //method for create a new basic user
-        public async Task<RegisterResponse> RegisterUserAsync(RegisterRequest req, string origin)
+        public async Task<AuthenticationResponse> RegisterUserAsync(RegisterRequest req, string origin)
         {
-            RegisterResponse res = new();
+            AuthenticationResponse res = new();
             res.HasError = false;
 
             var userNameExist = await _userManager.FindByNameAsync(req.UserName);
@@ -136,6 +136,17 @@ namespace RealEstate.Infrastructure.Identity.Services
                 });
 
             }
+
+            var registeredUser = await _userManager.FindByEmailAsync(user.Email);
+            res.Id = registeredUser.Id;
+            res.FirstName = registeredUser.FirstName;
+            res.LastName = registeredUser.LastName;
+            res.Email = registeredUser.Email;
+            res.UserName = registeredUser.UserName;
+            var listRoles = await _userManager.GetRolesAsync(registeredUser).ConfigureAwait(false);
+            res.Roles = listRoles.ToList();
+            res.IsVerified = registeredUser.IsVerified;
+            res.ProfilePicture = registeredUser.ProfilePicture;
 
             return res;
         }

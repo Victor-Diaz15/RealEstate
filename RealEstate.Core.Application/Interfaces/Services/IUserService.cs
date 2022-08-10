@@ -14,7 +14,7 @@ namespace RealEstate.Core.Application.Interfaces.Services
         Task<List<AuthenticationResponse>> GetAllUsersAsync();
         Task<UserSaveViewModel> GetUserByIdAsync(string id);
         Task<AuthenticationResponse> LoginAsync(LoginViewModel vm);
-        Task<RegisterResponse> RegisterAsync(UserSaveViewModel vm, string origin);
+        Task<AuthenticationResponse> RegisterAsync(UserSaveViewModel vm, string origin);
         Task<UpdateResponse> UpdateUserAsync(UserSaveViewModel vm, string id);
         Task<UpdateResponse> ActivedUserAsync(string id);
         Task<string> ConfirmEmailAsync(string userId, string token);
