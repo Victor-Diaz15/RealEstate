@@ -109,15 +109,13 @@ namespace WebApp.RealEstate.Controllers
                 return View(vm);
             }
 
-            AuthenticationResponse savedUser = await _userService.RegisterAsync(vm, origin);
-
-            if (savedUser != null && savedUser.Id != "")
+            if (response != null && response.Id != null)
             {
-                string basePath = $"/Images/Users/{savedUser.Id}";
-                savedUser.ProfilePicture = _uploadFileService.UploadFile(vm.ProfilePictureFile, basePath);
+                string basePath = $"/Images/Users/{response.Id}";
+                response.ProfilePicture = _uploadFileService.UploadFile(vm.ProfilePictureFile, basePath);
 
-                UserSaveViewModel userSvm = _mapper.Map<UserSaveViewModel>(savedUser);
-                await _userService.UpdateUserAsync(userSvm, savedUser.Id);
+                UserSaveViewModel userSvm = _mapper.Map<UserSaveViewModel>(response);
+                await _userService.UpdateUserAsync(userSvm, response.Id);
             }
 
             return RedirectToRoute(new { controller = "User", action = "Index" });

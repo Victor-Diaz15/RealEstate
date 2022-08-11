@@ -127,7 +127,7 @@ namespace RealEstate.Infrastructure.Identity.Services
             else if (user.TypeUser == (int)Roles.Client)
             {
                 await _userManager.AddToRoleAsync(user, Roles.Client.ToString());
-                var verificacionUri = SendVerificationEmailUri(user, origin);
+                var verificacionUri = await SendVerificationEmailUri(user, origin);
                 await _emailService.SendAsync(new EmailRequest()
                 {
                     To = user.Email,
@@ -137,16 +137,18 @@ namespace RealEstate.Infrastructure.Identity.Services
 
             }
 
-            var registeredUser = await _userManager.FindByEmailAsync(user.Email);
-            res.Id = registeredUser.Id;
-            res.FirstName = registeredUser.FirstName;
-            res.LastName = registeredUser.LastName;
-            res.Email = registeredUser.Email;
-            res.UserName = registeredUser.UserName;
-            var listRoles = await _userManager.GetRolesAsync(registeredUser).ConfigureAwait(false);
+            res.Id = user.Id;
+            res.FirstName = user.FirstName;
+            res.LastName = user.LastName;
+            res.Email = user.Email;
+            res.UserName = user.UserName;
+            res.TypeUser = user.TypeUser;
+            res.Password = req.Password;
+            res.PhoneNumber = user.PhoneNumber;
+            var listRoles = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
             res.Roles = listRoles.ToList();
-            res.IsVerified = registeredUser.IsVerified;
-            res.ProfilePicture = registeredUser.ProfilePicture;
+            res.IsVerified = user.IsVerified;
+            res.ProfilePicture = user.ProfilePicture;
 
             return res;
         }
