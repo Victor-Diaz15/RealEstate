@@ -26,6 +26,7 @@ namespace RealEstate.Infrastructure.Persistence.Context
 
         #region dbSets -->
         public DbSet<Improvement> Improvements { get; set; }
+        public DbSet<SaleType> SaleTypes { get; set; }
         #endregion
 
         public override Task<int> SaveChangesAsync(CancellationToken ct = new())
@@ -61,6 +62,9 @@ namespace RealEstate.Infrastructure.Persistence.Context
             mb.Entity<Improvement>()
                 .ToTable("Improvements");
 
+            mb.Entity<SaleType>()
+                .ToTable("SaleTypes");
+
             #endregion
 
             #region primary keys
@@ -68,15 +72,18 @@ namespace RealEstate.Infrastructure.Persistence.Context
             mb.Entity<Improvement>()
                 .HasKey(e => e.Id);
 
+            mb.Entity<SaleType>()
+                .HasKey(e => e.Id);
+
             #endregion
 
             #region relations
 
-            //mb.Entity<TypeAccount>()
-            //    .HasMany<Product>(t => t.Products)
-            //    .WithOne(p => p.TypeAccount)
-            //    .HasForeignKey(p => p.TypeAccountId)
-            //    .OnDelete(DeleteBehavior.Cascade);
+            mb.Entity<SaleType>()
+                .HasMany<Property>(t => t.Properties)
+                .WithOne(p => p.SaleType)
+                .HasForeignKey(p => p.SaleTypeId)
+                .OnDelete(DeleteBehavior.Cascade);
 
 
             #endregion
@@ -84,6 +91,16 @@ namespace RealEstate.Infrastructure.Persistence.Context
             #region property configurations
 
             #region Improvement
+            mb.Entity<Improvement>()
+                .Property(p => p.Name)
+                .IsRequired();
+
+            mb.Entity<Improvement>()
+                .Property(p => p.Description)
+                .IsRequired();
+            #endregion
+
+            #region SaleType
             mb.Entity<Improvement>()
                 .Property(p => p.Name)
                 .IsRequired();

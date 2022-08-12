@@ -17,7 +17,7 @@ namespace WebApp.RealEstate.Controllers
     {
         private readonly IImprovementService _improvementService;
         private readonly IMapper _mapper;
-        public ImprovementController(IImprovementService improvementService, RoleManager<IdentityRole> roleManager, IUploadFileService uploadFileService, IMapper mapper)
+        public ImprovementController(IImprovementService improvementService, IMapper mapper)
         {
             _improvementService = improvementService;
             _mapper = mapper;
