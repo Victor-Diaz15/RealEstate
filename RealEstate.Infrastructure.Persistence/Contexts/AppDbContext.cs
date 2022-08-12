@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using RealEstate.Core.Domain.Entities;
 
 namespace RealEstate.Infrastructure.Persistence.Context
 {
@@ -24,7 +25,7 @@ namespace RealEstate.Infrastructure.Persistence.Context
         }
 
         #region dbSets -->
-        //public DbSet<Product> Products { get; set; }
+        public DbSet<Improvement> Improvements { get; set; }
         #endregion
 
         public override Task<int> SaveChangesAsync(CancellationToken ct = new())
@@ -57,15 +58,15 @@ namespace RealEstate.Infrastructure.Persistence.Context
         {
             #region tables
 
-            //mb.Entity<Product>()
-            //    .ToTable("Products");
+            mb.Entity<Improvement>()
+                .ToTable("Improvements");
 
             #endregion
 
             #region primary keys
 
-            //mb.Entity<Product>()
-            //    .HasKey(e => e.Id);
+            mb.Entity<Improvement>()
+                .HasKey(e => e.Id);
 
             #endregion
 
@@ -82,10 +83,14 @@ namespace RealEstate.Infrastructure.Persistence.Context
 
             #region property configurations
 
-            #region Products
-            //mb.Entity<Product>()
-            //    .Property(p => p.Id)
-            //    .IsRequired();
+            #region Improvement
+            mb.Entity<Improvement>()
+                .Property(p => p.Name)
+                .IsRequired();
+
+            mb.Entity<Improvement>()
+                .Property(p => p.Description)
+                .IsRequired();
             #endregion
 
             #endregion
