@@ -15,6 +15,8 @@ namespace RealEstate.Core.Application
             #region Services
 
             service.AddTransient<IUserService, UserService>();
+            service.AddTransient<IImprovementService, ImprovementService>();
+            service.AddTransient<ISaleTypeService, SaleTypeService>();
 
             #endregion
         }

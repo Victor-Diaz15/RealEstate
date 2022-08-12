@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using RealEstate.Core.Domain.Entities;
 
 namespace RealEstate.Infrastructure.Persistence.Context
 {
@@ -24,7 +25,8 @@ namespace RealEstate.Infrastructure.Persistence.Context
         }
 
         #region dbSets -->
-        //public DbSet<Product> Products { get; set; }
+        public DbSet<Improvement> Improvements { get; set; }
+        public DbSet<SaleType> SaleTypes { get; set; }
         #endregion
 
         public override Task<int> SaveChangesAsync(CancellationToken ct = new())
@@ -57,35 +59,55 @@ namespace RealEstate.Infrastructure.Persistence.Context
         {
             #region tables
 
-            //mb.Entity<Product>()
-            //    .ToTable("Products");
+            mb.Entity<Improvement>()
+                .ToTable("Improvements");
+
+            mb.Entity<SaleType>()
+                .ToTable("SaleTypes");
 
             #endregion
 
             #region primary keys
 
-            //mb.Entity<Product>()
-            //    .HasKey(e => e.Id);
+            mb.Entity<Improvement>()
+                .HasKey(e => e.Id);
+
+            mb.Entity<SaleType>()
+                .HasKey(e => e.Id);
 
             #endregion
 
             #region relations
 
-            //mb.Entity<TypeAccount>()
-            //    .HasMany<Product>(t => t.Products)
-            //    .WithOne(p => p.TypeAccount)
-            //    .HasForeignKey(p => p.TypeAccountId)
-            //    .OnDelete(DeleteBehavior.Cascade);
+            mb.Entity<SaleType>()
+                .HasMany<Property>(t => t.Properties)
+                .WithOne(p => p.SaleType)
+                .HasForeignKey(p => p.SaleTypeId)
+                .OnDelete(DeleteBehavior.Cascade);
 
 
             #endregion
 
             #region property configurations
 
-            #region Products
-            //mb.Entity<Product>()
-            //    .Property(p => p.Id)
-            //    .IsRequired();
+            #region Improvement
+            mb.Entity<Improvement>()
+                .Property(p => p.Name)
+                .IsRequired();
+
+            mb.Entity<Improvement>()
+                .Property(p => p.Description)
+                .IsRequired();
+            #endregion
+
+            #region SaleType
+            mb.Entity<Improvement>()
+                .Property(p => p.Name)
+                .IsRequired();
+
+            mb.Entity<Improvement>()
+                .Property(p => p.Description)
+                .IsRequired();
             #endregion
 
             #endregion
