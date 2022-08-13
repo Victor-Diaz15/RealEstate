@@ -12,6 +12,7 @@ using RealEstate.Core.Application;
 using RealEstate.Infrastructure.Identity;
 using RealEstate.Infrastructure.Persistence;
 using RealEstate.Infrastructure.Shared;
+using RealEstateAPI.WebApi.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,8 @@ namespace RealEstateAPI
 
             services.AddControllers();
             services.AddHealthChecks();
+            services.AddSwaggerExtension();
+            services.AddApiVersioningExtension();
 
             services.AddDistributedMemoryCache();
             services.AddSession();
@@ -66,6 +69,9 @@ namespace RealEstateAPI
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSwaggerExtension();
+
             app.UseHealthChecks("/health");
             app.UseSession(); 
 
