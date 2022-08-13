@@ -1,16 +1,8 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RealEstate.Core.Application.Dtos.Account;
-using RealEstate.Core.Application.Enums;
-using RealEstate.Core.Application.Helpers;
 using RealEstate.Core.Application.Interfaces.Services;
-using RealEstate.Core.Application.ViewModels.Improvement;
 using RealEstate.Core.Application.ViewModels.SaleType;
-using RealEstate.Core.Application.ViewModels.User;
 using System.Threading.Tasks;
-using WebApp.RealEstate.Middlewares;
 
 namespace WebApp.RealEstate.Controllers
 {
@@ -65,7 +57,7 @@ namespace WebApp.RealEstate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteSaleType(ImprovementSaveViewModel vm)
+        public async Task<IActionResult> DeleteSaleType(SaleTypeSaveViewModel vm)
         {
             await _saleTypeService.DeleteAsync(vm.Id);
             return RedirectToRoute(new { controller = "SaleType", action = "Index" });

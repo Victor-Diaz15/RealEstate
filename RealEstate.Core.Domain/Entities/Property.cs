@@ -14,5 +14,9 @@ namespace RealEstate.Core.Domain.Entities
         //Navigation Property
         public int SaleTypeId { get; set; }
         public SaleType SaleType { get; set; }
+
+        //Navigation Property
+        public int PropertyTypeId { get; set; }
+        public PropertyType PropertyType { get; set; }
     }
 }

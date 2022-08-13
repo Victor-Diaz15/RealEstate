@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using RealEstate.Core.Application.Dtos.Account;
 using RealEstate.Core.Application.ViewModels.Improvement;
+using RealEstate.Core.Application.ViewModels.PropertyType;
+using RealEstate.Core.Application.ViewModels.SaleType;
 using RealEstate.Core.Application.ViewModels.User;
 using RealEstate.Core.Domain.Entities;
 
@@ -47,6 +49,22 @@ namespace RealEstate.Core.Application.Mappings
                 .ReverseMap();
 
             CreateMap<Improvement, ImprovementSaveViewModel>()
+                .ReverseMap();
+            #endregion
+
+            #region SaleType
+            CreateMap<SaleType, SaleTypeViewModel>()
+                .ReverseMap();
+
+            CreateMap<SaleType, SaleTypeSaveViewModel>()
+                .ReverseMap();
+            #endregion
+
+            #region PropertyType
+            CreateMap<PropertyType, PropertyTypeViewModel>()
+                .ReverseMap();
+
+            CreateMap<PropertyType, PropertyTypeSaveViewModel>()
                 .ReverseMap();
             #endregion
 
