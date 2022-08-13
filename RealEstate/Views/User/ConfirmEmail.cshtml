@@ -3,11 +3,14 @@
 
 <div class="row mt-5">
     <div class="col-6 offset-3">
-        <div class="card shadow-sm">
+        <div class="card shadow-sm bg-dark">
+            <div class="card-header d-flex justify-content-end">
+                <button type="button" class="btn-close" data-bs-dimiss="alert" aria-label="Close"></button>
+            </div>
             <div class="card-body">
-                <div class="alert alert-primary alert-dimissible fade show" role="alert">
-                    <h2>@Model - <a asp-controller="User" asp-action="Index" class="btn btn-primary">Ir a Login</a></h2>
-                    <button type="button" class="btn-close" data-bs-dimiss="alert" aria-label="Close"></button>
+                <div class="alert alert-secondary alert-dimissible fade show d-flex flex-column w-100" role="alert">
+                    <h3>@Model</h3>
+                    <a asp-controller="User" asp-action="Index" class="btn btn-primary mt-3">Ir a Login</a>
                 </div>
             </div>
         </div>

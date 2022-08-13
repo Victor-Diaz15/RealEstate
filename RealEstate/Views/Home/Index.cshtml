@@ -1,56 +1,90 @@
 ﻿
 
 
-<div class="row">   
-    <section class="col-sm-3 my-4 mx-auto">
-        <div class="card bg-light border-0 shadow">
-            <section class="card-body">
-                <img src="https://img-de.gtsstatic.net/reno/imagereader.aspx?idlisting=512-l-778-81_22-165483&imageurl=https%3A%2F%2Fmmsmedia.vht.com%2FMedia%2FPhotography%2FDEGI%2F1555810%2F7e03693b-47c8-4994-84f5-77b0edcbba3b.jpg%3Fdate%3D2022-07-29&option=n&w=1024&fallbackimageurl=https%3A%2F%2Fstatic-ind-elliman-production.gtsstatic.net%2Fresources%2Fsiteresources%2Fcommonresources%2Fimages%2Fnophoto%2Fde_website_holder_400x300.jpg" class="card-img-top img-fluid img-cover" alt="pokemon">
-                <div class="d-flex flex-column gap-2">
-                    <div class="d-flex flex-column gap-2">
-                        <h6 class="fw-bold">
-                            Proyecto
-                        </h6>
-                        <h6 class="">
-                            San Juan, Puerto Rico
-                        </h6>
+<div class="row mx-5">
+
+    <div class="col-sm-3 w-100 d-flex align-items-center gap-4 mb-3">
+        <form asp-action="Index" class="d-flex align-items-center gap-2 w-100">
+            <select class="form-select w-100" name="">
+                <option disabled selected>Seleccionar propiedad...</option>
+                <option value="null">Todas</option>
+                @*foreach (var item in ViewBag.Properties){}*@
+                    <option value="">Casa</option>
+            </select>
+            <select class="form-select w-100" name="">
+                <option disabled selected>Filtrar por precio...</option>
+                <option value="null">Todas</option>
+                    <option value="1">Precio mínimo</option>
+                    <option value="2">Precio máximo</option>
+            </select>
+            <div class="form-group w-100">
+                <input class="form-control" placeholder="Cantidad de habitaciones">
+            </div>
+            <div class="form-group w-100">
+                <input class="form-control" placeholder="Cantidad de baños">
+            </div>
+            <button class="btn btn-success" type="submit">Filtrar</button>
+        </form>
+        <form asp-action="Index" class="d-flex align-items-center gap-2 w-25"> 
+            <input class="form-control w-100" type="text" name="" placeholder="Buscar por código">
+            <button class="btn btn-success" type="submit">Buscar</button>
+        </form>
+    </div>
+    
+
+    @for(int i = 0; i < 8; i++)
+    {
+        <section class="col-3 my-4 mx-auto slide-up">
+            <a asp-controller="Home" asp-action="Details" class="card bg-light border-0 shadow" asp-route-id="">
+                <section class="card-body">
+                    <img src="https://img-de.gtsstatic.net/reno/imagereader.aspx?idlisting=512-l-778-81_22-165483&imageurl=https%3A%2F%2Fmmsmedia.vht.com%2FMedia%2FPhotography%2FDEGI%2F1555810%2F7e03693b-47c8-4994-84f5-77b0edcbba3b.jpg%3Fdate%3D2022-07-29&option=n&w=1024&fallbackimageurl=https%3A%2F%2Fstatic-ind-elliman-production.gtsstatic.net%2Fresources%2Fsiteresources%2Fcommonresources%2Fimages%2Fnophoto%2Fde_website_holder_400x300.jpg" class="card-img-top img-fluid img-cover" alt="pokemon">
+                    <div class="d-flex flex-column gap-2 mt-3">
+                        <div class="d-flex flex-column">
+                            <h6 class="fw-bold">
+                                Proyecto
+                            </h6>
+                            <h6 class="">
+                                San Juan, Puerto Rico
+                            </h6>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <h6 class="">
+                                Código
+                            </h6>
+                            <h6 class="fw-bold">
+                                768675
+                            </h6>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <h6 class="">
+                                Venta
+                            </h6>
+                            <h6 class="text-danger fw-bold">
+                                RD$ 250,000 
+                            </h6>
+                        </div>
                     </div>
-                    <div class="d-flex flex-column gap-2">
-                        <h6 class="">
-                            Código
-                        </h6>
-                        <h6 class="fw-bold">
-                            San Juan, Puerto Rico
-                        </h6>
-                    </div>
-                    <div class="d-flex flex-column gap-2">
-                        <h6 class="">
-                            Venta
-                        </h6>
-                        <h6 class="text-danger">
-                            RD$ 250,000 
-                        </h6>
-                    </div>
-                </div>
-            </section>
-             <section class="card-footer">
-                 <div class="d-flex gap-2">
-                     <section class="d-flex gap-1">
-                         <img src="~/images/bed.png" />
-                         <h6 class="fw-bold"> 6 </h6>
-                     </section>
-                    <section class="d-flex gap-1">
-                         <img src="~/images/bathtub.png"/>
-                         <h6 class="fw-bold"> 6 </h6>
-                     </section>
-                    <section class="d-flex gap-1">
-                         <img src="~/images/tape-measure.png" />
-                         <h6 class="fw-bold"> 456mts </h6>
-                     </section>
-                 </div>
-             </section>
-        </div>
-    </section>
+                </section>
+                 <section class="card-footer">
+                     <div class="d-flex justify-content-between align-items-center gap-5">
+                         <section class="d-flex justify-content-center align-items-center gap-2">
+                             <img src="~/images/bed.png" />
+                             <h6 class="fw-bold m-0"> 4 </h6>
+                         </section>
+                        <section class="d-flex justify-content-center align-items-center gap-2">
+                             <img src="~/images/bathtub.png"/>
+                             <h6 class="fw-bold m-0"> 6 </h6>
+                         </section>
+                        <section class="d-flex justify-content-center align-items-center gap-2">
+                             <img src="~/images/tape-measure.png" />
+                             <h6 class="fw-bold m-0"> 456mt </h6>
+                         </section>
+                     </div>
+                 </section>
+            </a>
+        </section>
+    }
+
 
 
 @*<section class="col-6 bg-danger rounded-3 text-white text-center mx-auto p-4 mt-5">
