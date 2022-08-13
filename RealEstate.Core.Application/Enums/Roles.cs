@@ -10,6 +10,7 @@ namespace RealEstate.Core.Application.Enums
     {
         Admin = 1,
         Agent,
-        Client
+        Client,
+        Developer
     }
 }

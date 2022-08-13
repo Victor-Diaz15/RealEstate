@@ -11,7 +11,9 @@ namespace RealEstate.Core.Application.Interfaces.Services
     {
         Task<AuthenticationResponse> AuthenticationAsync(AuthenticationRequest req);
         Task SignOutAsync();
-        Task<AuthenticationResponse> RegisterUserAsync(RegisterRequest req, string origin);
+        Task<AuthenticationResponse> RegisterBasicUserAsync(RegisterBasicRequest req, string origin);
+        Task<RegisterManagerResponse> RegisterAdminUserAsync(RegisterManagerRequest req);
+        Task<RegisterManagerResponse> RegisterDevUserAsync(RegisterManagerRequest req);
         Task<UpdateResponse> UpdateUserAsync(UpdateRequest req, string id);
         Task<UpdateResponse> ActivedUserAsync(string id);
         Task<List<AuthenticationResponse>> GetAllUsers();

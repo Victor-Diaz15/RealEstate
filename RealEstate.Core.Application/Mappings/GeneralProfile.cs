@@ -27,12 +27,22 @@ namespace RealEstate.Core.Application.Mappings
             CreateMap<AuthenticationResponse, UserViewModel>()
                 .ReverseMap();
 
-            CreateMap<RegisterRequest, UserSaveViewModel>()
+            CreateMap<RegisterBasicRequest, UserSaveViewModel>()
+                //.ForMember(x => x.HasError, opt => opt.Ignore())
+                //.ForMember(x => x.Error, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<RegisterManagerRequest, ManagerSaveViewModel>()
                 //.ForMember(x => x.HasError, opt => opt.Ignore())
                 //.ForMember(x => x.Error, opt => opt.Ignore())
                 .ReverseMap();
 
             CreateMap<UpdateRequest, UserSaveViewModel>()
+                //.ForMember(x => x.HasError, opt => opt.Ignore())
+                //.ForMember(x => x.Error, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<UpdateRequest, ManagerSaveViewModel>()
                 //.ForMember(x => x.HasError, opt => opt.Ignore())
                 //.ForMember(x => x.Error, opt => opt.Ignore())
                 .ReverseMap();

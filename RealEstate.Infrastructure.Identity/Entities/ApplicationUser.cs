@@ -9,6 +9,7 @@ namespace RealEstate.Infrastructure.Identity.Entities
 {
     public class ApplicationUser : IdentityUser
     {
+        public string CardId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool IsVerified { get; set; } = false;
