@@ -2,12 +2,7 @@
 @model LoginViewModel
 
 <div class="row">
-    <section class="w-100 mx-auto bg-primary rounded-3 text-white text-center p-3 mb-5">
-        <h3 class="display-8 fw-normal text-uppercase fw-bolder m-0">
-            Real Estate BDM
-        </h3>
-    </section>
-    <div class="col-4 mx-auto rounded-3 shadow p-4 mt-5">
+    <div class="col-4 mx-auto bg-light rounded-3 shadow p-5 mt-5">
         @Html.ValidationSummary(false, "", new { @class = "text-danger" })
         @if (Model.HasError)
         {
@@ -31,7 +26,7 @@
                     <input class="form-control" asp-for="Password" placeholder="*****">
                     <label asp-for="Password">Contraseña</label>
                 </div>
-                <div class="form-group mt-3">
+                <div class="form-group mt-5">
                     <button type="submit" class="btn btn-primary btn-lg w-100">Acceder</button>
                 </div>
             </div>

@@ -14,19 +14,8 @@
 
 
 <div class="row">
-    <div class="row bg-light rounded p-3 mb-5">
-        <section class="w-100 d-flex justify-content-between align-items-center px-5">
-            <h3 class="fs-4 fw-bold fw-bolder m-2 w-100">
-                Usuarios
-                <span class="fs-5 fw-bold fw-bolder text-muted m-2 text-end w-100">
-                    / Unete a la App
-                </span>
-            </h3>
-        </section>
-    </div>
-
     <div class="col-5 mx-auto">
-        <div class="card shadow">
+        <div class="card shadow bg-light">
             <div class="card-body">
                 @if (Model.HasError)
                 {
@@ -60,53 +49,10 @@
                             <label asp-for="Email" class="form-label">Correo </label>
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
-                    </section>
-                    <section class="col-5 mx-auto mt-2">
 
-                        <div class="form-floating mb-3">
-                            <input asp-for="PhoneNumber" class="form-control" placeholder="Telefono" />
-                            <label asp-for="PhoneNumber" class="form-label">Telefono </label>
-                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-floating mb-3">
-                            <input asp-for="UserName" class="form-control" placeholder="Usuario" />
-                            <label asp-for="UserName" class="form-label"> Usuario </label>
-                            <span asp-validation-for="UserName" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-floating mb-3">
-                            <input asp-for="Password" class="form-control" placeholder="Contraseña" />
-                            <label asp-for="Password" class="form-label">Contraseña </label>
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-floating mb-3">
-                            <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirmar Contraseña" />
-                            <label asp-for="ConfirmPassword" class="form-label">Confirmar Contraseña </label>
-                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label asp-for="ProfilePictureFile" class="form-label">Selecciona una imagen de perfil: </label>
-                            @if (editMode)
-                            {
-                                <input asp-for="ProfilePictureFile" class="form-control">
-                            }
-                            else
-                            {
-                                <input required asp-for="ProfilePictureFile" class="form-control">
-                            }
-                        </div>
-                    </section>
-
-                    <input type="hidden" asp-for="Id" name="Id" value="@Model.Id" />
-
-
-                    <section class="col-11 mx-auto">
                         @if ((!editMode))
                         {
-                            <div class="form-floating mb-3">
+                            <div class="form-floating">
                                 <select 
                                     asp-for="TypeUser" 
                                     value="@Model.TypeUser" 
@@ -135,9 +81,52 @@
                             </div>
                         }
                     </section>
+                    <section class="col-5 mx-auto mt-2">
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="PhoneNumber" class="form-control" placeholder="Telefono" />
+                            <label asp-for="PhoneNumber" class="form-label">Telefono </label>
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="UserName" class="form-control" placeholder="Usuario" />
+                            <label asp-for="UserName" class="form-label"> Usuario </label>
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Password" class="form-control" placeholder="Contraseña" />
+                            <label asp-for="Password" class="form-label">Contraseña </label>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirmar Contraseña" />
+                            <label asp-for="ConfirmPassword" class="form-label">Confirmar Contraseña </label>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </section>
+
+                    <input type="hidden" asp-for="Id" name="Id" value="@Model.Id" />
+
+
+                    <section class="col-11 mx-auto">
+                        <div class="form-group mb-3">
+                            <label asp-for="ProfilePictureFile" class="form-label text-muted fw-bold">Selecciona una imagen de perfil </label>
+                            @if (editMode)
+                            {
+                                <input asp-for="ProfilePictureFile" class="form-control">
+                            }
+                            else
+                            {
+                                <input required asp-for="ProfilePictureFile" class="form-control">
+                            }
+                        </div>
+                    </section>
                     <div class="col-11 mx-auto">
                         <button type="submit" class="btn btn-primary btn-lg w-100 mt-2">Guardar</button>
-                        <a asp-controller="Home" asp-action="UserManagement" class="btn btn-light w-100 mt-2">Volver atrás</a>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary w-100 mt-2">Volver atrás</a>
                     </div>
                 </form>
             </div>

@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
 using RealEstate.Core.Application.Dtos.Account;
+using RealEstate.Core.Application.ViewModels.Improvement;
+using RealEstate.Core.Application.ViewModels.PropertyType;
+using RealEstate.Core.Application.ViewModels.SaleType;
 using RealEstate.Core.Application.ViewModels.User;
+using RealEstate.Core.Domain.Entities;
 
 namespace RealEstate.Core.Application.Mappings
 {
@@ -10,7 +14,7 @@ namespace RealEstate.Core.Application.Mappings
         {
             #region mappings
 
-            #region user
+            #region User
 
             CreateMap<AuthenticationRequest, LoginViewModel>()
                 //.ForMember(x => x.HasError, opt => opt.Ignore())
@@ -38,6 +42,30 @@ namespace RealEstate.Core.Application.Mappings
                 //.ForMember(x => x.Error, opt => opt.Ignore())
                 .ReverseMap();
 
+            #endregion
+
+            #region Improvement
+            CreateMap<Improvement, ImprovementViewModel>()
+                .ReverseMap();
+
+            CreateMap<Improvement, ImprovementSaveViewModel>()
+                .ReverseMap();
+            #endregion
+
+            #region SaleType
+            CreateMap<SaleType, SaleTypeViewModel>()
+                .ReverseMap();
+
+            CreateMap<SaleType, SaleTypeSaveViewModel>()
+                .ReverseMap();
+            #endregion
+
+            #region PropertyType
+            CreateMap<PropertyType, PropertyTypeViewModel>()
+                .ReverseMap();
+
+            CreateMap<PropertyType, PropertyTypeSaveViewModel>()
+                .ReverseMap();
             #endregion
 
             #endregion
