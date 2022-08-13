@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace RealEstate.Core.Application.Dtos.Account
 {
-    public class RegisterResponse
+    public class RegisterManagerResponse
     {
         public bool HasError { get; set; }
         public string Error { get; set; }
 
-        public string Id { get; set; }
-        public string ProfilePicture { get; set; }
     }
 }

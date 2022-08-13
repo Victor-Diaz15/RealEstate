@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RealEstate.Core.Application.Dtos.Account
 {
-    public class RegisterRequest
+    public class RegisterBasicRequest
     {
         public string Id { get; set; }
         public string FirstName { get; set; }

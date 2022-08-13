@@ -79,7 +79,7 @@ namespace RealEstate.Infrastructure.Identity.Services
         }
 
         //method for create a new basic user
-        public async Task<AuthenticationResponse> RegisterUserAsync(RegisterRequest req, string origin)
+        public async Task<AuthenticationResponse> RegisterBasicUserAsync(RegisterBasicRequest req, string origin)
         {
             AuthenticationResponse res = new();
             res.HasError = false;
@@ -153,6 +153,93 @@ namespace RealEstate.Infrastructure.Identity.Services
             return res;
         }
 
+        //method for create a new admin user
+        public async Task<RegisterManagerResponse> RegisterAdminUserAsync(RegisterManagerRequest req)
+        {
+            RegisterManagerResponse res = new();
+            res.HasError = false;
+
+            var userNameExist = await _userManager.FindByNameAsync(req.UserName);
+            if (userNameExist != null)
+            {
+                res.HasError = true;
+                res.Error = $"User '{req.UserName}' already exist.";
+                return res;
+            }
+
+            var emailExist = await _userManager.FindByEmailAsync(req.Email);
+            if (emailExist != null)
+            {
+                res.HasError = true;
+                res.Error = $"Email '{req.Email}' already registered.";
+                return res;
+            }
+
+            var userAdmin = new ApplicationUser
+            {
+                CardId = req.CardId,
+                FirstName = req.FirstName,
+                LastName = req.LastName,
+                UserName = req.UserName,
+                Email = req.Email,
+                IsVerified = req.IsVerified,
+                TypeUser = (int)Roles.Admin
+            };
+
+            var result = await _userManager.CreateAsync(userAdmin, req.Password);
+            if (!result.Succeeded)
+            {
+                res.HasError = true;
+                res.Error = $"An error occurred when trying to register the user.";
+                return res;
+            }
+            await _userManager.AddToRoleAsync(userAdmin, Roles.Admin.ToString());
+            return res;
+        }
+
+        //method for create a new Dev user
+        public async Task<RegisterManagerResponse> RegisterDevUserAsync(RegisterManagerRequest req)
+        {
+            RegisterManagerResponse res = new();
+            res.HasError = false;
+
+            var userNameExist = await _userManager.FindByNameAsync(req.UserName);
+            if (userNameExist != null)
+            {
+                res.HasError = true;
+                res.Error = $"User '{req.UserName}' already exist.";
+                return res;
+            }
+
+            var emailExist = await _userManager.FindByEmailAsync(req.Email);
+            if (emailExist != null)
+            {
+                res.HasError = true;
+                res.Error = $"Email '{req.Email}' already registered.";
+                return res;
+            }
+
+            var userDev = new ApplicationUser
+            {
+                CardId = req.CardId,
+                FirstName = req.FirstName,
+                LastName = req.LastName,
+                UserName = req.UserName,
+                Email = req.Email,
+                IsVerified = req.IsVerified,
+                TypeUser = (int)Roles.Developer
+            };
+
+            var result = await _userManager.CreateAsync(userDev, req.Password);
+            if (!result.Succeeded)
+            {
+                res.HasError = true;
+                res.Error = $"An error occurred when trying to register the user.";
+                return res;
+            }
+            await _userManager.AddToRoleAsync(userDev, Roles.Developer.ToString());
+            return res;
+        }
         //method for update an user
         public async Task<UpdateResponse> UpdateUserAsync(UpdateRequest req, string id)
         {
@@ -161,6 +248,7 @@ namespace RealEstate.Infrastructure.Identity.Services
             ApplicationUser user = await _userManager.FindByIdAsync(id);
             if (user != null)
             {
+                user.CardId = req.CardId;
                 user.FirstName = req.FirstName;
                 user.LastName = req.LastName;
                 user.UserName = req.UserName;
@@ -345,44 +433,7 @@ namespace RealEstate.Infrastructure.Identity.Services
 
             return verificationUri;
         }
-
-        //Method private to form the url for the ForgotPassword page
-        private async Task<string> SendForgotPasswordUri(ApplicationUser user, string origin)
-        {
-            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
-
-            var route = "User/ResetPassword";
-            var uri = new Uri(string.Concat($"{origin}/", route));
-            var forgotPassUri = QueryHelpers.AddQueryString(uri.ToString(), "token", token);
-
-            return forgotPassUri;
-        }
-
-        //method to send an email to the user for reset their password
-        //public async Task<ForgotPasswordResponse> ForgotPasswordAsync(ForgotPasswordRequest req, string origin)
-        //{
-        //    ForgotPasswordResponse res = new();
-        //    res.HasError = false;
-
-        //    var user = await _userManager.FindByEmailAsync(req.Email);
-        //    if (user == null)
-        //    {
-        //        res.HasError = true;
-        //        res.Error = $"No user registered with {req.Email}.";
-        //        return res;
-        //    }
-
-        //    var forgotPassUri = await SendForgotPasswordUri(user, origin);
-        //    await _emailService.SendAsync(new EmailRequest()
-        //    {
-        //        To = user.Email,
-        //        Body = $"Please reset your password account visiting this URL {forgotPassUri}",
-        //        Subject = "Reset Password"
-        //    });
-
-        //    return res;
-        //}
+        
 
     }
 }

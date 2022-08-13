@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RealEstate.Core.Application.Dtos.Account
 {
-    public class UpdateRequest
+    public class RegisterManagerRequest
     {
         public string Id { get; set; }
         public string CardId { get; set; }
@@ -16,9 +16,6 @@ namespace RealEstate.Core.Application.Dtos.Account
         public string Email { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
-        public string PhoneNumber { get; set; }
-        public bool IsVerified { get; set; } = false;
-        public string ProfilePicture { get; set; }
-        public int TypeUser { get; set; }
+        public bool IsVerified { get; set; } = true;
     }
 }

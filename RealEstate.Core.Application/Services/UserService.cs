@@ -48,14 +48,34 @@ namespace RealEstate.Core.Application.Services
         }
         public async Task<AuthenticationResponse> RegisterAsync(UserSaveViewModel vm, string origin)
         {
-            RegisterRequest request = _mapper.Map<RegisterRequest>(vm);
-            return await _accountService.RegisterUserAsync(request, origin);
+            RegisterBasicRequest request = _mapper.Map<RegisterBasicRequest>(vm);
+            return await _accountService.RegisterBasicUserAsync(request, origin);
         }
+
+        public async Task<RegisterManagerResponse> RegisterAdminAsync(ManagerSaveViewModel vm)
+        {
+            RegisterManagerRequest request = _mapper.Map<RegisterManagerRequest>(vm);
+            return await _accountService.RegisterAdminUserAsync(request);
+        }
+
+        public async Task<RegisterManagerResponse> RegisterDevAsync(ManagerSaveViewModel vm)
+        {
+            RegisterManagerRequest request = _mapper.Map<RegisterManagerRequest>(vm);
+            return await _accountService.RegisterDevUserAsync(request);
+        }
+
         public async Task<UpdateResponse> UpdateUserAsync(UserSaveViewModel vm, string id)
         {
             UpdateRequest req = _mapper.Map<UpdateRequest>(vm);
             return await _accountService.UpdateUserAsync(req, id);
         }
+
+        public async Task<UpdateResponse> UpdateManagerUserAsync(ManagerSaveViewModel vm, string id)
+        {
+            UpdateRequest req = _mapper.Map<UpdateRequest>(vm);
+            return await _accountService.UpdateUserAsync(req, id);
+        }
+
         public async Task<UpdateResponse> ActivedUserAsync(string id)
         {
             return await _accountService.ActivedUserAsync(id);
