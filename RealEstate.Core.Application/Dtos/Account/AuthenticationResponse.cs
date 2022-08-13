@@ -21,5 +21,6 @@ namespace RealEstate.Core.Application.Dtos.Account
         public bool HasError { get; set; }
         public string Error { get; set; }
         public int TypeUser { get; set; }
+        public string JWToken { get; set; }
     }
 }

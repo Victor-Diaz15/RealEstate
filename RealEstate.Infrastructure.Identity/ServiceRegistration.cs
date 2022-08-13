@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RealEstate.Core.Application.Interfaces.Services;
+using RealEstate.Core.Domain.Settings;
 using RealEstate.Infrastructure.Identity.Context;
 using RealEstate.Infrastructure.Identity.Entities;
 using RealEstate.Infrastructure.Identity.Services;
@@ -43,7 +45,13 @@ namespace RealEstate.Infrastructure.Identity
                 opts.AccessDeniedPath = "/User/AccessDenied";
             });
 
-            service.AddAuthentication();
+            service.Configure<JWTSettings>(config.GetSection("JWTSettings"));
+
+            service.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            });
             #endregion
 
             #region 'Services'

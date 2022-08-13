@@ -11,6 +11,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RealEstate.Core.Domain.Settings;
+using Microsoft.Extensions.Options;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
 
 namespace RealEstate.Infrastructure.Identity.Services
 {
@@ -19,16 +24,18 @@ namespace RealEstate.Infrastructure.Identity.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailService _emailService;
-
+        private readonly JWTSettings _jwtSettings;
 
         public AccountService(
-            UserManager<ApplicationUser> userManager,
+            UserManager<ApplicationUser> userManager, 
             SignInManager<ApplicationUser> signInManager,
-            IEmailService emailService)
+            IEmailService emailService, 
+            IOptions<JWTSettings> jwtSettings)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailService = emailService;
+            _jwtSettings = jwtSettings.Value;
         }
 
         //Methods
@@ -60,6 +67,8 @@ namespace RealEstate.Infrastructure.Identity.Services
                 return res;
             }
 
+            JwtSecurityToken jwtSecurityToken =await GenerateJWToken(user);
+
             res.Id = user.Id;
             res.FirstName = user.FirstName;
             res.LastName = user.LastName;
@@ -68,6 +77,7 @@ namespace RealEstate.Infrastructure.Identity.Services
             var listRoles = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
             res.Roles = listRoles.ToList();
             res.IsVerified = user.IsVerified;
+            res.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
 
             return res;
         }
@@ -420,6 +430,44 @@ namespace RealEstate.Infrastructure.Identity.Services
             return res;
         }
 
+        #region private methods
+
+        private async Task<JwtSecurityToken> GenerateJWToken(ApplicationUser user)
+        {
+            var userClaims = await _userManager.GetClaimsAsync(user);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            var roleClaims = new List<Claim>();
+
+            foreach (var role in roles)
+            {
+                roleClaims.Add(new Claim("roles", role));
+            }
+
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim("uid",user.Id)
+            }
+            .Union(userClaims)
+            .Union(roleClaims);
+
+            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
+            var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+
+            var jwtSecurityToken = new JwtSecurityToken(
+                issuer: _jwtSettings.Issuer,
+                audience: _jwtSettings.Audience,
+                claims: claims,
+                expires:DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
+                signingCredentials: signingCredentials);
+
+            return jwtSecurityToken;
+        }
+
+
         //Method private to form the url for the emailVerificationUser page
         private async Task<string> SendVerificationEmailUri(ApplicationUser user, string origin)
         {
@@ -433,7 +481,7 @@ namespace RealEstate.Infrastructure.Identity.Services
 
             return verificationUri;
         }
-        
 
+        #endregion
     }
 }
