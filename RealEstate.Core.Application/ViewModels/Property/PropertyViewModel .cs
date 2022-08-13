@@ -4,18 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RealEstate.Core.Domain.Entities
+namespace RealEstate.Core.Application.ViewModels.Property
 {
-    public class Property
+    public class PropertyViewModel
     {
         public int Id { get; set; }
         public string Code { get; set; }
 
         public int PropertyTypeId { get; set; }
-        public PropertyType PropertyType { get; set; }
 
         public int SaleTypeId { get; set; }
-        public SaleType SaleType { get; set; }
 
         public double Price { get; set; }
         public double ParcelSize { get; set; }
@@ -25,9 +23,5 @@ namespace RealEstate.Core.Domain.Entities
 
         public string AgentName { get; set; }
         public int IdAgent { get; set; }
-
-
-
-
     }
 }
