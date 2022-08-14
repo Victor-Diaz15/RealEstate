@@ -63,7 +63,7 @@ namespace RealEstate.Infrastructure.Identity
                 {
                     ValidateIssuerSigningKey = true,
                     ValidateIssuer = true,
-                    ValidateActor = true,
+                    ValidateAudience = true,
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero,
                     ValidIssuer = config["JWTSettings:Issuer"],
