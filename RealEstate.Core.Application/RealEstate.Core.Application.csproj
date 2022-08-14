@@ -24,7 +24,6 @@
     <Folder Include="Features\Properties\Commands\DeletePropertyById\" />
     <Folder Include="Features\Properties\Commands\UpdateProperty\" />
     <Folder Include="Features\Properties\Commands\CreateProperty\" />
-    <Folder Include="Features\Properties\Queries\GetPropertyById\" />
   </ItemGroup>
 
 </Project>
