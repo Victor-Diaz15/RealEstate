@@ -78,7 +78,10 @@ namespace RealEstate.Infrastructure.Identity.Services
             var listRoles = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
             res.Roles = listRoles.ToList();
             res.IsVerified = user.IsVerified;
+            
             res.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+            var refreshToken = GenerateRefreshToken();
+            res.RefreshToken = refreshToken.Token;
 
             return res;
         }
@@ -160,9 +163,6 @@ namespace RealEstate.Infrastructure.Identity.Services
             res.Roles = listRoles.ToList();
             res.IsVerified = user.IsVerified;
             res.ProfilePicture = user.ProfilePicture;
-
-            var refreshToken = GenerateRefreshToken();
-            res.RefreshToken = refreshToken.Token;
 
             return res;
         }
