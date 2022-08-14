@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using RealEstate.Core.Application.Dtos.Account;
 using RealEstate.Core.Application.Interfaces.Services;
 using RealEstate.Core.Domain.Settings;
 using RealEstate.Infrastructure.Identity.Context;
@@ -51,6 +55,46 @@ namespace RealEstate.Infrastructure.Identity
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(opt =>
+            {
+                opt.RequireHttpsMetadata = false;
+                opt.SaveToken = false;
+                opt.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = true,
+                    ValidateActor = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero,
+                    ValidIssuer = config["JWTSettings:Issuer"],
+                    ValidAudience = config["JWTSettings:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JWTSettings:Key"]))
+                };
+                opt.Events = new JwtBearerEvents()
+                {
+                    OnAuthenticationFailed = e =>
+                    {
+                        e.NoResult();
+                        e.Response.StatusCode = 500;
+                        e.Response.ContentType = "text/plain";
+                        return e.Response.WriteAsync(e.Exception.ToString());
+                    },
+                    OnChallenge = e =>
+                    {
+                        e.HandleResponse();
+                        e.Response.StatusCode = 401;
+                        e.Response.ContentType = "application/json";
+                        var result = JsonConvert.SerializeObject(new JwtResponse { HasError = true, Error = "You're not authorized"});
+                        return e.Response.WriteAsync(result);
+                    },
+                    OnForbidden = e =>
+                    {
+                        e.Response.StatusCode = 403;
+                        e.Response.ContentType = "application/json";
+                        var result = JsonConvert.SerializeObject(new JwtResponse { HasError = true, Error = "You're not authorized to access this resource" });
+                        return e.Response.WriteAsync(result);
+                    }
+                };
             });
             #endregion
 

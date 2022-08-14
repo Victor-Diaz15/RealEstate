@@ -16,6 +16,7 @@ using Microsoft.Extensions.Options;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Cryptography;
 
 namespace RealEstate.Infrastructure.Identity.Services
 {
@@ -159,6 +160,9 @@ namespace RealEstate.Infrastructure.Identity.Services
             res.Roles = listRoles.ToList();
             res.IsVerified = user.IsVerified;
             res.ProfilePicture = user.ProfilePicture;
+
+            var refreshToken = GenerateRefreshToken();
+            res.RefreshToken = refreshToken.Token;
 
             return res;
         }
@@ -465,6 +469,26 @@ namespace RealEstate.Infrastructure.Identity.Services
                 signingCredentials: signingCredentials);
 
             return jwtSecurityToken;
+        }
+
+        private  RefreshToken GenerateRefreshToken()
+        {
+            return new RefreshToken
+            {
+                Token = RandomTokenString(),
+                Expire = DateTime.UtcNow.AddDays(7),
+                Created = DateTime.UtcNow
+            };
+        }
+
+        private string RandomTokenString()
+        {
+            using var rngCryptoServiceProvider = new RNGCryptoServiceProvider();
+            var randomBytes = new byte[40];
+            rngCryptoServiceProvider.GetBytes(randomBytes);
+
+
+            return BitConverter.ToString(randomBytes).Replace("-","");
         }
 
 

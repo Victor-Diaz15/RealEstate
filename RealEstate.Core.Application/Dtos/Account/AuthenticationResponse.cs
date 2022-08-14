@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace RealEstate.Core.Application.Dtos.Account
@@ -22,5 +23,7 @@ namespace RealEstate.Core.Application.Dtos.Account
         public string Error { get; set; }
         public int TypeUser { get; set; }
         public string JWToken { get; set; }
+        [JsonIgnore]
+        public string RefreshToken { get; set; }
     }
 }
