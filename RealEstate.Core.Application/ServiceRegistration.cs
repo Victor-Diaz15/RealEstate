@@ -2,6 +2,7 @@
 using RealEstate.Core.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using MediatR;
 
 namespace RealEstate.Core.Application
 {
@@ -11,6 +12,8 @@ namespace RealEstate.Core.Application
         public static void AddApplicationLayer(this IServiceCollection service)
         {
             service.AddAutoMapper(Assembly.GetExecutingAssembly());
+            service.AddMediatR(Assembly.GetExecutingAssembly());   
+
 
             #region Services
 

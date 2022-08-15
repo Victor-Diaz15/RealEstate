@@ -4,7 +4,7 @@ using RealEstate.Core.Application.Dtos.Account;
 using RealEstate.Core.Application.Interfaces.Services;
 using System.Threading.Tasks;
 
-namespace RealEstateAPI.WebApi.Controllers.v1
+namespace RealEstateAPI.WebApi.Controllers
 {
     [ApiVersion("1.0")]
     [ApiController]

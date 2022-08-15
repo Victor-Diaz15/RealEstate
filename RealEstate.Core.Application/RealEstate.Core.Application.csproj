@@ -20,10 +20,4 @@
     <ProjectReference Include="..\RealEstate.Core.Domain\RealEstate.Core.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Properties\Commands\DeletePropertyById\" />
-    <Folder Include="Features\Properties\Commands\UpdateProperty\" />
-    <Folder Include="Features\Properties\Commands\CreateProperty\" />
-  </ItemGroup>
-
 </Project>

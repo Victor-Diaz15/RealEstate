@@ -30,12 +30,13 @@ namespace RealEstate.Core.Application.Features.Properties.Queries.GetPropertyByI
 
         public async Task<PropertyViewModel> Handle(GetPropertyByIdQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var property = await GetByIdVM(request.Id);
+            return property;
         }
 
-        private async Task<PropertyViewModel> GetAllVM(int id)
+        private async Task<PropertyViewModel> GetByIdVM(int id)
         {
-            var property = _repo.GetByIdAsync(id);
+            var property = await _repo.GetByIdAsync(id);
             var result = _mapper.Map<PropertyViewModel>(property);
 
             return result;

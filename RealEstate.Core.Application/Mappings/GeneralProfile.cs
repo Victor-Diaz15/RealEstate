@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
 using RealEstate.Core.Application.Dtos.Account;
+using RealEstate.Core.Application.Features.Properties.Commands.CreateProperty;
+using RealEstate.Core.Application.Features.Properties.Commands.UpdateProperty;
+using RealEstate.Core.Application.Features.Properties.Queries.GetAllProperties;
 using RealEstate.Core.Application.ViewModels.Improvement;
+using RealEstate.Core.Application.ViewModels.Property;
 using RealEstate.Core.Application.ViewModels.PropertyType;
 using RealEstate.Core.Application.ViewModels.SaleType;
 using RealEstate.Core.Application.ViewModels.User;
@@ -76,6 +80,32 @@ namespace RealEstate.Core.Application.Mappings
 
             CreateMap<PropertyType, PropertyTypeSaveViewModel>()
                 .ReverseMap();
+            #endregion
+
+            CreateMap<Property, PropertyViewModel>()
+              .ReverseMap();
+
+            CreateMap<PropertyType, PropertySaveViewModel>()
+                .ReverseMap();
+
+            CreateMap<GetAllPropertyQuery, GetAllPropertyParameter>()
+                .ReverseMap();
+
+            CreateMap<CreatePropertyCommand, Property>()
+                .ForMember(x => x.PropertyType, opt => opt.Ignore())
+                .ForMember(x => x.SaleType, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<UpdatePropertyCommand, Property>()
+                .ForMember(x => x.PropertyType, opt => opt.Ignore())
+                .ForMember(x => x.SaleType, opt => opt.Ignore())
+                .ReverseMap();
+
+
+            #region property
+
+
+
             #endregion
 
             #endregion
