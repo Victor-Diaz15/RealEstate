@@ -28,6 +28,8 @@ namespace RealEstate.Infrastructure.Persistence.Context
         public DbSet<Improvement> Improvements { get; set; }
         public DbSet<SaleType> SaleTypes { get; set; }
         public DbSet<PropertyType> PropertyTypes { get; set; }
+        public DbSet<Property> Properties { get; set; }
+
         #endregion
 
         public override Task<int> SaveChangesAsync(CancellationToken ct = new())
@@ -69,6 +71,9 @@ namespace RealEstate.Infrastructure.Persistence.Context
             mb.Entity<PropertyType>()
                 .ToTable("PropertyTypes");
 
+            mb.Entity<Property>()
+                .ToTable("Properties");
+
             #endregion
 
             #region primary keys
@@ -80,6 +85,9 @@ namespace RealEstate.Infrastructure.Persistence.Context
                 .HasKey(e => e.Id);
 
             mb.Entity<PropertyType>()
+                .HasKey(e => e.Id);
+
+            mb.Entity<Property>()
                 .HasKey(e => e.Id);
 
             #endregion
@@ -129,6 +137,52 @@ namespace RealEstate.Infrastructure.Persistence.Context
                 .IsRequired();
 
             mb.Entity<PropertyType>()
+                .Property(p => p.Description)
+                .IsRequired();
+            #endregion
+
+            #region Property
+            mb.Entity<Property>()
+                .Property(p => p.Code)
+                .IsRequired();
+
+            mb.Entity<Property>()
+                .Property(p => p.PropertyTypeId)
+                .IsRequired();
+
+            mb.Entity<Property>()
+                .Property(p => p.SaleTypeId)
+                .IsRequired();
+
+            mb.Entity<Property>()
+                .Property(p => p.RoomQty)
+                .IsRequired();
+
+            mb.Entity<Property>()
+                .Property(p => p.RestRoomQty)
+                .IsRequired();
+
+            mb.Entity<Property>()
+                .Property(p => p.PropertyImgUrl1)
+                .IsRequired();
+
+            mb.Entity<Property>()
+                .Property(p => p.Price)
+                .IsRequired();
+
+            mb.Entity<Property>()
+                .Property(p => p.ParcelSize)
+                .IsRequired();
+
+            mb.Entity<Property>()
+                .Property(p => p.IdAgent)
+                .IsRequired();
+
+            mb.Entity<Property>()
+                .Property(p => p.AgentName)
+                .IsRequired();
+
+            mb.Entity<Property>()
                 .Property(p => p.Description)
                 .IsRequired();
             #endregion
