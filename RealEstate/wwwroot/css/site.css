@@ -79,3 +79,13 @@ body {
     transform: translateY(-15px);
 }
 
+.img-small {
+    width: 25px;
+    height: 25px;
+}
+
+.img-cover {
+    width: auto;
+    max-height: 325px;
+}
+
