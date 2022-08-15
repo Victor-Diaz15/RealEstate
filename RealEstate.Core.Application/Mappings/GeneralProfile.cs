@@ -82,6 +82,8 @@ namespace RealEstate.Core.Application.Mappings
                 .ReverseMap();
             #endregion
 
+            #region property
+
             CreateMap<Property, PropertyViewModel>()
               .ReverseMap();
 
@@ -100,11 +102,6 @@ namespace RealEstate.Core.Application.Mappings
                 .ForMember(x => x.PropertyType, opt => opt.Ignore())
                 .ForMember(x => x.SaleType, opt => opt.Ignore())
                 .ReverseMap();
-
-
-            #region property
-
-
 
             #endregion
 
