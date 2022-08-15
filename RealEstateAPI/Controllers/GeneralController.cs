@@ -11,6 +11,6 @@ namespace RealEstateAPI.WebApi.Controllers
     {
         private IMediator _mediator;
 
-        protected IMediator mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+        protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
     }
 }
