@@ -17,6 +17,8 @@ namespace RealEstate.Core.Domain.Entities
         public int SaleTypeId { get; set; }
         public SaleType SaleType { get; set; }
 
+        public ICollection<Improvement> Improvements { get; set; }
+
         public double Price { get; set; }
         public double ParcelSize { get; set; }
         public int RoomQty { get; set; }
@@ -24,7 +26,7 @@ namespace RealEstate.Core.Domain.Entities
         public string Description { get; set; }
 
         public string AgentName { get; set; }
-        public int IdAgent { get; set; }
+        public string IdAgent { get; set; }
 
         public string PropertyImgUrl1 { get; set; }
         public string PropertyImgUrl2 { get; set; }

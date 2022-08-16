@@ -2,6 +2,7 @@
 using RealEstate.Core.Application.Helpers;
 using RealEstate.Core.Application.Interfaces.Repositories;
 using RealEstate.Core.Application.Interfaces.Services;
+using RealEstate.Core.Application.ViewModels.Improvement;
 using RealEstate.Core.Application.ViewModels.Property;
 using RealEstate.Core.Domain.Entities;
 using System.Collections.Generic;
@@ -21,6 +22,44 @@ namespace RealEstate.Core.Application.Services
         {
             _repo = repo;
             _mapper = mapper;
+        }
+
+        public async Task<List<PropertyViewModel>> GetAllWithInclude()
+        {
+            List<Property> properties = await _repo.GetAllWithIncludeAsync(new List<string> { "Improvements", "PropertyType", "SaleType" });
+            List<PropertyViewModel> propertiesVm = _mapper.Map<List<PropertyViewModel>>(properties);
+
+            //List<Improvement> result = new();
+
+            //foreach (var prop in properties)
+            //{
+            //    foreach (var imp in prop.Improvements)
+            //    {
+            //        result.Add(imp);
+            //    }
+            //}
+
+            //properties.Select(prop => new PropertyViewModel()
+            //{
+            //    Id = prop.Id,
+            //    AgentName = prop.AgentName,
+            //    Code = prop.Code,
+            //    IdAgent = prop.IdAgent,
+            //    ParcelSize = prop.ParcelSize,
+            //    PropertyType = prop.PropertyType.Name,
+            //    SaleType = prop.SaleType.Name,
+            //    Price = prop.Price,
+            //    Description = prop.Description,
+            //    RestRoomQty = prop.RestRoomQty,
+            //    RoomQty = prop.RoomQty,
+            //    PropertyImgUrl1 = prop.PropertyImgUrl1,
+            //    PropertyImgUrl2 = prop.PropertyImgUrl2,
+            //    PropertyImgUrl3 = prop.PropertyImgUrl3,
+            //    PropertyImgUrl4 = prop.PropertyImgUrl4
+
+            //}).ToList();
+
+            return propertiesVm;
         }
 
         //Overrating the method add

@@ -18,46 +18,43 @@ namespace WebApp.RealEstate.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _propertyTypeService.GetAllVmAsync());
+            return View(await _propertyTypeService.GetAllWithInclude());
         }
 
-        public IActionResult AddPropertyType()
+        public IActionResult Add()
         {
-            return View(new PropertyTypeSaveViewModel());
+            return View("Save", new PropertyTypeSaveViewModel());
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPropertyType(PropertyTypeSaveViewModel vm)
+        public async Task<IActionResult> Add(PropertyTypeSaveViewModel vm)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(vm);
-            }
+            if (!ModelState.IsValid) return View("Save", vm);
 
             await _propertyTypeService.AddAsync(vm);
             return RedirectToRoute(new { controller = "PropertyType", action = "Index" });
 
         }
 
-        public async Task<IActionResult> UpdatePropertyType(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            return View("AddPropertyType", await _propertyTypeService.GetByIdVmAsync(id));
+            return View("Save", await _propertyTypeService.GetByIdVmAsync(id));
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdatePropertyType(PropertyTypeSaveViewModel vm)
+        public async Task<IActionResult> Update(PropertyTypeSaveViewModel vm)
         {
             await _propertyTypeService.UpdateAsync(vm, vm.Id);
             return RedirectToRoute(new { controller = "PropertyType", action = "Index" });
         }
 
-        public async Task<IActionResult> DeletePropertyType(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             return View(await _propertyTypeService.GetByIdVmAsync(id));
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeletePropertyType(PropertyTypeSaveViewModel vm)
+        public async Task<IActionResult> Delete(PropertyTypeSaveViewModel vm)
         {
             await _propertyTypeService.DeleteAsync(vm.Id);
             return RedirectToRoute(new { controller = "PropertyType", action = "Index" });

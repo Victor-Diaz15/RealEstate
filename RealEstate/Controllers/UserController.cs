@@ -50,7 +50,7 @@ namespace WebApp.RealEstate.Controllers
                 }
                 else if (response.Roles.Contains(Roles.Agent.ToString())) 
                 {
-                    return RedirectToRoute(new { controller = "Agent", action = "Index" });
+                    return RedirectToRoute(new { controller = "Home", action = "Index" });
                 }
 
                 return RedirectToRoute(new { controller = "Client", action = "Index" });
