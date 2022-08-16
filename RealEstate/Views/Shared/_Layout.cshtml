@@ -1,4 +1,4 @@
-﻿@using  RealEstate.Core.Application.Enums
+﻿@using RealEstate.Core.Application.Enums
 @using Microsoft.AspNetCore.Http
 @using RealEstate.Core.Application.Dtos.Account
 @using RealEstate.Core.Application.Helpers
@@ -22,7 +22,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - RealEstate</title>
+    <title>RealEstate</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -41,7 +41,7 @@
                             <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Agent" asp-action="Index">Agentes</a>
+                            <a class="nav-link" asp-controller="Agent" asp-action=@(isAdmin ? "AgentList" : "Index")>Agentes</a>
                         </li>
                         @if (isAgent && !isAdmin)
                         {
@@ -64,7 +64,7 @@
                                     Tipo de Ventas
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Mejoras</a>
+                                <a class="dropdown-item" asp-controller="Improvement" asp-action="Index">Mejoras</a>
                               </div>
                             </li> 
                         }
