@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RealEstate.Core.Application.Enums;
 using RealEstate.Core.Application.Helpers;
 using RealEstate.Core.Application.Interfaces.Services;
 using RealEstate.Core.Application.Services;
@@ -14,14 +15,15 @@ namespace WebApp.RealEstate.Controllers
     public class AgentController : Controller
     {
         private readonly IPropertyService _propertyService;
+        private readonly IUserService _userService;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AgentController(IPropertyService propertyService, IHttpContextAccessor httpContextAccessor)
+        public AgentController(IPropertyService propertyService, IUserService userService, IHttpContextAccessor httpContextAccessor)
         {
             _propertyService = propertyService;
             _httpContextAccessor = httpContextAccessor;
+            _userService = userService;
         }
-
 
         public async Task<IActionResult> Index()
         {
@@ -31,6 +33,21 @@ namespace WebApp.RealEstate.Controllers
             properties = properties.Where(prop => prop.IdAgent == user.Id).ToList();
 
             return View(properties);
+        }
+
+        public async Task<IActionResult> AgentList()
+        {
+            List<UserViewModel> users = await _userService.GetAllVmAsync();
+            users = users.Where(user => user.TypeUser == (int)Roles.Agent).ToList();
+
+            UserViewModel user = _httpContextAccessor.HttpContext.Session.Get<UserViewModel>("user");
+
+            List<PropertyViewModel> properties = await _propertyService.GetAllWithInclude();
+            properties = properties.Where(prop => prop.IdAgent == user.Id).ToList();
+
+            ViewBag.PropertyQty = properties.Count;
+
+            return View(users);
         }
     }
 }

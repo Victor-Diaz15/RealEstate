@@ -28,37 +28,34 @@ namespace WebApp.RealEstate.Controllers
             return View(await _improvementService.GetAllVmAsync());
         }
 
-        public IActionResult AddImprovement()
+        public IActionResult Add()
         {
-            return View(new ImprovementSaveViewModel());
+            return View("Save", new ImprovementSaveViewModel());
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddImprovement(ImprovementSaveViewModel vm)
+        public async Task<IActionResult> Add(ImprovementSaveViewModel vm)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(vm);
-            }
+            if (!ModelState.IsValid) return View("Save", vm);
 
             await _improvementService.AddAsync(vm);
             return RedirectToRoute(new { controller = "Improvement", action = "Index" });
 
         }
 
-        public async Task<IActionResult> UpdateImprovement(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            return View("AddImprovement", await _improvementService.GetByIdVmAsync(id));
+            return View("Save", await _improvementService.GetByIdVmAsync(id));
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateImprovement(ImprovementSaveViewModel vm)
+        public async Task<IActionResult> Update(ImprovementSaveViewModel vm)
         {
             await _improvementService.UpdateAsync(vm, vm.Id);
             return RedirectToRoute(new { controller = "Improvement", action = "Index" });
         }
 
-        public async Task<IActionResult> DeleteImprovement(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             return View(await _improvementService.GetByIdVmAsync(id));
         }

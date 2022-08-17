@@ -1,5 +1,5 @@
-﻿@using RealEstate.Core.Application.ViewModels.SaleType
-@model SaleTypeSaveViewModel
+﻿@using RealEstate.Core.Application.ViewModels.Improvement
+@model ImprovementSaveViewModel
 
 @{
 	bool editMode = Model.Id == 0 ? false : true;
@@ -9,10 +9,10 @@
     <div class="col-5 mx-auto">
         <div class="card shadow bg-light">
             <div class="card-body">
-                <form asp-controller="SaleType" asp-action=@(editMode ? "Update" : "Add") method="post" class="row gap-3 my-3" enctype="multipart/form-data">
+                <form asp-controller="Improvement" asp-action=@(editMode ? "Update" : "Add") method="post" class="row gap-3 my-3" enctype="multipart/form-data">
                     <div class="text-center my-2">
                         <h3 class="text-muted w-100">
-                            @(editMode ? $"Editar tipo de venta" : "Crear tipo de venta")
+                            @(editMode ? $"Editar mejora" : "Crear nueva mejora")
                         </h3>
                     </div>
                     <section class="col-8 mx-auto mt-2">
@@ -34,7 +34,7 @@
 
                     <div class="col-8 mx-auto">
                         <button type="submit" class="btn btn-primary btn-lg w-100 mt-2">Guardar</button>
-                        <a asp-controller="SaleType" asp-action="Index" class="btn btn-secondary w-100 mt-2">Volver atrás</a>
+                        <a asp-controller="Improvement" asp-action="Index" class="btn btn-secondary w-100 mt-2">Volver atrás</a>
                     </div>
                 </form>
             </div>
