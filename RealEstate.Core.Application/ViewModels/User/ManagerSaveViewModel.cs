@@ -12,7 +12,9 @@ namespace RealEstate.Core.Application.ViewModels.User
         public string Id { get; set; }
 
         [Required(ErrorMessage = "Field is required")]
-        [DataType(DataType.Text)]
+        [RegularExpression(@"^\(?([0-9]{3})\)?([0-9]{3})?([0-9]{5})$",
+            ErrorMessage = "ha introducido un formato invalido para el campo cedula, asegurese de que no tenga guiones, letras ni espacios " +
+            "y que no sea menor ni mayor de 11 digitos. Por favor verificar que cumpla con lo mencionado anteriormente.")]
         public string CardId { get; set; }
 
         [Required(ErrorMessage = "Field is required")]

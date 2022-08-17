@@ -1,0 +1,85 @@
+﻿@using RealEstate.Core.Application.ViewModels.User 
+@using RealEstate.Core.Application.Helpers
+@using RealEstate.Core.Application.Dtos.Account
+@using Microsoft.AspNetCore.Http
+
+@inject IHttpContextAccessor httpContextAccesor
+
+@model List<UserViewModel> 
+
+@{
+    var user = httpContextAccesor.HttpContext.Session.Get<AuthenticationResponse>("user");
+}
+
+<div class="row">
+
+    <div class="row bg-light rounded p-3 mb-5">
+        <section class="w-100 d-flex justify-content-between align-items-center px-5">
+            <h3 class="fs-4 fw-bold fw-bolder m-2 w-100">
+                Listado
+                <span class="fs-5 fw-bold fw-bolder text-muted m-2 text-end w-100">
+                    /Administradores
+                </span>
+            </h3>
+            <a asp-controller="Admin" asp-action="Add" class="btn btn-outline-dark">
+                Agregar Nuevo Administrador
+            </a>
+        </section>
+    </div>
+
+    <div class="col-8 mx-auto">
+
+        @if (Model == null)
+        {
+            <h2>No existen registros de administradores</h2>
+        }
+        else
+        {
+            <table class="table table-hover">
+                <thead>
+                    <tr class="table-primary">
+                        <th scope="col">Cedula</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Usuario</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Estado</th>
+                        <th class="text-center" scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (UserViewModel item in Model)
+                    {
+                        <tr class="table-light">
+                            <td>@item.CardId</td>
+                            <td>@item.FirstName</td>
+                            <td>@item.LastName</td>
+                            <td>@item.UserName</td>
+                            <td>@item.Email</td>
+                            <td>@(item.IsVerified ? "Activo" : "Inactivo")</td>
+                            <td>
+                                <div class="d-flex justify-content-start w-100">
+                                    @if (item.Id != user.Id)
+                                    {
+                                        <a asp-controller="Admin" asp-action="Update" asp-route-id="@item.Id" class="btn btn-sm btn-info me-2 w-100">Editar</a>
+
+                                        @if (item.IsVerified)
+                                        {
+                                            <a asp-controller="Admin" asp-action="ActiveUser" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger w-100">Desactivar</a>
+                                        }
+                                        else
+                                        {
+                                            <a asp-controller="Admin" asp-action="ActiveUser" asp-route-id="@item.Id" class="btn btn-sm btn-outline-success w-100">Activar</a>
+                                        }
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+    </div>
+</div>
+

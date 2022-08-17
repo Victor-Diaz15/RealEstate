@@ -189,6 +189,16 @@ namespace RealEstate.Infrastructure.Identity.Services
                 return res;
             }
 
+            List<ApplicationUser> userList = await _userManager.Users.ToListAsync();
+            //Checking if vm.Cedula is already exists int the Db
+            bool cedulaRepetion = userList.Any(user => user.CardId == req.CardId);
+            if (cedulaRepetion)
+            {
+                res.HasError = true;
+                res.Error = $"Este numero de cedula {req.CardId} ya existe.";
+                return res;
+            }
+
             var userAdmin = new ApplicationUser
             {
                 CardId = req.CardId,
@@ -393,13 +403,15 @@ namespace RealEstate.Infrastructure.Identity.Services
                 AuthenticationResponse user_res = new()
                 {
                     Id = user.Id,
+                    CardId = user.CardId,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     UserName = user.UserName,
                     Email = user.Email,
                     PhoneNumber = user.PhoneNumber,
                     Roles = rol.ToList(),
-                    IsVerified = user.IsVerified
+                    IsVerified = user.IsVerified,
+                    TypeUser = user.TypeUser
                 };
 
                 res.Add(user_res);
@@ -418,6 +430,7 @@ namespace RealEstate.Infrastructure.Identity.Services
             if (user != null)
             {
                 res.Id = user.Id;
+                res.CardId = user.CardId;
                 res.Email = user.Email;
                 res.FirstName = user.FirstName;
                 res.LastName = user.LastName;

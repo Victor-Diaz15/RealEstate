@@ -11,7 +11,8 @@ namespace RealEstate.Core.Application.ViewModels.User
     public class UserSaveViewModel
     {
         public string Id { get; set; }
-    
+        public string CardId { get; set; }
+
         [Required(ErrorMessage = "Field is required")]
         [DataType(DataType.Text)]
         public string FirstName { get; set; }
