@@ -10,11 +10,11 @@
             <div class="card my-5">
                 <div class="card-header bg-primary text-light">
                     <h3>
-                        @(mode ? "Esta seguro que desea desactivar este admin?" : "Esta seguro que desea activar este admin?")
+                        @(mode ? "Esta seguro que desea desactivar este desarrollador" : "Esta seguro que desea activar este admin?")
                     </h3>
                 </div>
                 <div class="card-body text-center">
-                    <form method="post" asp-controller="Admin" asp-action="ActiveUser">
+                    <form method="post" asp-controller="Developer" asp-action="ActiveUser">
                         <input type="hidden" asp-for="Id" />
 
                         @if (mode)
@@ -25,7 +25,7 @@
                         {
                             <button type="submit" class="btn btn-success me-3">Activar</button>
                         }
-                        <a asp-controller="Admin" asp-action="AdminList" class="btn btn-outline-secondary text-dark">Cancelar</a>
+                        <a asp-controller="Developer" asp-action="Index" class="btn btn-outline-secondary text-dark">Cancelar</a>
                     </form>
                 </div>
             </div>
