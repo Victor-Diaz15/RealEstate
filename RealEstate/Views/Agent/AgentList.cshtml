@@ -32,17 +32,17 @@
                             <td>@item.Email</td>
                             <td>@propQty</td>
                             <td>
-                                <div class="d-flex justify-content-start w-100">
+                                <div class="d-flex gap-2 justify-content-start w-100">
                                     @if (item.IsVerified)
                                     {
-                                        <a asp-controller="Admin" asp-action="ActiveUser" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger w-100">Desactivar</a>
+                                        <a asp-controller="Agent" asp-action="ActiveUser" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger w-100">Desactivar</a>
                                     }
                                     else
                                     {
-                                        <a asp-controller="Admin" asp-action="ActiveUser" asp-route-id="@item.Id" class="btn btn-sm btn-outline-success w-100">Activar</a>
+                                        <a asp-controller="Agent" asp-action="ActiveUser" asp-route-id="@item.Id" class="btn btn-sm btn-outline-success w-100">Activar</a>
                                     }
                                     <a 
-                                        asp-controller="Admin" 
+                                        asp-controller="Agent" 
                                         asp-action="Delete" 
                                         asp-route-id="@item.Id" 
                                         class="btn btn-sm btn-danger me-2 w-100"

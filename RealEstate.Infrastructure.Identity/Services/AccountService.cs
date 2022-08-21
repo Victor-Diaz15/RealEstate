@@ -92,6 +92,13 @@ namespace RealEstate.Infrastructure.Identity.Services
             await _signInManager.SignOutAsync();
         }
 
+        //method for delete a user
+        public async Task DeleteUserAsync(string id)
+        {
+            ApplicationUser user = await _userManager.FindByIdAsync(id);
+            await _userManager.DeleteAsync(user);
+        }
+
         //method for create a new basic user
         public async Task<AuthenticationResponse> RegisterBasicUserAsync(RegisterBasicRequest req, string origin)
         {

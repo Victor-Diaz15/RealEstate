@@ -49,5 +49,29 @@ namespace WebApp.RealEstate.Controllers
 
             return View(users);
         }
+
+        public async Task<IActionResult> ActiveUser(string id)
+        {
+            return View("ActiveUser", await _userService.GetUserByIdAsync(id));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ActiveUser(UserSaveViewModel vm)
+        {
+            await _userService.ActivedUserAsync(vm.Id);
+            return RedirectToRoute(new { controller = "Agent", action = "AgentList" });
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            return View(await _userService.GetUserByIdAsync(id));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(UserSaveViewModel vm)
+        {
+            await _userService.DeleteUserAsync(vm.Id);
+            return RedirectToRoute(new { controller = "Agent", action = "AgentList" });
+        }
     }
 }
