@@ -21,6 +21,7 @@ namespace RealEstate.Infrastructure.Identity.Seeds
             defaultUser.IsVerified = true;
             defaultUser.EmailConfirmed = true;
             defaultUser.PhoneNumberConfirmed = true;
+            defaultUser.TypeUser = (int)Roles.Agent;
 
             if (userManager.Users.All(u => u.Id != defaultUser.Id))
             {

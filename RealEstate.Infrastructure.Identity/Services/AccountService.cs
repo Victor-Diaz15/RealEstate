@@ -92,6 +92,13 @@ namespace RealEstate.Infrastructure.Identity.Services
             await _signInManager.SignOutAsync();
         }
 
+        //method for delete a user
+        public async Task DeleteUserAsync(string id)
+        {
+            ApplicationUser user = await _userManager.FindByIdAsync(id);
+            await _userManager.DeleteAsync(user);
+        }
+
         //method for create a new basic user
         public async Task<AuthenticationResponse> RegisterBasicUserAsync(RegisterBasicRequest req, string origin)
         {
@@ -186,6 +193,16 @@ namespace RealEstate.Infrastructure.Identity.Services
             {
                 res.HasError = true;
                 res.Error = $"Email '{req.Email}' already registered.";
+                return res;
+            }
+
+            List<ApplicationUser> userList = await _userManager.Users.ToListAsync();
+            //Checking if vm.Cedula is already exists int the Db
+            bool cedulaRepetion = userList.Any(user => user.CardId == req.CardId);
+            if (cedulaRepetion)
+            {
+                res.HasError = true;
+                res.Error = $"Este numero de cedula {req.CardId} ya existe.";
                 return res;
             }
 
@@ -393,13 +410,15 @@ namespace RealEstate.Infrastructure.Identity.Services
                 AuthenticationResponse user_res = new()
                 {
                     Id = user.Id,
+                    CardId = user.CardId,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     UserName = user.UserName,
                     Email = user.Email,
                     PhoneNumber = user.PhoneNumber,
                     Roles = rol.ToList(),
-                    IsVerified = user.IsVerified
+                    IsVerified = user.IsVerified,
+                    TypeUser = user.TypeUser
                 };
 
                 res.Add(user_res);
@@ -418,6 +437,7 @@ namespace RealEstate.Infrastructure.Identity.Services
             if (user != null)
             {
                 res.Id = user.Id;
+                res.CardId = user.CardId;
                 res.Email = user.Email;
                 res.FirstName = user.FirstName;
                 res.LastName = user.LastName;

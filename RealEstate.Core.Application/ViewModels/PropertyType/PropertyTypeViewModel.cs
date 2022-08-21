@@ -12,6 +12,6 @@ namespace RealEstate.Core.Application.ViewModels.PropertyType
         public string Name { get; set; }
         public string Description { get; set; }
 
-        //public List<PropertyViewModel> Properties { get; set; }
+        public int PropertiesQty { get; set; }
     }
 }

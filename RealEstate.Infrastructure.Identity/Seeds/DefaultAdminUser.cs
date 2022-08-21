@@ -14,6 +14,7 @@ namespace RealEstate.Infrastructure.Identity.Seeds
         public static async Task SeedAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             ApplicationUser defaultUser = new();
+            defaultUser.CardId = "40218999932";
             defaultUser.UserName = "DefaultAdminUser";
             defaultUser.Email = "DefaultAdminUser@gmail.com";
             defaultUser.FirstName = "Admin";
@@ -21,6 +22,7 @@ namespace RealEstate.Infrastructure.Identity.Seeds
             defaultUser.IsVerified = true;
             defaultUser.EmailConfirmed = true;
             defaultUser.PhoneNumberConfirmed = true;
+            defaultUser.TypeUser = (int)Roles.Admin;
 
             if (userManager.Users.All(u => u.Id != defaultUser.Id))
             {

@@ -1,4 +1,4 @@
-﻿@using  RealEstate.Core.Application.Enums
+﻿@using RealEstate.Core.Application.Enums
 @using Microsoft.AspNetCore.Http
 @using RealEstate.Core.Application.Dtos.Account
 @using RealEstate.Core.Application.Helpers
@@ -7,9 +7,13 @@
 @{
     var user = httpContextAccesor.HttpContext.Session.Get<AuthenticationResponse>("user");
     bool isAdmin = false;
+    bool isClient = false;
+    bool isAgent = false;
     if (user != null)
     {
         isAdmin = user.Roles.Contains(Roles.Admin.ToString());
+        isClient = user.Roles.Contains(Roles.Client.ToString());
+        isAgent = user.Roles.Contains(Roles.Agent.ToString());
     }
 }
 
@@ -18,7 +22,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - RealEstate</title>
+    <title>RealEstate</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -26,7 +30,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow">
             <div class="container">
-                <a class="navbar-brand" asp-controller="Home" asp-action="Index">Real Estate BDM</a>
+                <a class="navbar-brand" asp-controller="@(isAdmin ? "Admin" : "Home")" asp-action="Index">Real Estate BDM</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -34,26 +38,57 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-controller="@(isAdmin ? "Admin" : "Home")" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Agent" asp-action="Index">Agentes</a>
+                            <a class="nav-link" asp-controller="Agent" asp-action=@(isAdmin ? "AgentList" : "Index")>Agentes</a>
                         </li>
+                        @if (isAgent && !isAdmin)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Agent" asp-action="Index">Propiedades</a>
+                            </li>
+                        }
+                        @if (isAdmin)
+                        {
+                             <li class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Mantenimientos</a>
+                              <div class="dropdown-menu" data-bs-popper="static">
+                                <a class="dropdown-item" asp-controller="Admin" asp-action="AdminList">Administradores</a>
+                                <a class="dropdown-item" asp-controller="Developer" asp-action="Index">Desarrolladores</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-controller="PropertyType" asp-action="Index">
+                                    Tipo de Propiedades
+                                </a>
+                                <a class="dropdown-item" asp-controller="SaleType" asp-action="Index">
+                                    Tipo de Ventas
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-controller="Improvement" asp-action="Index">Mejoras</a>
+                              </div>
+                            </li> 
+                        }
                     </ul>
                     <ul class="navbar-nav">
+                        @if (isAgent && !isAdmin)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Agent" asp-action="MyProfile">Mi Perfil</a>
+                            </li>
+                        }
                         @if (user == null)
                         {  
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="Index">Iniciar Sesión</a>
+                                <a class="nav-link" asp-controller="User" asp-action="Index">Iniciar Sesión</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="User" asp-action="Register">Únete a la App</a>
                             </li>
                         }
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="User" asp-action="Register">Únete a la App</a>
-                        </li>
                         @if (user != null)
                         {                            
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="LogOut">Cerrar Sesion</a>
+                                <a class="nav-link" asp-controller="User" asp-action="LogOut">Cerrar Sesion</a>
                             </li>
                         }
                     </ul>

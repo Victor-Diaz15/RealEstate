@@ -106,6 +106,9 @@ namespace RealEstate.Infrastructure.Persistence.Context
                 .HasForeignKey(p => p.PropertyTypeId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            mb.Entity<Property>()
+                .HasMany<Improvement>(p => p.Improvements)
+                .WithMany(i => i.Properties);
 
             #endregion
 

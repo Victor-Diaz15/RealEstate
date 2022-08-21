@@ -18,46 +18,43 @@ namespace WebApp.RealEstate.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _saleTypeService.GetAllVmAsync());
+            return View(await _saleTypeService.GetAllWithInclude());
         }
 
-        public IActionResult AddSaleType()
+        public IActionResult Add()
         {
-            return View(new SaleTypeSaveViewModel());
+            return View("Save", new SaleTypeSaveViewModel());
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddSaleType(SaleTypeSaveViewModel vm)
+        public async Task<IActionResult> Add(SaleTypeSaveViewModel vm)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(vm);
-            }
+            if (!ModelState.IsValid) return View("Save", vm);
 
             await _saleTypeService.AddAsync(vm);
             return RedirectToRoute(new { controller = "SaleType", action = "Index" });
 
         }
 
-        public async Task<IActionResult> UpdateSaleType(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            return View("AddSaleType", await _saleTypeService.GetByIdVmAsync(id));
+            return View("Save", await _saleTypeService.GetByIdVmAsync(id));
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateSaleType(SaleTypeSaveViewModel vm)
+        public async Task<IActionResult> Update(SaleTypeSaveViewModel vm)
         {
             await _saleTypeService.UpdateAsync(vm, vm.Id);
             return RedirectToRoute(new { controller = "SaleType", action = "Index" });
         }
 
-        public async Task<IActionResult> DeleteSaleType(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             return View(await _saleTypeService.GetByIdVmAsync(id));
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteSaleType(SaleTypeSaveViewModel vm)
+        public async Task<IActionResult> Delete(SaleTypeSaveViewModel vm)
         {
             await _saleTypeService.DeleteAsync(vm.Id);
             return RedirectToRoute(new { controller = "SaleType", action = "Index" });

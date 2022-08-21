@@ -22,5 +22,22 @@ namespace RealEstate.Core.Application.Services
             _mapper = mapper;
         }
 
+        public async Task<List<SaleTypeViewModel>> GetAllWithInclude()
+        {
+            List<SaleType> propertyTypes = await _saleTypeRepo.GetAllWithIncludeAsync(new List<string> { "Properties" });
+            List<SaleTypeViewModel> saleTypeViewModels = new();
+
+            saleTypeViewModels = propertyTypes.Select(prop => new SaleTypeViewModel()
+            {
+                Id = prop.Id,
+                Name = prop.Name,
+                Description = prop.Description,
+                PropertiesQty = prop.Properties.Count()
+
+            }).ToList();
+
+            return saleTypeViewModels;
+        }
+
     }
 }

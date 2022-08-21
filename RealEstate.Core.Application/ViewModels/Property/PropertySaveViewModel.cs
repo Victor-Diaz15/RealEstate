@@ -35,7 +35,7 @@ namespace RealEstate.Core.Application.ViewModels.Property
         public string Description { get; set; }
 
         public string AgentName { get; set; }
-        public int IdAgent { get; set; }
+        public string IdAgent { get; set; }
 
         [DataType(DataType.Upload)]
         public IFormFile PropertyImg1 { get; set; }

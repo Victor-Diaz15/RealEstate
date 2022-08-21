@@ -95,14 +95,9 @@ namespace RealEstate.Core.Application.Services
 
         }
 
-        //public async Task<ForgotPasswordResponse> ForgotPasswordAsync(ForgotPassViewModel vm, string origin)
-        //{
-        //    ForgotPasswordRequest request = _mapper.Map<ForgotPasswordRequest>(vm);
-        //    return await _accountService.ForgotPasswordAsync(request, origin);
-        //}
-
-        
-
-        
+        public async Task DeleteUserAsync(string id)
+        {
+            await _accountService.DeleteUserAsync(id);
+        }
     }
 }

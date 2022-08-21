@@ -12,27 +12,24 @@ using System.Threading.Tasks;
 
 namespace WebApp.RealEstate.Controllers
 {
-    public class AdminController : Controller
+    public class DeveloperController : Controller
     {
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public AdminController(IUserService userService, IMapper mapper, IHttpContextAccessor http)
+        public DeveloperController(IUserService userService, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             _userService = userService;
             _mapper = mapper;
-            _httpContextAccessor = http;
+            _httpContextAccessor = httpContextAccessor;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-        public async Task<IActionResult> AdminList()
+
+        public async Task<IActionResult> Index()
         {
             List<UserViewModel> users = await _userService.GetAllVmAsync();
-            var adminsVm = users.Where(us => us.TypeUser == (int)Roles.Admin).ToList();
+            users = users.Where(user => user.TypeUser == (int)Roles.Developer).ToList();
 
-            return View(adminsVm);
+            return View(users);
         }
 
         public IActionResult Add()
@@ -45,7 +42,7 @@ namespace WebApp.RealEstate.Controllers
         {
             if (!ModelState.IsValid) return View("Save", vm);
 
-            RegisterManagerResponse response = await _userService.RegisterAdminAsync(vm);
+            RegisterManagerResponse response = await _userService.RegisterDevAsync(vm);
             if (response.HasError)
             {
                 vm.HasError = response.HasError;
@@ -53,7 +50,7 @@ namespace WebApp.RealEstate.Controllers
                 return View("Save", vm);
             }
 
-            return RedirectToRoute(new { controller = "Admin", action = "AdminList" });
+            return RedirectToRoute(new { controller = "Developer", action = "Index" });
 
         }
 
@@ -63,7 +60,7 @@ namespace WebApp.RealEstate.Controllers
 
             if (id == user.Id)
             {
-                return RedirectToRoute(new { controller = "Admin", action = "AdminList" });
+                return RedirectToRoute(new { controller = "Developer", action = "Index" });
             }
             UserSaveViewModel vm = await _userService.GetUserByIdAsync(id);
             ManagerSaveViewModel managerSaveVm = _mapper.Map<ManagerSaveViewModel>(vm);
@@ -80,18 +77,19 @@ namespace WebApp.RealEstate.Controllers
             UserSaveViewModel userSaveVm = _mapper.Map<UserSaveViewModel>(vm);
             await _userService.UpdateUserAsync(userSaveVm, userSaveVm.Id);
 
-            return RedirectToRoute(new { controller = "Admin", action = "AdminList" });
+            return RedirectToRoute(new { controller = "Developer", action = "Index" });
         }
 
         public async Task<IActionResult> ActiveUser(string id)
         {
             return View("ActiveUser", await _userService.GetUserByIdAsync(id));
         }
+
         [HttpPost]
         public async Task<IActionResult> ActiveUser(UserSaveViewModel vm)
         {
             await _userService.ActivedUserAsync(vm.Id);
-            return RedirectToRoute(new { controller = "Admin", action = "AdminList" });
+            return RedirectToRoute(new { controller = "Developer", action = "Index" });
         }
     }
 }
