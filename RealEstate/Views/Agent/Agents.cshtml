@@ -5,14 +5,30 @@
 <div class="row">
     <div class="col-8 mx-auto">
 
+        <form asp-controller="Agent" asp-action="Index" class="d-flex justify-content-end align-items-center gap-2"> 
+            <input class="form-control" type="text" name="" placeholder="Buscar por nombre">
+            <button class="btn btn-success" type="submit">Buscar</button>
+        </form>
+
         @if (Model == null || Model.Count == 0)
         {
-            <h2>No existen agentes</h2>
+            <section class="col-6 bg-danger rounded-3 text-white text-center mx-auto p-4 mt-5">
+	            <h3 class="display-8 fw-normal text-uppercase fw-bolder m-0"> No hay agentes registrados </h3>
+            </section>
         }
-        else
-        {
-            
-        }
+        
+        <div class="row mt-5"> 
+            @foreach (UserViewModel item in Model)
+            {
+                <div class="col-3 mx-auto">                    
+                <section class="d-flex flex-column align-items-center bg-light gap-2 rounded shadow p-5">
+                    <img src="@item.ProfilePicture" class="img-cover" style="width: 50px;height: 50px; border-radius: 50%;" alt="img">
+                    <h5 class="fw-bold">@item.FirstName @item.LastName</h5>
+                </section>
+                </div>
+            }
+        </div>
+
     </div>
 
 </div>
