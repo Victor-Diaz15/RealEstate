@@ -23,7 +23,7 @@ namespace RealEstateAPI.WebApi.Extensions
                     Title = "RealEstate API",
                     Contact = new OpenApiContact
                     {
-                        Name = "Dav M.M."
+                        Name = "Dav M.M. y los BDM (banco davinci montas)"
                     }
                 });
 

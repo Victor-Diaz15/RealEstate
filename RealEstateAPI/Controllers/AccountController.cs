@@ -22,14 +22,21 @@ namespace RealEstateAPI.WebApi.Controllers
         {
             return Ok(await _accountSvc.AuthenticationAsync(request));
         }
-        //[HttpPost("register")]
-        //public async Task<IActionResult> RegisterAsync(AuthenticationRequest request)
-        //{
-        //    var origin = Request.Headers["origin"];
-        //    //RegisterBasicRequest basicUser = 
-        //    //var user = _mapper.Map
-        //    return Ok(await _accountSvc.RegisterBasicUserAsync(request, origin));
-        //}
+
+        [HttpPost("register")]
+        public async Task<IActionResult> RegisterAsync(RegisterManagerRequest request)
+        {
+            //var origin = Request.Headers["origin"];
+            return Ok(await _accountSvc.RegisterDevUserAsync(request));
+        }
+
+
+        [HttpPost("registerAdmin")]
+        public async Task<IActionResult> RegisterAdminAsync(RegisterManagerRequest request)
+        {
+            return Ok(await _accountSvc.RegisterAdminUserAsync(request));
+        }
+
 
 
     }
