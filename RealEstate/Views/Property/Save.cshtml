@@ -1,0 +1,123 @@
+﻿@using RealEstate.Core.Application.ViewModels.Property
+@using RealEstate.Core.Application.ViewModels.PropertyType
+@using RealEstate.Core.Application.ViewModels.SaleType
+@using RealEstate.Core.Application.ViewModels.Improvement
+
+@model PropertySaveViewModel
+
+@{
+	bool editMode = Model.Id == 0 ? false : true;
+}
+
+<div class="row">
+    <div class="col-5 mx-auto">
+
+    @if (ViewBag.PropTypes.Count == 0 ||
+            ViewBag.SaleTypes.Count == 0 ||
+            ViewBag.Improvements.Count == 0)
+    {
+        <section class="col-10 bg-danger rounded-3 text-white text-center mx-auto p-4 mt-5">
+	        <h3 class="display-8 fw-normal text-uppercase fw-bolder m-0">
+                Debe crear al menos un tipo de propiedad, tipo de venta o mejora
+            </h3>
+        </section>
+    }
+
+    else
+    {
+            
+        <div class="card shadow bg-light">
+            <div class="card-body">
+                <form asp-controller="Property" asp-action=@(editMode ? "UpdateProperty" : "AddProperty") method="post" class="row gap-3 my-3" enctype="multipart/form-data">
+                    <div class="text-center my-2">
+                        <h3 class="text-muted w-100">
+                            @(editMode ? $"Editar propiedad" : "Crear propiedad")
+                        </h3>
+                    </div>
+                    <section class="col-8 mx-auto mt-2">
+                        <select class="form-select w-100" name="PropertyTypeId">
+                            <option disabled selected>Seleccionar tipo de propiedad...</option>
+                            @foreach (PropertyTypeViewModel item in ViewBag.PropTypes)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                        <select class="form-select w-100" name="SaleTypeId">
+                            <option disabled selected>Seleccionar tipo de venta...</option>
+                            @foreach (SaleTypeViewModel item in ViewBag.SaleTypes)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                        <select class="form-select w-100" name="ImprovementId">
+                            <option disabled selected>Seleccionar Mejoras...</option>
+                            @foreach (ImprovementViewModel item in ViewBag.Improvements)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+@*                        <div class="form-floating mb-3">
+                            <input asp-for="N" class="form-control" placeholder="Nombre" />
+                            <label asp-for="Name"> Nombre</label>
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>*@
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Price" class="form-control" placeholder="Precio"/>
+                            <label asp-for="Price" class="form-label">Precio</label>
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="ParcelSize" class="form-control" placeholder="Tamaño de propiedad"/>
+                            <label asp-for="ParcelSize" class="form-label">Tamaño de propiedad</label>
+                            <span asp-validation-for="ParcelSize" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="RoomQty" class="form-control" placeholder="Cantidad de habitaciones"/>
+                            <label asp-for="RoomQty" class="form-label">Cantidad de habitaciones</label>
+                            <span asp-validation-for="RoomQty" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="PropertyImg1" class="form-label text-muted fw-bold">Selecciona las imágenes</label>
+                            @if (editMode)
+                            {
+                                <input asp-for="PropertyImg1" class="form-control">
+                            }
+                            else
+                            {
+                                <input required asp-for="PropertyImg1" class="form-control">
+                            }
+                            <input asp-for="PropertyImg2" class="form-control">
+                            <input asp-for="PropertyImg3" class="form-control">
+                            <input asp-for="PropertyImg4" class="form-control">
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="RestRoomQty" class="form-control" placeholder="Cantidad de baños"/>
+                            <label asp-for="RestRoomQty" class="form-label">Cantidad de baños</label>
+                            <span asp-validation-for="RestRoomQty" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <textarea asp-for="Description" class="form-control" placeholder="Descripción"></textarea> 
+                            <label asp-for="Description" class="form-label">Descripción</label>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </section>
+
+                    <input type="hidden" asp-for="Id" name="Id" value="@Model.Id" />
+
+                    <div class="col-8 mx-auto">
+                        <button type="submit" class="btn btn-primary btn-lg w-100 mt-2">Guardar</button>
+                        <a asp-controller="Property" asp-action="AgentProperties" class="btn btn-secondary w-100 mt-2">Volver atrás</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+
+    </div>
+</div>

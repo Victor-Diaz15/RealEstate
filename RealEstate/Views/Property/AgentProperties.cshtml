@@ -1,0 +1,78 @@
+﻿@using RealEstate.Core.Application.ViewModels.Property
+@model List<PropertyViewModel>
+
+
+<div class="row mx-5">
+
+    <div class="col-8 mx-auto">
+        <section class="w-100 d-flex mx-auto justify-content-between gap-3 align-items-center pb-5">
+            <a asp-controller="Property" asp-action="AddProperty" class="btn btn-outline-success text-uppercase w-100 py-3">
+                Agregar Propiedad
+            </a>
+        </section>
+    </div>
+   
+    @if (Model.Count == 0 || Model == null)
+    {
+        <section class="col-6 bg-danger rounded-3 text-white text-center mx-auto p-4 mt-5">
+	        <h3 class="display-8 fw-normal text-uppercase fw-bolder m-0"> Agente sin propiedades creadas</h3>
+        </section>
+    }
+    @foreach (PropertyViewModel item in Model)
+    {
+        <section class="col-3 my-4 mx-auto slide-up">
+            <a asp-controller="Home" asp-action="Details" class="card bg-light border-0 shadow" asp-route-id="">
+                <section class="card-body">
+                    <img src="@item.PropertyImgUrl1" class="card-img-top img-fluid img-cover" alt="pokemon">
+                    <div class="d-flex flex-column gap-2 mt-3">
+                        <div class="d-flex flex-column">
+                            <h6 class="fw-bold">
+                                @item.PropertyType
+                            </h6>
+                            <h6 class="">
+                                San Juan, Puerto Rico
+                            </h6>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <h6 class="">
+                                Código
+                            </h6>
+                            <h6 class="fw-bold">
+                                @item.Code
+                            </h6>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <h6 class="">
+                                @item.SaleType
+                            </h6>
+                            <h6 class="text-danger fw-bold">
+                                RD$ @item.Price 
+                            </h6>
+                        </div>
+                    </div>
+                </section>
+                <section class="card-footer">
+                    <div class="d-flex justify-content-between align-items-center gap-5">
+                        <section class="d-flex justify-content-center align-items-center gap-2">
+                            <img src="~/images/bed.png" />
+                            <h6 class="fw-bold m-0"> @item.RoomQty </h6>
+                        </section>
+                    <section class="d-flex justify-content-center align-items-center gap-2">
+                            <img src="~/images/bathtub.png"/>
+                            <h6 class="fw-bold m-0"> @item.RestRoomQty </h6>
+                        </section>
+                    <section class="d-flex justify-content-center align-items-center gap-2">
+                            <img src="~/images/tape-measure.png" />
+                            <h6 class="fw-bold m-0"> @item.ParcelSize mts </h6>
+                        </section>
+                    </div>
+                </section>
+                <section class="d-flex gap-2 bg-primary">
+                    <a asp-controller="Property" asp-action="UpdateProperty" class="btn btn-info">Editar</a>
+                    <a asp-controller="Property" asp-action="DeleteProperty" class="btn btn-danger">Borrar</a>
+                </section>
+            </a>
+        </section>
+    }
+
+</div>
