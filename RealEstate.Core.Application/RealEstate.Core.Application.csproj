@@ -24,8 +24,6 @@
     <Folder Include="Features\Agents\Commands\ChangeStatus\" />
     <Folder Include="Features\Agents\Queries\GetAgentById\" />
     <Folder Include="Features\Agents\Queries\GetAgentProperty\" />
-    <Folder Include="Features\SalesType\Commands\" />
-    <Folder Include="Features\SalesType\Queries\" />
   </ItemGroup>
 
 </Project>
