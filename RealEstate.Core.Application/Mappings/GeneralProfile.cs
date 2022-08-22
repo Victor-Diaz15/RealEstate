@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using RealEstate.Core.Application.Dtos.Account;
+using RealEstate.Core.Application.Dtos.PropertyTypeDtos;
 using RealEstate.Core.Application.Features.Properties.Commands.CreateProperty;
 using RealEstate.Core.Application.Features.Properties.Commands.UpdateProperty;
 using RealEstate.Core.Application.Features.Properties.Queries.GetAllProperties;
+using RealEstate.Core.Application.Features.PropertyTypes.Commands.CreatePropertyType;
+using RealEstate.Core.Application.Features.PropertyTypes.Commands.UpdatePropertyType;
 using RealEstate.Core.Application.ViewModels.Improvement;
 using RealEstate.Core.Application.ViewModels.Property;
 using RealEstate.Core.Application.ViewModels.PropertyType;
@@ -85,6 +88,28 @@ namespace RealEstate.Core.Application.Mappings
 
             CreateMap<PropertyType, PropertyTypeSaveViewModel>()
                 .ReverseMap();
+
+            CreateMap<PropertyType, PropTypeDto>()
+                //.ForMember(x => x., opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<UpdatePropertyTypeCommand, PropTypeDto>()
+                //.ForMember(x => x., opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<PropertyType, CreatePropertyTypeCommand>()
+                .ReverseMap()
+                .ForMember(x => x.Properties, opt => opt.Ignore()); 
+
+            CreateMap<PropertyType, UpdatePropertyTypeCommand>() //
+               .ReverseMap()
+               .ForMember(x => x.Properties, opt => opt.Ignore());
+
+            CreateMap<PropertyType, PropertyTypeUpdateResponse>()
+               .ReverseMap()
+               .ForMember(x => x.Properties, opt => opt.Ignore());
+
+
             #endregion
 
             #region property

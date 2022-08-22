@@ -18,7 +18,7 @@ namespace RealEstateAPI.WebApi.Controllers
         }
 
         [HttpPost("authenticate")]
-        public async Task<IActionResult> AuthenticateAsync(AuthenticationRequest request)
+        public async Task<IActionResult> LoginAsync(AuthenticationRequest request)
         {
             return Ok(await _accountSvc.AuthenticationAsync(request));
         }
@@ -26,7 +26,6 @@ namespace RealEstateAPI.WebApi.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync(RegisterManagerRequest request)
         {
-            //var origin = Request.Headers["origin"];
             return Ok(await _accountSvc.RegisterDevUserAsync(request));
         }
 

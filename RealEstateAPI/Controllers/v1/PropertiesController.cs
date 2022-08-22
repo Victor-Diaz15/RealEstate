@@ -25,21 +25,8 @@ namespace RealEstateAPI.WebApi.Controllers.v1
             }
         }
 
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetPropById(int id)
-        {
-            try
-            {
-                return Ok(await Mediator.Send(new GetAllPropertyQuery() { Id = id }));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
-
         //[HttpGet]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
         //public async Task<IActionResult> GetPropById(int id)
         //{
         //    try
@@ -49,7 +36,6 @@ namespace RealEstateAPI.WebApi.Controllers.v1
         //    catch (Exception ex)
         //    {
         //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-
         //    }
         //}
 
@@ -58,14 +44,17 @@ namespace RealEstateAPI.WebApi.Controllers.v1
         //{
         //    try
         //    {
-        //        return Ok(await mediator.Send(new GetPropertyByCodeQuery() { Code = code }));
+        //        return Ok(await Mediator.Send(new GetPropertyByCodeQuery() { Code = code }));
         //    }
         //    catch (Exception ex)
         //    {
         //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-
         //    }
         //}
+
+       
+
+
 
     }
 }

@@ -31,6 +31,7 @@ namespace RealEstate.Core.Application.Features.Properties.Queries.GetPropertyByI
         public async Task<PropertyViewModel> Handle(GetPropertyByIdQuery request, CancellationToken cancellationToken)
         {
             var property = await GetByIdVM(request.Id);
+            if (property == null) throw new Exception("Record not found");
             return property;
         }
 
