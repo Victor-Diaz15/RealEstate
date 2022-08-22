@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using RealEstate.Core.Application.Dtos.Account;
+using RealEstate.Core.Application.Dtos.Improvements;
 using RealEstate.Core.Application.Dtos.PropertyTypeDtos;
 using RealEstate.Core.Application.Dtos.SalesType;
+using RealEstate.Core.Application.Features.Improvements.Commands.CreateImprovement;
+using RealEstate.Core.Application.Features.Improvements.Commands.UpdateImprovement;
 using RealEstate.Core.Application.Features.Properties.Commands.CreateProperty;
 using RealEstate.Core.Application.Features.Properties.Commands.UpdateProperty;
 using RealEstate.Core.Application.Features.Properties.Queries.GetAllProperties;
@@ -75,6 +78,26 @@ namespace RealEstate.Core.Application.Mappings
 
             CreateMap<Improvement, ImprovementSaveViewModel>()
                 .ReverseMap();
+
+            CreateMap<Improvement, ImprovementDto>()
+                .ReverseMap()
+                .ForMember(x => x.Properties, opt => opt.Ignore());
+
+            CreateMap<UpdateImprovementCommand, ImprovementDto>()
+               //.ForMember(x => x., opt => opt.Ignore())
+               .ReverseMap();
+
+            CreateMap<Improvement, CreateImprovementCommand>()
+                .ReverseMap()
+                .ForMember(x => x.Properties, opt => opt.Ignore());
+
+            CreateMap<Improvement, UpdateImprovementCommand>() //
+               .ReverseMap()
+               .ForMember(x => x.Properties, opt => opt.Ignore());
+
+            CreateMap<Improvement, ImprovementUpdateResponse>()
+               .ReverseMap()
+               .ForMember(x => x.Properties, opt => opt.Ignore());
             #endregion
 
             #region SaleType
