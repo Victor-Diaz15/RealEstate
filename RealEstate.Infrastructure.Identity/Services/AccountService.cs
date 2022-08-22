@@ -286,6 +286,7 @@ namespace RealEstate.Infrastructure.Identity.Services
                 user.Email = req.Email;
                 user.PhoneNumber = req.PhoneNumber;
                 user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, req.Password);
+                user.ProfilePicture = req.ProfilePicture;
 
                 var userUpdated = await _userManager.UpdateAsync(user);
                 if (!userUpdated.Succeeded)
@@ -418,7 +419,8 @@ namespace RealEstate.Infrastructure.Identity.Services
                     PhoneNumber = user.PhoneNumber,
                     Roles = rol.ToList(),
                     IsVerified = user.IsVerified,
-                    TypeUser = user.TypeUser
+                    TypeUser = user.TypeUser,
+                    ProfilePicture = user.ProfilePicture
                 };
 
                 res.Add(user_res);
