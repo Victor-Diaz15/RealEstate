@@ -22,5 +22,6 @@ namespace RealEstate.Core.Application.Interfaces.Services
         Task<string> ConfirmAccountAsync(string userId, string token);
         //Task<ForgotPasswordResponse> ForgotPasswordAsync(ForgotPasswordRequest req, string origin);
         Task<ResetPasswordResponse> ResetPasswordAsync(ResetPasswordRequest req);
+        Task<UpdateResponse> ActivedAgentAsync(string id, bool status);
     }
 }

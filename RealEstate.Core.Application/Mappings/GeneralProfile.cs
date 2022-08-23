@@ -5,6 +5,7 @@ using RealEstate.Core.Application.Dtos.Properties;
 using RealEstate.Core.Application.Dtos.PropertyTypeDtos;
 using RealEstate.Core.Application.Dtos.SalesType;
 using RealEstate.Core.Application.Dtos.UserAccounts;
+using RealEstate.Core.Application.Features.ChangeStatus.Commands.ChangeStatus;
 using RealEstate.Core.Application.Features.Improvements.Commands.CreateImprovement;
 using RealEstate.Core.Application.Features.Improvements.Commands.UpdateImprovement;
 using RealEstate.Core.Application.Features.PropertyTypes.Commands.CreatePropertyType;
@@ -69,8 +70,44 @@ namespace RealEstate.Core.Application.Mappings
                 //.ForMember(x => x.Error, opt => opt.Ignore())
                 .ReverseMap();
 
-            //CreateMap<AgentDto, >()
-            //    .ReverseMap();
+            CreateMap<AgentDto, RegisterManagerRequest>()
+                .ForMember(x => x.ConfirmPassword, opt => opt.Ignore())
+                .ForMember(x => x.Password, opt => opt.Ignore())
+                .ForMember(x => x.IsVerified, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<AgentDtoActive, AgentDto>()
+                .ReverseMap()
+                .ForMember(x => x.IsActive, opt => opt.Ignore());
+
+            CreateMap<AgentDto, AuthenticationResponse>()
+                .ForMember(x => x.RefreshToken, opt => opt.Ignore())
+                .ForMember(x => x.JWToken, opt => opt.Ignore())
+                .ForMember(x => x.TypeUser, opt => opt.Ignore())
+                .ForMember(x => x.HasError, opt => opt.Ignore())
+                .ForMember(x => x.Error, opt => opt.Ignore())
+                .ForMember(x => x.Password, opt => opt.Ignore())
+                .ForMember(x => x.ProfilePicture, opt => opt.Ignore())
+                .ForMember(x => x.IsVerified, opt => opt.Ignore())
+                .ForMember(x => x.Roles, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<AgentDtoActive, AuthenticationResponse>()
+                .ForMember(x => x.RefreshToken, opt => opt.Ignore())
+                .ForMember(x => x.JWToken, opt => opt.Ignore())
+                .ForMember(x => x.TypeUser, opt => opt.Ignore())
+                .ForMember(x => x.HasError, opt => opt.Ignore())
+                .ForMember(x => x.Error, opt => opt.Ignore())
+                .ForMember(x => x.Password, opt => opt.Ignore())
+                .ForMember(x => x.ProfilePicture, opt => opt.Ignore())
+                .ForMember(x => x.IsVerified, opt => opt.Ignore())
+                .ForMember(x => x.Roles, opt => opt.Ignore())
+                .ReverseMap()
+                .ForMember(x => x.Properties, opt => opt.Ignore());
+
+            CreateMap<ChangeAgentStatusCommand, ChangeAgentStatusResponse>()
+              .ReverseMap();
+
 
             #endregion
 

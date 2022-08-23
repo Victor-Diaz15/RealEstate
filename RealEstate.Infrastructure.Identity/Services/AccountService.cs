@@ -346,7 +346,26 @@ namespace RealEstate.Infrastructure.Identity.Services
                 return res;
             }
         }
-        
+
+        public async Task<UpdateResponse> ActivedAgentAsync(string id, bool status)
+        {
+            UpdateResponse res = new();
+            res.HasError = false;
+            ApplicationUser user = await _userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                user.IsVerified = status;
+                
+                return res;
+            }
+            else
+            {
+                res.HasError = true;
+                res.Error = $"No accounts exists with this id: {id}";
+                return res;
+            }
+        }
+
         //method to confirm the account of the user
         public async Task<string> ConfirmAccountAsync(string userId, string token)
         {
@@ -452,6 +471,8 @@ namespace RealEstate.Infrastructure.Identity.Services
             res.Error = $"Not user exists with this id: {id}";
             return res;
         }
+
+
 
         #region private methods
 
