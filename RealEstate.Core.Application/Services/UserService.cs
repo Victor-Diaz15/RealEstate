@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using RealEstate.Core.Application.Dtos.Account;
+using RealEstate.Core.Application.Interfaces.Repositories;
 using RealEstate.Core.Application.Interfaces.Services;
 using RealEstate.Core.Application.ViewModels.User;
+using RealEstate.Core.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +16,13 @@ namespace RealEstate.Core.Application.Services
     {
 
         private readonly IAccountService _accountService;
+        private readonly IPropertyRepository _propertyRepository;
         private readonly IMapper _mapper;
 
-        public UserService(IAccountService accountService, IMapper mapper)
+        public UserService(IAccountService accountService, IPropertyRepository propertyRepository, IMapper mapper)
         {
             _accountService = accountService;
+            _propertyRepository = propertyRepository;
             _mapper = mapper;
         }
 
@@ -97,6 +101,15 @@ namespace RealEstate.Core.Application.Services
 
         public async Task DeleteUserAsync(string id)
         {
+            //Eliminando las propiedades del agente.
+            List<Property> propertyList = await _propertyRepository.GetAllAsync();
+            foreach (Property item in propertyList)
+            {
+                if (item.IdAgent == id)
+                {
+                    await _propertyRepository.DeleteAsync(item);
+                }
+            }
             await _accountService.DeleteUserAsync(id);
         }
     }

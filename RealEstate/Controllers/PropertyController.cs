@@ -71,6 +71,7 @@ namespace WebApp.RealEstate.Controllers
 
             UserViewModel user = _httpContextAccessor.HttpContext.Session.Get<UserViewModel>("user");
             vm.IdAgent = user.Id;
+            vm.AgentName = $"{user.FirstName} {user.LastName}";
 
             PropertySaveViewModel prop = await _propertyService.AddAsync(vm);
 
