@@ -8,9 +8,9 @@ namespace RealEstate.Core.Application.Enums
 {
     public enum Roles
     {
-        Admin = 1,
+        Client = 1,
+        Admin,
         Agent,
-        Client,
         Developer
     }
 }

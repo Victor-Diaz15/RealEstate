@@ -165,9 +165,9 @@ namespace RealEstate.Infrastructure.Persistence.Context
                 .Property(p => p.RestRoomQty)
                 .IsRequired();
 
-            mb.Entity<Property>()
-                .Property(p => p.PropertyImgUrl1)
-                .IsRequired();
+            //mb.Entity<Property>()
+            //    .Property(p => p.PropertyImgUrl1)
+            //    .IsRequired();
 
             mb.Entity<Property>()
                 .Property(p => p.Price)

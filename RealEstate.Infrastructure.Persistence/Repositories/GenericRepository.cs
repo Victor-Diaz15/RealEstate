@@ -35,6 +35,11 @@ namespace RealEstate.Infrastructure.Persistence.Repositories
         {
             return await _db.Set<Entity>().FindAsync(id);
         }
+
+        public virtual Entity GetById(int id)
+        {
+            return  _db.Set<Entity>().Find(id);
+        }
         public virtual async Task<Entity> AddAsync(Entity entity)
         {
             await _db.Set<Entity>().AddAsync(entity);

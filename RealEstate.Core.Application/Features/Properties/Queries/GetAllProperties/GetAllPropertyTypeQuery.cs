@@ -48,8 +48,8 @@ namespace RealEstate.Core.Application.Features.Propertys.Queries.GetAllProperty
             {
                 Id = p.Id,
                 Code = p.Code,
-                PropertyTypeId = Convert.ToString(GetPropertyTypeName(p.Id)),
-                SaleTypeId = Convert.ToString(GetSaleTypeName(p.Id)),
+                PropertyTypeId =  GetPropertyTypeName(p.PropertyTypeId),
+                SaleTypeId = GetSaleTypeName(p.SaleTypeId),
                 Price = p.Price,
                 ParcelSize = p.ParcelSize,
                 RoomQty = p.RoomQty,
@@ -62,14 +62,14 @@ namespace RealEstate.Core.Application.Features.Propertys.Queries.GetAllProperty
             return propListDto;
         }
 
-        private async Task<string> GetPropertyTypeName(int id)
+        private string GetPropertyTypeName(int id)
         {
-            var propType = await _propTypeRepository.GetByIdAsync(id);
+            var propType =  _propTypeRepository.GetById(id);
             return propType.Name;
         }
-        private async Task<string> GetSaleTypeName(int id)
+        private  string GetSaleTypeName(int id)
         {
-            var saleType = await _saleTypeRepository.GetByIdAsync(id);
+            var saleType =  _saleTypeRepository.GetById(id);
             return saleType.Name;
         }
     }

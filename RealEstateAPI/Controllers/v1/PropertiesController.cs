@@ -30,7 +30,7 @@ namespace RealEstateAPI.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PropertyDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetSaleById(int id)
+        public async Task<IActionResult> GetPropertyById(int id)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace RealEstateAPI.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PropertyDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetSaleById(string code)
+        public async Task<IActionResult> GetPropertyByCode([FromBody]string code)
         {
             try
             {
