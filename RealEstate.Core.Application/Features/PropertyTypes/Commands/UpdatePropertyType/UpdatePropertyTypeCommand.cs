@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using RealEstate.Core.Application.Features.Properties.Commands.UpdateProperty;
 using RealEstate.Core.Application.Interfaces.Repositories;
 using RealEstate.Core.Domain.Entities;
 using System;

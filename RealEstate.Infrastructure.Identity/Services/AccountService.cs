@@ -155,7 +155,6 @@ namespace RealEstate.Infrastructure.Identity.Services
                     Body = $"Se ha creado su cuenta con exito, ahora solo debe acceder a este link para que active su usuario!!. {verificacionUri}",
                     Subject = "Bienevenido a Real Estate App"
                 });
-
             }
 
             res.Id = user.Id;

@@ -16,11 +16,11 @@ namespace RealEstate.Core.Application.Features.SaleTypes.Queries.GetSaleTypeById
     {
         public int Id { get; set; } 
     }
-    public class GetSaleTypeByIdQueryHanler: IRequestHandler<GetSaleTypeByIdQuery, SaleTypeDto>
+    public class GetSaleTypeByIdQueryHandler: IRequestHandler<GetSaleTypeByIdQuery, SaleTypeDto>
     {
         private readonly ISaleTypeRepository _repo;
         private readonly IMapper _mapper;
-        public GetSaleTypeByIdQueryHanler(ISaleTypeRepository repo, IMapper mapper)
+        public GetSaleTypeByIdQueryHandler(ISaleTypeRepository repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using RealEstate.Core.Application.Dtos.Properties;
 using RealEstate.Core.Application.Interfaces.Repositories;
 using RealEstate.Core.Application.ViewModels.Property;
 using System;
@@ -9,37 +10,39 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace RealEstate.Core.Application.Features.Properties.Queries.GetPropertyById
+namespace RealEstate.Core.Application.Features.Propertys.Queries.GetPropertyById
 {
-    public class GetPropertyByCodeQuery : IRequest<PropertyViewModel>
+    public class GetPropertyByCodeQuery : IRequest<PropertyDto>
     {
-        public string Code { get; set; }
+        public string Code { get; set; } 
     }
-
-
-    public class GetPropertyByCodeQueryHandler : IRequestHandler<GetPropertyByCodeQuery, PropertyViewModel>
+    public class GetPropertyByCodeQueryHanler : IRequestHandler<GetPropertyByCodeQuery, PropertyDto>
     {
         private readonly IPropertyRepository _repo;
         private readonly IMapper _mapper;
-        public GetPropertyByCodeQueryHandler(IPropertyRepository repo, IMapper mapper)
+        public GetPropertyByCodeQueryHanler(IPropertyRepository repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
         }
 
-
-        public async Task<PropertyViewModel> Handle(GetPropertyByCodeQuery request, CancellationToken cancellationToken)
+        public async Task<PropertyDto> Handle(GetPropertyByCodeQuery request, CancellationToken cancellationToken)
         {
-            var property = await GetByIdVM(request.Code);
+            var property = await GetByCodeVm(request.Code);
+            if (property == null) throw new Exception("record not found");
             return property;
-        }
 
-        private async Task<PropertyViewModel> GetByIdVM(string code)
+
+        }
+        public async Task<PropertyDto> GetByCodeVm(string code)
         {
             var property = await _repo.GetByCodeAsync(code);
-            var result = _mapper.Map<PropertyViewModel>(property);
-            return result;
+            var propertyDto = _mapper.Map<PropertyDto>(property);
+
+            return propertyDto;
         }
-    } 
+
+        
+    }
 
 }

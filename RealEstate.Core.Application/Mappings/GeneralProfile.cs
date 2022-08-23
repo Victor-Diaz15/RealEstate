@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
 using RealEstate.Core.Application.Dtos.Account;
 using RealEstate.Core.Application.Dtos.Improvements;
+using RealEstate.Core.Application.Dtos.Properties;
 using RealEstate.Core.Application.Dtos.PropertyTypeDtos;
 using RealEstate.Core.Application.Dtos.SalesType;
+using RealEstate.Core.Application.Dtos.UserAccounts;
 using RealEstate.Core.Application.Features.Improvements.Commands.CreateImprovement;
 using RealEstate.Core.Application.Features.Improvements.Commands.UpdateImprovement;
-using RealEstate.Core.Application.Features.Properties.Commands.CreateProperty;
-using RealEstate.Core.Application.Features.Properties.Commands.UpdateProperty;
-using RealEstate.Core.Application.Features.Properties.Queries.GetAllProperties;
 using RealEstate.Core.Application.Features.PropertyTypes.Commands.CreatePropertyType;
 using RealEstate.Core.Application.Features.PropertyTypes.Commands.UpdatePropertyType;
 using RealEstate.Core.Application.Features.SalesType.Commands.CreateSaleType;
@@ -69,6 +68,9 @@ namespace RealEstate.Core.Application.Mappings
                 //.ForMember(x => x.HasError, opt => opt.Ignore())
                 //.ForMember(x => x.Error, opt => opt.Ignore())
                 .ReverseMap();
+
+            //CreateMap<AgentDto, >()
+            //    .ReverseMap();
 
             #endregion
 
@@ -146,7 +148,7 @@ namespace RealEstate.Core.Application.Mappings
 
             CreateMap<PropertyType, CreatePropertyTypeCommand>()
                 .ReverseMap()
-                .ForMember(x => x.Properties, opt => opt.Ignore()); 
+                .ForMember(x => x.Properties, opt => opt.Ignore());
 
             CreateMap<PropertyType, UpdatePropertyTypeCommand>() //
                .ReverseMap()
@@ -167,18 +169,20 @@ namespace RealEstate.Core.Application.Mappings
             CreateMap<PropertyType, PropertySaveViewModel>()
                 .ReverseMap();
 
-            CreateMap<GetAllPropertyQuery, GetAllPropertyParameter>()
-                .ReverseMap();
-
-            CreateMap<CreatePropertyCommand, Property>()
+            CreateMap<Property, PropertyDto>()
+                .ForMember(x => x.ImprovementList, opt => opt.Ignore())
+                .ReverseMap()
                 .ForMember(x => x.PropertyType, opt => opt.Ignore())
-                .ForMember(x => x.SaleType, opt => opt.Ignore())
-                .ReverseMap();
+                .ForMember(x => x.Improvements, opt => opt.Ignore())
+                .ForMember(x => x.PropertyImgUrl1, opt => opt.Ignore())
+                .ForMember(x => x.PropertyImgUrl2, opt => opt.Ignore())
+                .ForMember(x => x.PropertyImgUrl3, opt => opt.Ignore())
+                .ForMember(x => x.PropertyImgUrl4, opt => opt.Ignore());
+            
 
-            CreateMap<UpdatePropertyCommand, Property>()
-                .ForMember(x => x.PropertyType, opt => opt.Ignore())
-                .ForMember(x => x.SaleType, opt => opt.Ignore())
-                .ReverseMap();
+
+          
+
 
             #endregion
 

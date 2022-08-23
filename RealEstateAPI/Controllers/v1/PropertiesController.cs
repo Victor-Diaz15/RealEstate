@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using RealEstate.Core.Application.Features.Properties.Queries.GetAllProperties;
-using RealEstate.Core.Application.Features.Properties.Queries.GetPropertyById;
+using RealEstate.Core.Application.Dtos.Properties;
+using RealEstate.Core.Application.Features.Propertys.Queries.GetAllProperty;
+using RealEstate.Core.Application.Features.Propertys.Queries.GetPropertyById;
 using System;
 using System.Threading.Tasks;
 
@@ -13,11 +14,11 @@ namespace RealEstateAPI.WebApi.Controllers.v1
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAll(GetAllPropertyParameter param )
+        public async Task<IActionResult> GetAll()
         {
             try
             {
-                return Ok(await Mediator.Send( new GetAllPropertyQuery() { Id = param.Id}));
+                return Ok(await Mediator.Send( new GetAllPropertyQuery()));
             }
             catch (Exception ex)
             {
@@ -25,34 +26,39 @@ namespace RealEstateAPI.WebApi.Controllers.v1
             }
         }
 
-        //[HttpGet]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //public async Task<IActionResult> GetPropById(int id)
-        //{
-        //    try
-        //    {
-        //        return Ok(await Mediator.Send(new GetPropertyByIdQuery() { Id = id }));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-        //    }
-        //}
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PropertyDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetSaleById(int id)
+        {
+            try
+            {
+                return Ok(await Mediator.Send(new GetPropertyByIdQuery() { Id = id }));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
 
-        //[HttpGet]
-        //public async Task<IActionResult> GetByCode(string code)
-        //{
-        //    try
-        //    {
-        //        return Ok(await Mediator.Send(new GetPropertyByCodeQuery() { Code = code }));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-        //    }
-        //}
+        [HttpGet("{code}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PropertyDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetSaleById(string code)
+        {
+            try
+            {
+                return Ok(await Mediator.Send(new GetPropertyByCodeQuery() { Code = code }));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
 
-       
+
 
 
 

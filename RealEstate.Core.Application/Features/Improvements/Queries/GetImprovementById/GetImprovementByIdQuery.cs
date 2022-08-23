@@ -10,7 +10,7 @@ namespace RealEstate.Core.Application.Features.Improvements.Queries.GetImproveme
 {
     public class GetImprovementByIdQuery : IRequest<ImprovementDto>
     {
-        public int Id { get; set; } 
+        public int Id { get; set; }
     }
     public class GetImprovementByIdQueryHanler: IRequestHandler<GetImprovementByIdQuery, ImprovementDto>
     {
