@@ -166,7 +166,7 @@ namespace RealEstate.Core.Application.Mappings
             CreateMap<Property, PropertyViewModel>()
               .ReverseMap();
 
-            CreateMap<PropertyType, PropertySaveViewModel>()
+            CreateMap<Property, PropertySaveViewModel>()
                 .ReverseMap();
 
             CreateMap<Property, PropertyDto>()

@@ -64,7 +64,7 @@
 
                                     @foreach (var item in ViewBag.Roles)
                                     {
-                                        if (@item.Name != "Admin")
+                                        if (@item.Name != "Admin" && @item.Name != "Developer")
                                         {                                            
                                             if (@item.Name == "Agent")
                                             {

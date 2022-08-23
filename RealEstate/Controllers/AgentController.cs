@@ -50,6 +50,14 @@ namespace WebApp.RealEstate.Controllers
             return View(users);
         }
 
+        public async Task<IActionResult> Agents() 
+        {
+            List<UserViewModel> users = await _userService.GetAllVmAsync();
+            users = users.Where(user => user.TypeUser == (int)Roles.Agent).ToList();
+
+            return View(users);
+        }
+
         public async Task<IActionResult> ActiveUser(string id)
         {
             return View("ActiveUser", await _userService.GetUserByIdAsync(id));
