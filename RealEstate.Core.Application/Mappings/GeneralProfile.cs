@@ -40,6 +40,9 @@ namespace RealEstate.Core.Application.Mappings
             CreateMap<AuthenticationResponse, UserViewModel>()
                 .ReverseMap();
 
+            CreateMap<UpdateAgentViewModel, UserSaveViewModel>()
+                .ReverseMap();
+
             CreateMap<RegisterBasicRequest, UserSaveViewModel>()
                 //.ForMember(x => x.HasError, opt => opt.Ignore())
                 //.ForMember(x => x.Error, opt => opt.Ignore())

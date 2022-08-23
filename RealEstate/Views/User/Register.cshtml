@@ -68,11 +68,11 @@
                                         {                                            
                                             if (@item.Name == "Agent")
                                             {
-                                                <option value="2">@item.Name</option>
+                                                <option value="@((int)Roles.Agent)">@item.Name</option>
                                             }
                                             else
                                             {
-                                                <option value="3">@item.Name</option>
+                                                <option value="@((int)Roles.Client)">@item.Name</option>
                                             }
                                         }
                                         count++;

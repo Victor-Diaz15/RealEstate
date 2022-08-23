@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RealEstate.Core.Application.Enums;
 using RealEstate.Core.Application.Helpers;
@@ -17,12 +18,17 @@ namespace WebApp.RealEstate.Controllers
         private readonly IPropertyService _propertyService;
         private readonly IUserService _userService;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IMapper _mapper;
+        private readonly IUploadFileService _uploadFileService;
 
-        public AgentController(IPropertyService propertyService, IUserService userService, IHttpContextAccessor httpContextAccessor)
+        public AgentController(IPropertyService propertyService, IUserService userService, IHttpContextAccessor httpContextAccessor, IMapper mapper,
+            IUploadFileService uploadFileService)
         {
             _propertyService = propertyService;
             _httpContextAccessor = httpContextAccessor;
             _userService = userService;
+            _mapper = mapper;
+            _uploadFileService = uploadFileService;
         }
 
         public async Task<IActionResult> Index()
@@ -40,10 +46,12 @@ namespace WebApp.RealEstate.Controllers
             List<UserViewModel> users = await _userService.GetAllVmAsync();
             users = users.Where(user => user.TypeUser == (int)Roles.Agent).ToList();
 
-            UserViewModel user = _httpContextAccessor.HttpContext.Session.Get<UserViewModel>("user");
-
+            //searching all properties of an agent
             List<PropertyViewModel> properties = await _propertyService.GetAllWithInclude();
-            properties = properties.Where(prop => prop.IdAgent == user.Id).ToList();
+            foreach (var user in users)
+            {
+                properties = properties.Where(prop => prop.IdAgent == user.Id).ToList();
+            }
 
             ViewBag.PropertyQty = properties.Count;
 
@@ -68,6 +76,39 @@ namespace WebApp.RealEstate.Controllers
         {
             await _userService.ActivedUserAsync(vm.Id);
             return RedirectToRoute(new { controller = "Agent", action = "AgentList" });
+        }
+
+        public async Task<IActionResult> MyProfile()
+        {
+            UserViewModel user = _httpContextAccessor.HttpContext.Session.Get<UserViewModel>("user");
+            UserSaveViewModel userVm = await _userService.GetUserByIdAsync(user.Id);
+            UpdateAgentViewModel agentVm = _mapper.Map<UpdateAgentViewModel>(userVm);
+            return View("Update", agentVm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateAgent(UpdateAgentViewModel vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Update", vm);
+            }
+            UserSaveViewModel userVm = await _userService.GetUserByIdAsync(vm.Id);
+
+            string basePath = $"/Images/Users/{userVm.Id}";
+            vm.ProfilePicture = _uploadFileService.UploadFile(vm.ProfilePictureFile, basePath, true, userVm.ProfilePicture);
+
+
+            var response = await _userService.UpdateAgentAsync(vm);
+
+            if (response.HasError)
+            {
+                vm.HasError = response.HasError;
+                vm.Error = response.Error;
+                return View("Update", vm);
+            }
+
+            return RedirectToRoute(new { controller = "Agent", action = "Index" });
         }
 
         public async Task<IActionResult> Delete(string id)

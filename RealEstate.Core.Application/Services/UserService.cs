@@ -74,10 +74,9 @@ namespace RealEstate.Core.Application.Services
             return await _accountService.UpdateUserAsync(req, id);
         }
 
-        public async Task<UpdateResponse> UpdateManagerUserAsync(ManagerSaveViewModel vm, string id)
+        public async Task<UpdateResponse> UpdateAgentAsync(UpdateAgentViewModel vm)
         {
-            UpdateRequest req = _mapper.Map<UpdateRequest>(vm);
-            return await _accountService.UpdateUserAsync(req, id);
+            return await _accountService.UpdateAgentAsync(vm);
         }
 
         public async Task<UpdateResponse> ActivedUserAsync(string id)

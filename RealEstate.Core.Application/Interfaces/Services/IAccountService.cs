@@ -1,4 +1,5 @@
 ﻿using RealEstate.Core.Application.Dtos.Account;
+using RealEstate.Core.Application.ViewModels.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace RealEstate.Core.Application.Interfaces.Services
         Task<RegisterManagerResponse> RegisterAdminUserAsync(RegisterManagerRequest req);
         Task<RegisterManagerResponse> RegisterDevUserAsync(RegisterManagerRequest req);
         Task<UpdateResponse> UpdateUserAsync(UpdateRequest req, string id);
+        Task<UpdateResponse> UpdateAgentAsync(UpdateAgentViewModel vm);
         Task<UpdateResponse> ActivedUserAsync(string id);
         Task<List<AuthenticationResponse>> GetAllUsers();
         Task<AuthenticationResponse> GetUserById(string id);

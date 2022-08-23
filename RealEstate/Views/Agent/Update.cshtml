@@ -1,0 +1,63 @@
+﻿@using RealEstate.Core.Application.ViewModels.User
+@model UpdateAgentViewModel
+  
+@{
+    ViewData["Title"] = "Update";
+}
+
+<div class="row">
+    <div class="col-5 mx-auto">
+        <div class="card shadow bg-light">
+            <div class="card-body">
+                @if (Model.HasError)
+                {
+                    <div class="alert alert-danger alert-dimissible fade show" role="alert">
+                        <p>@Model.Error</p>
+                        <button type="button" class="btn-close" data-bs-dimiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+                <form asp-controller="Agent" asp-action="UpdateAgent" method="post" class="row gap-3 my-3" enctype="multipart/form-data">
+                    <div class="text-center my-2">
+                        <h3 class="text-muted w-100">
+                            Editar Perfil
+                        </h3>
+                    </div>
+                    <section class="col-5 mx-auto mt-2">
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="FirstName" class="form-control" placeholder="Nombre" />
+                            <label asp-for="FirstName"> Nombre </label>
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="LastName" class="form-control" placeholder="Apellido" />
+                            <label asp-for="LastName" class="form-label">Apellido </label>
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="PhoneNumber" class="form-control" placeholder="Telefono" />
+                            <label asp-for="PhoneNumber" class="form-label">Telefono </label>
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+
+                    </section>
+
+                    <input type="hidden" asp-for="Id" name="Id" value="@Model.Id" />
+
+                    <section class="col-11 mx-auto">
+                        <div class="form-group mb-3">
+                            <label asp-for="ProfilePictureFile" class="form-label text-muted fw-bold">Selecciona una imagen de perfil </label>
+                            <input required asp-for="ProfilePictureFile" class="form-control">
+                        </div>
+                    </section>
+                    <div class="col-11 mx-auto">
+                        <button type="submit" class="btn btn-primary btn-lg w-100 mt-2">Guardar</button>
+                        <a asp-controller="Agent" asp-action="Index" class="btn btn-secondary w-100 mt-2">Volver atrás</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
