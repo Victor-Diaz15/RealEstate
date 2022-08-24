@@ -12,7 +12,9 @@ namespace RealEstate.Core.Application.ViewModels.Property
         public int Id { get; set; }
         public string Code { get; set; }
 
+        public int PropertyTypeId { get; set; }
         public string PropertyType { get; set; }
+        public int SaleTypeId { get; set; }
         public string SaleType { get; set; }
         public double Price { get; set; }
         public double ParcelSize { get; set; }

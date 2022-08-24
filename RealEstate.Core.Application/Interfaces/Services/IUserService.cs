@@ -1,4 +1,5 @@
 ﻿using RealEstate.Core.Application.Dtos.Account;
+using RealEstate.Core.Application.ViewModels.Filters;
 using RealEstate.Core.Application.ViewModels.User;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace RealEstate.Core.Application.Interfaces.Services
     public interface IUserService
     {
         Task<List<UserViewModel>> GetAllVmAsync();
+        Task<List<UserViewModel>> GetAllAgentsWithFilters(FiltersViewModel filters);
         Task<List<AuthenticationResponse>> GetAllUsersAsync();
         Task<UserSaveViewModel> GetUserByIdAsync(string id);
         Task<AuthenticationResponse> LoginAsync(LoginViewModel vm);
