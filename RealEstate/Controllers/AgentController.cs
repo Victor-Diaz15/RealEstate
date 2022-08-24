@@ -61,7 +61,8 @@ namespace WebApp.RealEstate.Controllers
 
         public async Task<IActionResult> Agents(FiltersViewModel filters) 
         {
-            return View(await _userService.GetAllAgentsWithFilters(filters));
+            var agents = await _userService.GetAllAgentsWithFilters(filters);
+            return View(agents);
         }
 
         public async Task<IActionResult> ActiveUser(string id)
