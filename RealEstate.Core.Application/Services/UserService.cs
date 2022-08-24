@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using RealEstate.Core.Application.Dtos.Account;
+using RealEstate.Core.Application.Enums;
 using RealEstate.Core.Application.Interfaces.Repositories;
 using RealEstate.Core.Application.Interfaces.Services;
+using RealEstate.Core.Application.ViewModels.Filters;
 using RealEstate.Core.Application.ViewModels.User;
 using RealEstate.Core.Domain.Entities;
 using System;
@@ -30,6 +32,21 @@ namespace RealEstate.Core.Application.Services
         {
             var users = await this.GetAllUsersAsync();
             var usersVm = _mapper.Map<List<UserViewModel>>(users);
+
+            return usersVm;
+        }
+        public async Task<List<UserViewModel>> GetAllAgentsWithFilters(FiltersViewModel filters)
+        {
+            var users = await this.GetAllUsersAsync();
+            var usersVm = _mapper.Map<List<UserViewModel>>(users);
+
+            usersVm = usersVm.Where(user => user.TypeUser == (int)Roles.Agent).ToList();
+
+            if (!string.IsNullOrWhiteSpace(filters.name))
+            {
+                usersVm = usersVm.Where(user => (user.FirstName + user.LastName).Trim().ToLower() == filters.name.Trim().ToLower()).ToList();
+                return usersVm;
+            }
 
             return usersVm;
         }

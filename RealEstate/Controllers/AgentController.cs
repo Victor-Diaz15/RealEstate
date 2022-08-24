@@ -5,6 +5,7 @@ using RealEstate.Core.Application.Enums;
 using RealEstate.Core.Application.Helpers;
 using RealEstate.Core.Application.Interfaces.Services;
 using RealEstate.Core.Application.Services;
+using RealEstate.Core.Application.ViewModels.Filters;
 using RealEstate.Core.Application.ViewModels.Property;
 using RealEstate.Core.Application.ViewModels.User;
 using System.Collections.Generic;
@@ -58,12 +59,9 @@ namespace WebApp.RealEstate.Controllers
             return View(users);
         }
 
-        public async Task<IActionResult> Agents() 
+        public async Task<IActionResult> Agents(FiltersViewModel filters) 
         {
-            List<UserViewModel> users = await _userService.GetAllVmAsync();
-            users = users.Where(user => user.TypeUser == (int)Roles.Agent).ToList();
-
-            return View(users);
+            return View(await _userService.GetAllAgentsWithFilters(filters));
         }
 
         public async Task<IActionResult> ActiveUser(string id)
