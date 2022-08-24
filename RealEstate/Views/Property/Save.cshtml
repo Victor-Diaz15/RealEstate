@@ -35,21 +35,21 @@
                         </h3>
                     </div>
                     <section class="col-8 mx-auto mt-2">
-                        <select class="form-select w-100" name="PropertyTypeId">
+                        <select asp-for="PropertyTypeId" class="form-select w-100" name="PropertyTypeId">
                             <option disabled selected>Seleccionar tipo de propiedad...</option>
                             @foreach (PropertyTypeViewModel item in ViewBag.PropTypes)
                             {
                                 <option value="@item.Id">@item.Name</option>
                             }
                         </select>
-                        <select class="form-select w-100" name="SaleTypeId">
+                        <select asp-for="SaleTypeId" class="form-select w-100" name="SaleTypeId">
                             <option disabled selected>Seleccionar tipo de venta...</option>
                             @foreach (SaleTypeViewModel item in ViewBag.SaleTypes)
                             {
                                 <option value="@item.Id">@item.Name</option>
                             }
                         </select>
-                        <select class="form-select w-100" name="ImprovementId">
+                        <select asp-for="ImprovementId" class="form-select w-100" name="ImprovementId">
                             <option disabled selected>Seleccionar Mejoras...</option>
                             @foreach (ImprovementViewModel item in ViewBag.Improvements)
                             {
@@ -108,6 +108,7 @@
                         </div>
                     </section>
 
+                    <input type="hidden" asp-for="AgentName" name="AgentName" value="@Model.AgentName" />
                     <input type="hidden" asp-for="Id" name="Id" value="@Model.Id" />
 
                     <div class="col-8 mx-auto">

@@ -91,6 +91,10 @@ namespace WebApp.RealEstate.Controllers
 
         public async Task<IActionResult> UpdateProperty(int id)
         {
+            ViewBag.PropTypes = await _propertyTypeService.GetAllVmAsync();
+            ViewBag.SaleTypes = await _saleTypeService.GetAllVmAsync();
+            ViewBag.Improvements = await _improvementService.GetAllVmAsync();
+
             return View("Save", await _propertyService.GetByIdVmAsync(id));
         }
 
@@ -98,7 +102,7 @@ namespace WebApp.RealEstate.Controllers
         public async Task<IActionResult> UpdateProperty(PropertySaveViewModel vm)
         {
             await _propertyService.UpdateAsync(vm, vm.Id);
-            return RedirectToRoute(new { controller = "Property", action = "Index" });
+            return RedirectToRoute(new { controller = "Property", action = "AgentProperties" });
         }
 
         public async Task<IActionResult> DeleteProperty(int id)
@@ -110,7 +114,7 @@ namespace WebApp.RealEstate.Controllers
         public async Task<IActionResult> DeleteProperty(PropertySaveViewModel vm)
         {
             await _propertyService.DeleteAsync(vm.Id);
-            return RedirectToRoute(new { controller = "Property", action = "Index" });
+            return RedirectToRoute(new { controller = "Property", action = "AgentProperties" });
         }
 
     }
