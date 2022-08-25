@@ -14,6 +14,7 @@ using RealEstate.Core.Application.Features.SalesType.Commands.CreateSaleType;
 using RealEstate.Core.Application.Features.SalesType.Commands.UpdateSaleType;
 using RealEstate.Core.Application.ViewModels.Improvement;
 using RealEstate.Core.Application.ViewModels.Property;
+using RealEstate.Core.Application.ViewModels.PropertyFavorite;
 using RealEstate.Core.Application.ViewModels.PropertyType;
 using RealEstate.Core.Application.ViewModels.SaleType;
 using RealEstate.Core.Application.ViewModels.User;
@@ -218,11 +219,16 @@ namespace RealEstate.Core.Application.Mappings
                 .ForMember(x => x.PropertyImgUrl2, opt => opt.Ignore())
                 .ForMember(x => x.PropertyImgUrl3, opt => opt.Ignore())
                 .ForMember(x => x.PropertyImgUrl4, opt => opt.Ignore());
-            
 
+            #endregion
 
-          
+            #region propertyFavorite
 
+            CreateMap<PropertyFavorite, PropertyFavoriteViewModel>()
+              .ReverseMap();
+
+            CreateMap<PropertyFavorite, PropertyFavoriteSaveViewModel>()
+                .ReverseMap();
 
             #endregion
 
