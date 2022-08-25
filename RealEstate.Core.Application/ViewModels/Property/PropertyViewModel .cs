@@ -11,7 +11,7 @@ namespace RealEstate.Core.Application.ViewModels.Property
     {
         public int Id { get; set; }
         public string Code { get; set; }
-
+        public string Ubication { get; set; }
         public int PropertyTypeId { get; set; }
         public string PropertyType { get; set; }
         public int SaleTypeId { get; set; }
@@ -30,6 +30,7 @@ namespace RealEstate.Core.Application.ViewModels.Property
         public string PropertyImgUrl3 { get; set; }
         public string PropertyImgUrl4 { get; set; }
 
+        public DateTime Created { get; set; }
         public List<ImprovementViewModel> Improvements { get; set; }
     }
 }

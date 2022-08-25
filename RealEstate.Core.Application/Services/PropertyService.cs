@@ -43,6 +43,7 @@ namespace RealEstate.Core.Application.Services
             {
                 Id = prop.Id,
                 AgentName = prop.AgentName,
+                Ubication = prop.Ubication,
                 Code = prop.Code,
                 IdAgent = prop.IdAgent,
                 ParcelSize = prop.ParcelSize,
@@ -69,6 +70,7 @@ namespace RealEstate.Core.Application.Services
             {
                 Id = prop.Id,
                 AgentName = prop.AgentName,
+                Ubication = prop.Ubication,
                 Code = prop.Code,
                 IdAgent = prop.IdAgent,
                 ParcelSize = prop.ParcelSize,

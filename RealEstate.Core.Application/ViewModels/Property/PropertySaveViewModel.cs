@@ -12,6 +12,8 @@ namespace RealEstate.Core.Application.ViewModels.Property
     {
         public int Id { get; set; }
         public string Code { get; set; }
+        [Required(ErrorMessage = "Debe especificar la ubicacion de la propiedad")]
+        public string Ubication { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "Debe especificar el tipo de propiedad")]
         public int PropertyTypeId { get; set; }

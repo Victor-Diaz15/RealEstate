@@ -67,7 +67,13 @@ namespace WebApp.RealEstate.Controllers
         [HttpPost]
         public async Task<IActionResult> AddProperty(PropertySaveViewModel vm)
         {
-            if (!ModelState.IsValid) return View("Save", vm);
+            if (!ModelState.IsValid)
+            {
+                ViewBag.PropTypes = await _propertyTypeService.GetAllVmAsync();
+                ViewBag.SaleTypes = await _saleTypeService.GetAllVmAsync();
+                ViewBag.Improvements = await _improvementService.GetAllVmAsync();
+                return View("Save", vm);
+            }
 
             UserViewModel user = _httpContextAccessor.HttpContext.Session.Get<UserViewModel>("user");
             vm.IdAgent = user.Id;
@@ -101,6 +107,23 @@ namespace WebApp.RealEstate.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateProperty(PropertySaveViewModel vm)
         {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.PropTypes = await _propertyTypeService.GetAllVmAsync();
+                ViewBag.SaleTypes = await _saleTypeService.GetAllVmAsync();
+                ViewBag.Improvements = await _improvementService.GetAllVmAsync();
+                return View("Save", vm);
+            }
+
+            PropertySaveViewModel propVm = await _propertyService.GetByIdVmAsync(vm.Id);
+
+            string basePath = $"/Images/Property/{propVm.Id}";
+
+            vm.PropertyImgUrl1 = _uploadFileService.UploadFile(vm.PropertyImg1, basePath, true, propVm.PropertyImgUrl1);
+            vm.PropertyImgUrl2 = _uploadFileService.UploadFile(vm.PropertyImg2, basePath, true, propVm.PropertyImgUrl2);
+            vm.PropertyImgUrl3 = _uploadFileService.UploadFile(vm.PropertyImg3, basePath, true, propVm.PropertyImgUrl3);
+            vm.PropertyImgUrl4 = _uploadFileService.UploadFile(vm.PropertyImg4, basePath, true, propVm.PropertyImgUrl4);
+            
             await _propertyService.UpdateAsync(vm, vm.Id);
             return RedirectToRoute(new { controller = "Property", action = "AgentProperties" });
         }
