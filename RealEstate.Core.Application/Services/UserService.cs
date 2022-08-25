@@ -44,8 +44,8 @@ namespace RealEstate.Core.Application.Services
 
             if (!string.IsNullOrWhiteSpace(filters.name))
             {
-                usersVm = usersVm.Where(user => (user.FirstName + user.LastName).Trim().ToLower() == filters.name.Trim().ToLower()).ToList();
-                return usersVm;
+                List<UserViewModel> vm = usersVm.Where(user => user.FirstName.Trim().ToLower() == filters.name.Trim().ToLower()).ToList();
+                return vm;
             }
 
             return usersVm;
