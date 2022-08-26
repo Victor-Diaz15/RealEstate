@@ -17,6 +17,11 @@ namespace RealEstate.Infrastructure.Persistence.Repositories
             _db = db;
         }
 
+        public List<Property> GetAll()
+        {
+            return _db.Set<Property>().ToList();
+        }
+
         public async Task<Property> GetByCodeAsync(string Code)
         {
             return await _db.Set<Property>().FindAsync(Code);

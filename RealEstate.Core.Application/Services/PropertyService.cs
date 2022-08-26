@@ -26,7 +26,30 @@ namespace RealEstate.Core.Application.Services
             _mapper = mapper;
             _propImprovementRepo = propImprovementRepo;
         }
+        public List<PropertyViewModel> GetAll()
+        {
+            List<Property> properties = _repo.GetAll();
+            return properties.Select(prop => new PropertyViewModel()
+            {
+                Id = prop.Id,
+                AgentName = prop.AgentName,
+                Ubication = prop.Ubication,
+                Code = prop.Code,
+                IdAgent = prop.IdAgent,
+                ParcelSize = prop.ParcelSize,
+                //PropertyType = prop.PropertyType.Name,
+                //SaleType = prop.SaleType.Name,
+                Price = prop.Price,
+                Description = prop.Description,
+                RestRoomQty = prop.RestRoomQty,
+                RoomQty = prop.RoomQty,
+                PropertyImgUrl1 = prop.PropertyImgUrl1,
+                PropertyImgUrl2 = prop.PropertyImgUrl2,
+                PropertyImgUrl3 = prop.PropertyImgUrl3,
+                PropertyImgUrl4 = prop.PropertyImgUrl4,
 
+            }).ToList();
+        }
         public async Task<List<PropertyViewModel>> GetAllWithInclude()
         {
             List<Property> properties = await _repo.GetAllWithIncludeAsync(new List<string> { "Improvements", "PropertyType", "SaleType" });

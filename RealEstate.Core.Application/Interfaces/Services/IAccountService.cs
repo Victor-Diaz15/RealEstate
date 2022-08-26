@@ -20,6 +20,7 @@ namespace RealEstate.Core.Application.Interfaces.Services
         Task<UpdateResponse> UpdateAgentAsync(UpdateAgentViewModel vm);
         Task<UpdateResponse> ActivedUserAsync(string id);
         Task<List<AuthenticationResponse>> GetAllUsers();
+        List<AuthenticationResponse> GetAll();
         Task<AuthenticationResponse> GetUserById(string id);
         Task<string> ConfirmAccountAsync(string userId, string token);
         //Task<ForgotPasswordResponse> ForgotPasswordAsync(ForgotPasswordRequest req, string origin);

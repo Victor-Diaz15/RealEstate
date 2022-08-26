@@ -2,7 +2,7 @@
 @model List<UserViewModel>
 
 @{
-    var propQty = ViewBag.PropertyQty;
+    //var propQty = ViewBag.PropertyQty;
 }
 
 
@@ -37,7 +37,7 @@
                             <td>@item.FirstName</td>
                             <td>@item.LastName</td>
                             <td>@item.Email</td>
-                            <td>@propQty</td>
+                            <td>@item.PropQty</td>
                             <td>
                                 <div class="d-flex gap-2 justify-content-start w-100">
                                     @if (item.IsVerified)

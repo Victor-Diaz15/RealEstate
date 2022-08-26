@@ -14,6 +14,9 @@ namespace RealEstate.Core.Application.Interfaces.Services
         Task<List<UserViewModel>> GetAllVmAsync();
         Task<List<UserViewModel>> GetAllAgentsWithFilters(FiltersViewModel filters);
         Task<List<AuthenticationResponse>> GetAllUsersAsync();
+
+        List<AuthenticationResponse> GetAllUsers();
+
         Task<UserSaveViewModel> GetUserByIdAsync(string id);
         Task<AuthenticationResponse> LoginAsync(LoginViewModel vm);
         Task<AuthenticationResponse> RegisterAsync(UserSaveViewModel vm, string origin);

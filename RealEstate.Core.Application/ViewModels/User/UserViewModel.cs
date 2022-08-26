@@ -21,5 +21,6 @@ namespace RealEstate.Core.Application.ViewModels.User
         public bool HasError { get; set; }
         public string Error { get; set; }
         public bool IsVerified { get; set; } = false;
+        public int PropQty { get; set; }
     }
 }

@@ -47,6 +47,24 @@ namespace WebApp.RealEstate.Controllers
             List<UserViewModel> users = await _userService.GetAllVmAsync();
             users = users.Where(user => user.TypeUser == (int)Roles.Agent).ToList();
 
+
+            var listUsers = users.Select(user => new UserViewModel() {
+                Id = user.Id,
+                CardId = user.CardId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName,
+                Password = user.Password,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                ProfilePicture = user.ProfilePicture,
+                HasError = user.HasError,
+                Error = user.Error,
+                IsVerified = user.IsVerified,
+                PropQty = PropertyQuantity(user.Id) //tu ta claro de que no
+            }).ToList();
+
+
             //searching all properties of an agent
             List<PropertyViewModel> properties = await _propertyService.GetAllWithInclude();
             foreach (var user in users)
@@ -56,10 +74,21 @@ namespace WebApp.RealEstate.Controllers
 
             ViewBag.PropertyQty = properties.Count;
 
-            return View(users);
+            return View(listUsers);
         }
 
-        public async Task<IActionResult> Agents(FiltersViewModel filters) 
+        private int PropertyQuantity(string agentId) 
+        {
+            var listAgent = _userService.GetAllUsers();
+            var agent = listAgent.FirstOrDefault(x => x.Id == agentId);
+
+            var listProps = _propertyService.GetAll();
+            var propsFiltered = listProps.Where(x => x.IdAgent == agentId);
+            int result = propsFiltered.Count();
+            return result;
+        }
+
+    public async Task<IActionResult> Agents(FiltersViewModel filters) 
         {
             var agents = await _userService.GetAllAgentsWithFilters(filters);
             return View(agents);

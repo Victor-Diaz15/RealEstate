@@ -479,6 +479,34 @@ namespace RealEstate.Infrastructure.Identity.Services
             return res;
         }
 
+        public  List<AuthenticationResponse> GetAll()
+        {
+            var users = _userManager.Users.ToList();
+
+            List<AuthenticationResponse> res = new();
+
+            foreach (var user in users)
+            {
+                var rol = _userManager.GetRolesAsync(user).ConfigureAwait(false);
+
+                AuthenticationResponse user_res = new()
+                {
+                    Id = user.Id,
+                    CardId = user.CardId,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    IsVerified = user.IsVerified,
+                    TypeUser = user.TypeUser,
+                    ProfilePicture = user.ProfilePicture
+                };
+                res.Add(user_res);
+            };
+
+            return res;
+        }
         //Method to get all users
         public async Task<AuthenticationResponse> GetUserById(string id)
         {

@@ -9,6 +9,7 @@ namespace RealEstate.Core.Application.Interfaces.Repositories
 {
     public interface IPropertyRepository: IGenericRepository<Property>
     {
+        List<Property> GetAll();
         Task<Property> GetByCodeAsync(string Code);
 
         Task<Property> GetByNameAsync(string Name);
