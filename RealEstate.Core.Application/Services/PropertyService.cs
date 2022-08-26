@@ -57,7 +57,8 @@ namespace RealEstate.Core.Application.Services
                 PropertyImgUrl1 = prop.PropertyImgUrl1,
                 PropertyImgUrl2 = prop.PropertyImgUrl2,
                 PropertyImgUrl3 = prop.PropertyImgUrl3,
-                PropertyImgUrl4 = prop.PropertyImgUrl4
+                PropertyImgUrl4 = prop.PropertyImgUrl4,
+               // IsFavourite = prop.IsFavourite
 
             }).ToList();
         }
@@ -86,7 +87,8 @@ namespace RealEstate.Core.Application.Services
                 PropertyImgUrl1 = prop.PropertyImgUrl1,
                 PropertyImgUrl2 = prop.PropertyImgUrl2,
                 PropertyImgUrl3 = prop.PropertyImgUrl3,
-                PropertyImgUrl4 = prop.PropertyImgUrl4
+                PropertyImgUrl4 = prop.PropertyImgUrl4,
+                //IsFavourite = prop.IsFavourite
 
             }).ToList();
 

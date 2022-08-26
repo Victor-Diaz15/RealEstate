@@ -34,6 +34,5 @@ namespace RealEstate.Core.Domain.Entities
         public string PropertyImgUrl3 { get; set; }
         public string PropertyImgUrl4 { get; set; }
 
-
     }
 }

@@ -216,6 +216,7 @@ namespace RealEstate.Core.Application.Mappings
             #region property
 
             CreateMap<Property, PropertyViewModel>()
+              .ForMember(x => x.IsFavourite, opt => opt.Ignore())
               .ReverseMap();
 
             CreateMap<Property, PropertySaveViewModel>()

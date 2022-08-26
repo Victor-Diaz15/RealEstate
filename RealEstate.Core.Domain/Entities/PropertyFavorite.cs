@@ -10,6 +10,6 @@ namespace RealEstate.Core.Domain.Entities
     {
         public int Id { get; set; }
         public string ClientId { get; set; }
-        public string PropertyId { get; set; }
+        public int PropertyId { get; set; }
     }
 }
