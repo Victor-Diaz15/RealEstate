@@ -16,10 +16,10 @@ namespace RealEstate.Core.Application.Features.PropertyTypes.Commands.UpdateProp
     {
         [SwaggerParameter(Description = "Property Type id")]
         public int Id { get; set; }
-        public string Name { get; set; }
         [SwaggerParameter(Description = "Property Type name")]
-        public string Description { get; set; }
+        public string Name { get; set; }
         [SwaggerParameter(Description = "Property Type description")]
+        public string Description { get; set; }
 
     }
 

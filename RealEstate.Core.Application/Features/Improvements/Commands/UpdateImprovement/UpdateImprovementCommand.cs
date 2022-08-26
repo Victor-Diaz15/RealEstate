@@ -13,10 +13,10 @@ namespace RealEstate.Core.Application.Features.Improvements.Commands.UpdateImpro
     {
         [SwaggerParameter(Description = "Improvement id")]
         public int Id { get; set; }
-        public string Name { get; set; }
         [SwaggerParameter(Description = "Improvement name")]
-        public string Description { get; set; }
+        public string Name { get; set; }
         [SwaggerParameter(Description = "Improvement description")]
+        public string Description { get; set; }
 
     }
 
