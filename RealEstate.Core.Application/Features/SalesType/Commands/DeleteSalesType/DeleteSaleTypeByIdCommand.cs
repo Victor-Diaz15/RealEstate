@@ -11,6 +11,7 @@ namespace RealEstate.Core.Application.Features.SalesType.Commands.DeleteSalesTyp
 {
     public class DeleteSaleTypeByIdCommand : IRequest<int>
     {
+        [SwaggerParameter(Description = "Sale Type id")]
         public int Id { get; set; }
     }
 

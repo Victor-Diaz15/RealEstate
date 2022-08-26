@@ -4,11 +4,15 @@ using RealEstate.Core.Application.Interfaces.Repositories;
 using System.Threading;
 using System.Threading.Tasks;
 using RealEstate.Core.Domain.Entities;
+using Swashbuckle.AspNetCore.Annotations;
+
 namespace RealEstate.Core.Application.Features.Improvements.Commands.CreateImprovement
 {
     public class CreateImprovementCommand : IRequest<int>
     {
+        [SwaggerParameter(Description = "Improvement name")]
         public string Name { get; set; }
+        [SwaggerParameter(Description = "Improvement Description")]
         public string Description { get; set; }
     }
 

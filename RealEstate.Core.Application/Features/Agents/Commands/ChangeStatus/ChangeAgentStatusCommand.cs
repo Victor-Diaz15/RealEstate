@@ -3,6 +3,7 @@ using MediatR;
 using RealEstate.Core.Application.Dtos.UserAccounts;
 using RealEstate.Core.Application.Features.Improvements.Commands.UpdateImprovement;
 using RealEstate.Core.Application.Interfaces.Services;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,10 @@ namespace RealEstate.Core.Application.Features.ChangeStatus.Commands.ChangeStatu
 {
     public class ChangeAgentStatusCommand : IRequest<ChangeAgentStatusResponse>
     {
+        [SwaggerParameter( Description= "Agent Id")]
         public string Id { get; set; }
+        [SwaggerParameter(Description = "Agent Status")]
+
         public bool Status { get; set; }
     }
     public class ChangeAgentStatusCommandHandler : IRequestHandler<ChangeAgentStatusCommand, ChangeAgentStatusResponse>

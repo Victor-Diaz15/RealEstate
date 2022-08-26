@@ -2,6 +2,7 @@
 using MediatR;
 using RealEstate.Core.Application.Interfaces.Repositories;
 using RealEstate.Core.Domain.Entities;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,7 +12,9 @@ namespace RealEstate.Core.Application.Features.PropertyTypes.Commands.CreateProp
     public class CreatePropertyTypeCommand : IRequest<int>
     {
 
+        [SwaggerParameter(Description = "Property Type name")]
         public string Name { get; set; }
+        [SwaggerParameter(Description = "Property Type Description")]
         public string Description { get; set; }
 
     }

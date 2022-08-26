@@ -4,11 +4,15 @@ using RealEstate.Core.Application.Interfaces.Repositories;
 using System.Threading;
 using System.Threading.Tasks;
 using RealEstate.Core.Domain.Entities;
+using Swashbuckle.AspNetCore.Annotations;
+
 namespace RealEstate.Core.Application.Features.SalesType.Commands.CreateSaleType
 {
     public class CreateSaleTypeCommand : IRequest<int>
     {
+        [SwaggerParameter(Description = "Sale Type name")]
         public string Name { get; set; }
+        [SwaggerParameter(Description = "Sale Type name")]
         public string Description { get; set; }
     }
 

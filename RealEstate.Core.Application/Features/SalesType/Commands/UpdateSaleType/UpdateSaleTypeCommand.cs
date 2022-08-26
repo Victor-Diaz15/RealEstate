@@ -2,6 +2,7 @@
 using MediatR;
 using RealEstate.Core.Application.Interfaces.Repositories;
 using RealEstate.Core.Domain.Entities;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,11 @@ namespace RealEstate.Core.Application.Features.SalesType.Commands.UpdateSaleType
 {
     public class UpdateSaleTypeCommand : IRequest<SaleTypeUpdateResponse>
     {
+        [SwaggerParameter(Description = "Sale Type id")]
         public int Id { get; set; }
+        [SwaggerParameter(Description = "Sale Type name")]
         public string Name { get; set; }
+        [SwaggerParameter(Description = "Sale Type description")]
         public string Description { get; set; }
     }
 

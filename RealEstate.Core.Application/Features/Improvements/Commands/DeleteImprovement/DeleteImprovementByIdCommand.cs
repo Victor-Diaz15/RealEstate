@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using RealEstate.Core.Application.Interfaces.Repositories;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace RealEstate.Core.Application.Features.Improvements.Commands.DeleteImpro
 {
     public class DeleteImprovementByIdCommand : IRequest<int>
     {
+        [SwaggerParameter(Description = "Improvement id")]
         public int Id { get; set; }
     }
 
