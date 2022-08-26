@@ -1,5 +1,6 @@
 ﻿@using RealEstate.Core.Application.ViewModels.Property
 @using RealEstate.Core.Application.ViewModels.User
+@using RealEstate.Core.Application.ViewModels.Improvement
 @model PropertyViewModel
 
 <div class="row justify-content-center">
@@ -139,21 +140,12 @@
     <div class="col-9 bg-light rounded gap-3 p-3">
         <h5 class="fw-bold">Mejoras</h5>
          <div class="d-flex justify-content-start align-items-center gap-3 mt-4">
-            <section class="d-flex justify-content-center align-items-center bg-secondary rounded p-2">
-                <h6 class="m-0"> Comedor </h6>
-            </section>
-            <section class="d-flex justify-content-center align-items-center bg-secondary rounded p-2">
-                <h6 class="m-0"> Cocina </h6>
-            </section>
-            <section class="d-flex justify-content-center align-items-center bg-secondary rounded p-2">
-                <h6 class="m-0"> Balcon </h6>
-            </section>
-            <section class="d-flex justify-content-center align-items-center bg-secondary rounded p-2">
-                <h6 class="m-0"> Terraza </h6>
-            </section>
-            <section class="d-flex justify-content-center align-items-center bg-secondary rounded p-2">
-                <h6 class="m-0"> Baño </h6>
-            </section>
+            @foreach (ImprovementSaveViewModel item in ViewBag.Imps)
+            {                
+                <section class="d-flex justify-content-center align-items-center bg-secondary rounded p-2">
+                    <h6 class="m-0"> @item.Name </h6>
+                </section>
+            }
          </div>
     </div>
 </div>

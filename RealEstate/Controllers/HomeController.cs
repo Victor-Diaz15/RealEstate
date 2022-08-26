@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using RealEstate.Core.Application.Interfaces.Services;
 using RealEstate.Core.Application.Services;
 using RealEstate.Core.Application.ViewModels.Filters;
+using RealEstate.Core.Application.ViewModels.Improvement;
 using RealEstate.Core.Application.ViewModels.Property;
 using RealEstate.Models;
 using System;
@@ -17,13 +18,17 @@ namespace RealEstate.Controllers
     {
         private readonly IPropertyService _propertyService;
         private readonly IUserService _userService;
+        private readonly IPropertyImprovementService _propertyImprovementService;
+        private readonly IImprovementService _improvementService;
         private readonly IPropertyTypeService _propertyTypeService;
 
 
-        public HomeController(IPropertyService propertyService, IPropertyTypeService propertyTypeService, IUserService userService)
+        public HomeController(IPropertyService propertyService, IPropertyTypeService propertyTypeService, IPropertyImprovementService propertyImprovementService, IImprovementService improvementService,IUserService userService)
         {
             _propertyService = propertyService;
             _propertyTypeService = propertyTypeService;
+            _propertyImprovementService = propertyImprovementService;
+            _improvementService = improvementService;
             _userService = userService;
         }
 
@@ -40,6 +45,18 @@ namespace RealEstate.Controllers
 
             var agent = await _userService.GetAllVmAsync();
             ViewBag.Agent = agent.Where(a => a.Id == prop.IdAgent);
+
+            var imps = await _propertyImprovementService.GetAllVmAsync();
+            var impsIds = imps.Where(i => i.PropId == prop.Id).ToList();
+
+            List<ImprovementSaveViewModel> improvements = new();
+
+            foreach (var item in impsIds)
+            {
+                improvements.Add(await _improvementService.GetByIdVmAsync(item.ImprovementId));
+            }
+
+            ViewBag.Imps = improvements;
             
             return View(prop);
         }
