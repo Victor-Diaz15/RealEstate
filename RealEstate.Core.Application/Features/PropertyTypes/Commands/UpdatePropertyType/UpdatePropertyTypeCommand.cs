@@ -2,6 +2,7 @@
 using MediatR;
 using RealEstate.Core.Application.Interfaces.Repositories;
 using RealEstate.Core.Domain.Entities;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,13 @@ namespace RealEstate.Core.Application.Features.PropertyTypes.Commands.UpdateProp
 {
     public class UpdatePropertyTypeCommand : IRequest<PropertyTypeUpdateResponse>
     {
+        [SwaggerParameter(Description = "Property Type id")]
         public int Id { get; set; }
+        [SwaggerParameter(Description = "Property Type name")]
         public string Name { get; set; }
+        [SwaggerParameter(Description = "Property Type description")]
         public string Description { get; set; }
+
     }
 
     public class UpdatePropertyTypeCommandHandler : IRequestHandler<UpdatePropertyTypeCommand, PropertyTypeUpdateResponse>

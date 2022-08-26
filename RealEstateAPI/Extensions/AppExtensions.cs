@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace RealEstateAPI.WebApi.Extensions
 {
@@ -10,6 +11,7 @@ namespace RealEstateAPI.WebApi.Extensions
             app.UseSwaggerUI(opt =>
             {
                 opt.SwaggerEndpoint("/swagger/v1/swagger.json", "RealEstateAPI");
+                opt.DefaultModelRendering(ModelRendering.Model);
             });
         }
     }

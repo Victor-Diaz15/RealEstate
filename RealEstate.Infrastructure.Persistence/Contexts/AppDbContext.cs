@@ -30,6 +30,8 @@ namespace RealEstate.Infrastructure.Persistence.Context
         public DbSet<PropertyType> PropertyTypes { get; set; }
         public DbSet<Property> Properties { get; set; }
         public DbSet<PropertyFavorite> PropertyFavorites { get; set; }
+        public DbSet<PropertyImprovement> PropertyImprovement { get; set; }
+
 
         #endregion
 

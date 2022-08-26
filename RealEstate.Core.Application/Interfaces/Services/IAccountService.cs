@@ -15,7 +15,7 @@ namespace RealEstate.Core.Application.Interfaces.Services
         Task DeleteUserAsync(string id);
         Task<AuthenticationResponse> RegisterBasicUserAsync(RegisterBasicRequest req, string origin);
         Task<RegisterManagerResponse> RegisterAdminUserAsync(RegisterManagerRequest req);
-        Task<RegisterManagerResponse> RegisterDevUserAsync(RegisterManagerRequest req);
+        Task<RegisterManagerResponse> RegisterDevUserAsync(RegisterManagerDevRequest req);
         Task<UpdateResponse> UpdateUserAsync(UpdateRequest req, string id);
         Task<UpdateResponse> UpdateAgentAsync(UpdateAgentViewModel vm);
         Task<UpdateResponse> ActivedUserAsync(string id);

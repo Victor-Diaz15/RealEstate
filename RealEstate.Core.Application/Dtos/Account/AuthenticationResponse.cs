@@ -24,6 +24,7 @@ namespace RealEstate.Core.Application.Dtos.Account
         public string Error { get; set; }
         public int TypeUser { get; set; }
         public string JWToken { get; set; }
+
         [JsonIgnore]
         public string RefreshToken { get; set; }
     }

@@ -2,6 +2,7 @@
 using MediatR;
 using RealEstate.Core.Application.Interfaces.Repositories;
 using RealEstate.Core.Domain.Entities;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,9 +11,13 @@ namespace RealEstate.Core.Application.Features.Improvements.Commands.UpdateImpro
 {
     public class UpdateImprovementCommand : IRequest<ImprovementUpdateResponse>
     {
+        [SwaggerParameter(Description = "Improvement id")]
         public int Id { get; set; }
+        [SwaggerParameter(Description = "Improvement name")]
         public string Name { get; set; }
+        [SwaggerParameter(Description = "Improvement description")]
         public string Description { get; set; }
+
     }
 
     public class UpdateImprovementCommandHandler : IRequestHandler<UpdateImprovementCommand, ImprovementUpdateResponse>

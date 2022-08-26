@@ -49,7 +49,7 @@
                                 <option value="@item.Id">@item.Name</option>
                             }
                         </select>
-                        <select asp-for="ImprovementId" class="form-select w-100" name="ImprovementId">
+                        <select multiple asp-for="ListImprovement" class="form-select w-100" name="ListImprovement">
                             <option disabled selected>Seleccionar Mejoras...</option>
                             @foreach (ImprovementViewModel item in ViewBag.Improvements)
                             {

@@ -36,7 +36,8 @@ namespace RealEstate.Core.Application.Features.Propertys.Queries.GetPropertyById
         }
         public async Task<PropertyDto> GetByCodeVm(string code)
         {
-            var property = await _repo.GetByCodeAsync(code);
+            var listProperty = await _repo.GetAllAsync();
+            var property = listProperty.FirstOrDefault(x => x.Code == code);
             var propertyDto = _mapper.Map<PropertyDto>(property);
 
             return propertyDto;

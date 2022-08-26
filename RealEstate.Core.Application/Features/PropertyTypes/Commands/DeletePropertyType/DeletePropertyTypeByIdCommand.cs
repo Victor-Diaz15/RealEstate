@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using RealEstate.Core.Application.Interfaces.Repositories;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace RealEstate.Core.Application.Features.PropertyTypes.Commands.DeleteProp
 {
     public class DeletePropertyTypeByIdCommand : IRequest<int>
     {
+        [SwaggerParameter(Description = "Property Id")]
         public int Id { get; set; }
     }
 

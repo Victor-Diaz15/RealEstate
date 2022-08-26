@@ -79,7 +79,7 @@ namespace RealEstate.Infrastructure.Identity.Services
             var listRoles = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
             res.Roles = listRoles.ToList();
             res.IsVerified = user.IsVerified;
-            
+            res.TypeUser = user.TypeUser;
             res.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
             var refreshToken = GenerateRefreshToken();
             res.RefreshToken = refreshToken.Token;
@@ -229,7 +229,7 @@ namespace RealEstate.Infrastructure.Identity.Services
         }
 
         //method for create a new Dev user
-        public async Task<RegisterManagerResponse> RegisterDevUserAsync(RegisterManagerRequest req)
+        public async Task<RegisterManagerResponse> RegisterDevUserAsync(RegisterManagerDevRequest req)
         {
             RegisterManagerResponse res = new();
             res.HasError = false;

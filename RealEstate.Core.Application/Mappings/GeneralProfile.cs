@@ -15,6 +15,7 @@ using RealEstate.Core.Application.Features.SalesType.Commands.UpdateSaleType;
 using RealEstate.Core.Application.ViewModels.Improvement;
 using RealEstate.Core.Application.ViewModels.Property;
 using RealEstate.Core.Application.ViewModels.PropertyFavorite;
+using RealEstate.Core.Application.ViewModels.PropertyImprovement;
 using RealEstate.Core.Application.ViewModels.PropertyType;
 using RealEstate.Core.Application.ViewModels.SaleType;
 using RealEstate.Core.Application.ViewModels.User;
@@ -53,6 +54,11 @@ namespace RealEstate.Core.Application.Mappings
                 //.ForMember(x => x.HasError, opt => opt.Ignore())
                 //.ForMember(x => x.Error, opt => opt.Ignore())
                 .ReverseMap();
+
+            
+            CreateMap<RegisterManagerRequest, RegisterManagerDevRequest>()
+                .ReverseMap()
+                .ForMember(x => x.IsVerified, opt => opt.Ignore());
 
             CreateMap<RegisterManagerRequest, ManagerSaveViewModel>()
                 //.ForMember(x => x.HasError, opt => opt.Ignore())
@@ -112,6 +118,12 @@ namespace RealEstate.Core.Application.Mappings
             CreateMap<ChangeAgentStatusCommand, ChangeAgentStatusResponse>()
               .ReverseMap();
 
+            CreateMap<UpdateResponse, ChangeAgentStatusResponse>()
+                .ForMember(x => x.Id, opt => opt.Ignore())
+                .ForMember(x => x.Status, opt => opt.Ignore())
+                .ReverseMap()
+                .ForMember(x => x.Error, opt => opt.Ignore())
+                .ForMember(x => x.HasError, opt => opt.Ignore());
 
             #endregion
 
@@ -233,6 +245,17 @@ namespace RealEstate.Core.Application.Mappings
 
             #endregion
 
+            #region PropertyImproment
+
+            CreateMap<PropertyImprovement, PropertyImprovementViewModel>()
+             .ReverseMap()
+             .ForMember(x => x.Id, opt => opt.Ignore());
+
+            CreateMap<PropertyImprovement, PropertyImprovementSaveViewModel>()
+             .ReverseMap()
+             .ForMember(x => x.Id, opt => opt.Ignore());
+
+            #endregion
             #endregion
         }
     }

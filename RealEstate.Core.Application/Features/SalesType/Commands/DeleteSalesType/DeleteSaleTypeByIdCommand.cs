@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using RealEstate.Core.Application.Interfaces.Repositories;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace RealEstate.Core.Application.Features.SalesType.Commands.DeleteSalesTyp
 {
     public class DeleteSaleTypeByIdCommand : IRequest<int>
     {
+        [SwaggerParameter(Description = "Sale Type id")]
         public int Id { get; set; }
     }
 

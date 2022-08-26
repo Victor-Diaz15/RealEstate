@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace RealEstate.Core.Application.Dtos.Account
 {
-    public class RegisterManagerRequest
+    public class RegisterManagerDevRequest
     {
-
         public string CardId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -17,7 +16,7 @@ namespace RealEstate.Core.Application.Dtos.Account
         public string Email { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
-        [JsonIgnore]
         public bool IsVerified { get; set; } = true;
+
     }
 }
