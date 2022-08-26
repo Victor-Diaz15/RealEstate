@@ -19,7 +19,7 @@
         <div class="row mt-5"> 
             @foreach (UserViewModel item in Model)
             {
-                <div class="col-3 mx-auto">                    
+                <a asp-controller="Agent" asp-action="AgentProperties" asp-route-id="@item.Id" class="col-3 mx-auto">                    
                     <section class="d-flex flex-column align-items-center bg-light gap-2 rounded shadow p-5">
                         @if (item.ProfilePicture != null)
                         {
@@ -30,8 +30,8 @@
                             <img src="~/images/default-agent.png" class="img-fluid" style="width: 50px;height: 50px; border-radius: 50%;" alt="img">
                         }
                         <h5 class="fw-bold">@item.FirstName @item.LastName</h5>
-                </section>
-                </div>
+                    </section>
+                </a>
             }
         </div>
 

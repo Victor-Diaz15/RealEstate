@@ -30,6 +30,8 @@ namespace RealEstate.Core.Application.ViewModels.Property
         public string PropertyImgUrl3 { get; set; }
         public string PropertyImgUrl4 { get; set; }
 
+        public bool IsFavourite { get; set; } = false;
+
         public DateTime Created { get; set; }
         public List<ImprovementViewModel> Improvements { get; set; }
     }

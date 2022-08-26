@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using RealEstate.Core.Application.Dtos.Account;
 using RealEstate.Core.Application.Interfaces.Repositories;
 using RealEstate.Core.Application.Interfaces.Services;
 using RealEstate.Core.Application.ViewModels.PropertyFavorite;
@@ -15,13 +16,34 @@ namespace RealEstate.Core.Application.Services
         GenericService<PropertyFavoriteSaveViewModel, PropertyFavoriteViewModel, PropertyFavorite>, IPropertyFavoriteService
     {
         private readonly IPropertyFavoriteRepository _propertyFavoriteRepo;
+        private readonly IPropertyRepository _propertyRepository;
         private readonly IMapper _mapper;
-        public PropertyFavoriteService(IPropertyFavoriteRepository propertyFavoriteRepo, IMapper mapper) : base(propertyFavoriteRepo, mapper)
+        public PropertyFavoriteService(IPropertyFavoriteRepository propertyFavoriteRepo, IPropertyRepository propertyRepository, IMapper mapper) : base(propertyFavoriteRepo, mapper)
         {
             _propertyFavoriteRepo = propertyFavoriteRepo;
+            _propertyRepository = propertyRepository;
             _mapper = mapper;
         }
 
+        public async Task ChangeFavouritePropStatus(string clientId, int propId)
+        {
+            var favList = await _propertyFavoriteRepo.GetAllAsync();
 
+            var favProp = favList.Where(x => x.PropertyId == propId && x.ClientId == clientId).FirstOrDefault();
+            
+            if (favProp != null) 
+            {
+                await _propertyFavoriteRepo.DeleteAsync(favProp);
+                return;
+            }
+
+            PropertyFavorite item = new PropertyFavorite
+            {
+                PropertyId = propId,
+                ClientId = clientId,
+            };
+
+            await _propertyFavoriteRepo.AddAsync(item);
+        }
     }
 }
