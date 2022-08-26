@@ -17,6 +17,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Cryptography;
+using RealEstate.Core.Application.ViewModels.User;
 
 namespace RealEstate.Infrastructure.Identity.Services
 {
@@ -305,6 +306,37 @@ namespace RealEstate.Infrastructure.Identity.Services
             }
         }
 
+        //method for update an user agent
+        public async Task<UpdateResponse> UpdateAgentAsync(UpdateAgentViewModel vm)
+        {
+            UpdateResponse res = new();
+            res.HasError = false;
+            ApplicationUser user = await _userManager.FindByIdAsync(vm.Id);
+            if (user != null)
+            {
+                user.FirstName = vm.FirstName;
+                user.LastName = vm.LastName;
+                user.PhoneNumber = vm.PhoneNumber;
+                user.ProfilePicture = vm.ProfilePicture;
+
+                var userUpdated = await _userManager.UpdateAsync(user);
+                if (!userUpdated.Succeeded)
+                {
+                    res.HasError = true;
+                    res.Error = "Error when trying update the user";
+                    return res;
+
+                }
+                return res;
+            }
+            else
+            {
+                res.HasError = true;
+                res.Error = $"No accounts exists with this id: {vm.Id}";
+                return res;
+            }
+        }
+
         //method to activate an user
         public async Task<UpdateResponse> ActivedUserAsync(string id)
         {
@@ -465,6 +497,7 @@ namespace RealEstate.Infrastructure.Identity.Services
                 res.PhoneNumber = user.PhoneNumber;
                 res.IsVerified = user.IsVerified;
                 res.TypeUser = user.TypeUser;
+                res.ProfilePicture = user.ProfilePicture;
 
                 return res;
             }

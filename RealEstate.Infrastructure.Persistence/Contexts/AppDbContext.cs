@@ -29,6 +29,7 @@ namespace RealEstate.Infrastructure.Persistence.Context
         public DbSet<SaleType> SaleTypes { get; set; }
         public DbSet<PropertyType> PropertyTypes { get; set; }
         public DbSet<Property> Properties { get; set; }
+        public DbSet<PropertyFavorite> PropertyFavorites { get; set; }
 
         #endregion
 
@@ -74,6 +75,9 @@ namespace RealEstate.Infrastructure.Persistence.Context
             mb.Entity<Property>()
                 .ToTable("Properties");
 
+            mb.Entity<PropertyFavorite>()
+                .ToTable("PropertyFavorites");
+
             #endregion
 
             #region primary keys
@@ -88,6 +92,9 @@ namespace RealEstate.Infrastructure.Persistence.Context
                 .HasKey(e => e.Id);
 
             mb.Entity<Property>()
+                .HasKey(e => e.Id);
+
+            mb.Entity<PropertyFavorite>()
                 .HasKey(e => e.Id);
 
             #endregion
@@ -165,10 +172,6 @@ namespace RealEstate.Infrastructure.Persistence.Context
                 .Property(p => p.RestRoomQty)
                 .IsRequired();
 
-            //mb.Entity<Property>()
-            //    .Property(p => p.PropertyImgUrl1)
-            //    .IsRequired();
-
             mb.Entity<Property>()
                 .Property(p => p.Price)
                 .IsRequired();
@@ -187,6 +190,16 @@ namespace RealEstate.Infrastructure.Persistence.Context
 
             mb.Entity<Property>()
                 .Property(p => p.Description)
+                .IsRequired();
+            #endregion
+
+            #region PropertyFavorite
+            mb.Entity<PropertyFavorite>()
+                .Property(p => p.ClientId)
+                .IsRequired();
+
+            mb.Entity<PropertyFavorite>()
+                .Property(p => p.PropertyId)
                 .IsRequired();
             #endregion
 

@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using RealEstate.Core.Domain.Commons;
+
 
 namespace RealEstate.Core.Domain.Entities
 {
-    public class Property
+    public class Property : AuditableBaseEntity
     {
-        public int Id { get; set; }
         public string Code { get; set; }
+        public string Ubication { get; set; }
 
         public int PropertyTypeId { get; set; }
         public PropertyType PropertyType { get; set; }

@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using RealEstate.Core.Application.Dtos.Account;
+using RealEstate.Core.Application.Enums;
 using RealEstate.Core.Application.Interfaces.Repositories;
 using RealEstate.Core.Application.Interfaces.Services;
+using RealEstate.Core.Application.ViewModels.Filters;
 using RealEstate.Core.Application.ViewModels.User;
 using RealEstate.Core.Domain.Entities;
 using System;
@@ -30,6 +32,21 @@ namespace RealEstate.Core.Application.Services
         {
             var users = await this.GetAllUsersAsync();
             var usersVm = _mapper.Map<List<UserViewModel>>(users);
+
+            return usersVm;
+        }
+        public async Task<List<UserViewModel>> GetAllAgentsWithFilters(FiltersViewModel filters)
+        {
+            var users = await this.GetAllUsersAsync();
+            var usersVm = _mapper.Map<List<UserViewModel>>(users);
+
+            usersVm = usersVm.Where(user => user.TypeUser == (int)Roles.Agent).ToList();
+
+            if (!string.IsNullOrWhiteSpace(filters.name))
+            {
+                List<UserViewModel> vm = usersVm.Where(user => user.FirstName.Trim().ToLower() == filters.name.Trim().ToLower()).ToList();
+                return vm;
+            }
 
             return usersVm;
         }
@@ -75,10 +92,9 @@ namespace RealEstate.Core.Application.Services
             return await _accountService.UpdateUserAsync(req, id);
         }
 
-        public async Task<UpdateResponse> UpdateManagerUserAsync(ManagerSaveViewModel vm, string id)
+        public async Task<UpdateResponse> UpdateAgentAsync(UpdateAgentViewModel vm)
         {
-            UpdateRequest req = _mapper.Map<UpdateRequest>(vm);
-            return await _accountService.UpdateUserAsync(req, id);
+            return await _accountService.UpdateAgentAsync(vm);
         }
 
         public async Task<UpdateResponse> ActivedUserAsync(string id)

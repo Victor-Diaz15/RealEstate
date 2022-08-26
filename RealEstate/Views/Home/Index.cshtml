@@ -1,16 +1,24 @@
 ﻿@using RealEstate.Core.Application.ViewModels.Property
+@using RealEstate.Core.Application.ViewModels.PropertyType
+
 @model List<PropertyViewModel>
 
 
 <div class="row mx-5">
 
     <div class="col-sm-3 w-100 d-flex align-items-center gap-4 mb-3">
-        <form asp-action="Index" class="d-flex align-items-center gap-2 w-100">
-            <select class="form-select w-100" name="">
-                <option disabled selected>Seleccionar propiedad...</option>
+        <form asp-controller="Home" asp-action="Index" class="d-flex align-items-center gap-2 w-100">
+            <select class="form-select w-100" name="propertyTypeId" id="propertyTypeId">
+                @if (ViewBag.PropertyTypes.Count == 0)
+                {
+                    <option disabled selected>No existen propiedad...</option>
+                }
+                <option disabled selected> Seleccionar propiedad...</option>
                 <option value="null">Todas</option>
-                @*foreach (var item in ViewBag.Properties){}*@
-                    <option value="">Casa</option>
+                @foreach (PropertyTypeViewModel item in ViewBag.PropertyTypes)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
             </select>
             <select class="form-select w-100" name="">
                 <option disabled selected>Filtrar por precio...</option>
@@ -19,15 +27,15 @@
                     <option value="2">Precio máximo</option>
             </select>
             <div class="form-group w-100">
-                <input class="form-control" placeholder="Cantidad de habitaciones">
+                <input class="form-control" name="roomQty" id="roomQty" placeholder="Cantidad de habitaciones">
             </div>
             <div class="form-group w-100">
-                <input class="form-control" placeholder="Cantidad de baños">
+                <input class="form-control" name="restRoomQty" id="restRoomQty" placeholder="Cantidad de baños">
             </div>
             <button class="btn btn-success" type="submit">Filtrar</button>
         </form>
-        <form asp-action="Index" class="d-flex align-items-center gap-2 w-25"> 
-            <input class="form-control w-100" type="text" name="" placeholder="Buscar por código">
+        <form asp-controller="Home" asp-action="Index" class="d-flex align-items-center gap-2 w-25"> 
+            <input class="form-control w-100" type="text" name="code" id="code" placeholder="Buscar por código">
             <button class="btn btn-success" type="submit">Buscar</button>
         </form>
     </div>
@@ -43,14 +51,14 @@
         <section class="col-3 my-4 mx-auto slide-up">
             <a asp-controller="Home" asp-action="Details" class="card bg-light border-0 shadow" asp-route-id="">
                 <section class="card-body">
-                    <img src="@item.PropertyImgUrl1" class="card-img-top img-fluid img-cover" alt="pokemon">
+                    <img src="@item.PropertyImgUrl1" class="card-img-top img-fluid img-cover-2" alt="Propiedad">
                     <div class="d-flex flex-column gap-2 mt-3">
                         <div class="d-flex flex-column">
                             <h6 class="fw-bold">
                                 @item.PropertyType
                             </h6>
                             <h6 class="">
-                                San Juan, Puerto Rico
+                                @item.Ubication
                             </h6>
                         </div>
                         <div class="d-flex flex-column">

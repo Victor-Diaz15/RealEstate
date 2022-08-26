@@ -1,0 +1,28 @@
+﻿@using RealEstate.Core.Application.ViewModels.Property
+@model PropertySaveViewModel
+
+<div class="row mt-5">
+    <div class="col-6 offset-3">
+        <div class="card">
+            <div class="card-header bg-danger text-light">
+                <h4 class="text-center">
+                    ¿Está seguro que desea eliminar esta propiedad?
+                </h4>
+            </div>
+            <div class="card-body bg-light">
+
+                <form method="post" asp-controller="Property" asp-action="DeleteProperty">
+                    <div class="form-group">
+                    </div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-danger me-3">Eliminar</button>
+                        <a asp-controller="Property" asp-action="AgentProperties" class="btn btn-success">Cancelar</a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</div>

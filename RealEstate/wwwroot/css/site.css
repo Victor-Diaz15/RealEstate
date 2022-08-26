@@ -89,3 +89,7 @@ body {
     max-height: 325px;
 }
 
+.img-cover-2 {
+    height: 250px;
+    object-fit: cover;
+}
