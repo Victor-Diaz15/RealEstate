@@ -16,13 +16,15 @@ namespace RealEstate.Controllers
     public class HomeController : Controller
     {
         private readonly IPropertyService _propertyService;
+        private readonly IUserService _userService;
         private readonly IPropertyTypeService _propertyTypeService;
 
 
-        public HomeController(IPropertyService propertyService, IPropertyTypeService propertyTypeService)
+        public HomeController(IPropertyService propertyService, IPropertyTypeService propertyTypeService, IUserService userService)
         {
             _propertyService = propertyService;
             _propertyTypeService = propertyTypeService;
+            _userService = userService;
         }
 
         public async Task<IActionResult> Index(FiltersViewModel filters)
@@ -31,9 +33,15 @@ namespace RealEstate.Controllers
             return View(await _propertyService.GetAllWithFilters(filters));
         }
 
-        public IActionResult Details()
+        public async Task<IActionResult> Details(int id)
         {
-            return View();
+            var props = await _propertyService.GetAllWithInclude();
+            var prop = props.Where(p => p.Id == id).FirstOrDefault();
+
+            var agent = await _userService.GetAllVmAsync();
+            ViewBag.Agent = agent.Where(a => a.Id == prop.IdAgent);
+            
+            return View(prop);
         }
     }
 }

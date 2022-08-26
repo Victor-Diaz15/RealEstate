@@ -1,4 +1,7 @@
-﻿
+﻿@using RealEstate.Core.Application.ViewModels.Property
+@using RealEstate.Core.Application.ViewModels.User
+@model PropertyViewModel
+
 <div class="row justify-content-center">
     <section class="col-6 d-flex flex-column gap-4">
 
@@ -7,19 +10,59 @@
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
           <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            @if (Model.PropertyImgUrl2 != null)
+            {    
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            }
+            @if (Model.PropertyImgUrl3 != null)
+            {    
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            }
+            @if (Model.PropertyImgUrl4 != null)
+            {    
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            }
           </div>
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img src="https://img-de.gtsstatic.net/reno/imagereader.aspx?idlisting=512-l-778-81_22-165483&imageurl=https%3A%2F%2Fmmsmedia.vht.com%2FMedia%2FPhotography%2FDEGI%2F1555810%2F7e03693b-47c8-4994-84f5-77b0edcbba3b.jpg%3Fdate%3D2022-07-29&option=n&w=1024&fallbackimageurl=https%3A%2F%2Fstatic-ind-elliman-production.gtsstatic.net%2Fresources%2Fsiteresources%2Fcommonresources%2Fimages%2Fnophoto%2Fde_website_holder_400x300.jpg" class="d-block img-cover w-100" alt="...">
+              <img src="@Model.PropertyImgUrl1" class="d-block img-cover w-100" alt="...">
             </div>
-            <div class="carousel-item">
-              <img src="https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(15).webp" class="d-block img-cover w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-              <img src="https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(15).webp" class="d-block img-cover w-100" alt="...">
-            </div>
+            @if (Model.PropertyImgUrl2 != null && Model.PropertyImgUrl2 != "")
+            {
+                <div class="carousel-item">
+                    <img src="@Model.PropertyImgUrl2" class="d-block img-cover w-100" alt="...">
+                </div>                    
+            } 
+            else 
+            {
+                <div class="carousel-item">
+                    <img src="~/images/image-not-found.png" class="d-block img-cover w-100" alt="...">
+                </div>  
+            }
+            @if (Model.PropertyImgUrl3 != null && Model.PropertyImgUrl3 != "")
+            {                    
+                <div class="carousel-item">
+                    <img src="@Model.PropertyImgUrl3" class="d-block img-cover w-100" alt="...">
+                </div>
+            }
+            else 
+            {
+                <div class="carousel-item">
+                    <img src="~/images/image-not-found.png" class="d-block img-cover w-100" alt="...">
+                </div>  
+            }
+            @if (Model.PropertyImgUrl4 != null && Model.PropertyImgUrl4 != "")
+            {                    
+                <div class="carousel-item">
+                    <img src="@Model.PropertyImgUrl4" class="d-block img-cover w-100" alt="...">
+                </div>
+            }
+            else 
+            {
+                <div class="carousel-item">
+                    <img src="~/images/image-not-found.png" class="d-block img-cover w-100" alt="...">
+                </div>  
+            }
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -36,66 +79,64 @@
         <div class="d-flex flex-column bg-light rounded gap-3 p-3">
             <h5 class="fw-bold">Descripción</h5>
             <p>
-                Proyecto está ubicado en Puerto Plata, rodeado por el Campo de Golf 
-               catalogado por la revista Golf Digest entre los 100 mejores campos 
-               fuera de los EE. UU. de 18 hoyos, par 72 y se extiende aproximadamente
-               6.990 yardas. Tendremos una gran casa Club dentro del proyecto con piscina
-               , restaurantes, tiendas comerciales, Gimnasio, entre otras áreas recreativas
-               y exclusivas para propietarios más el Club de playa.
+                @Model.Description
            </p>
         </div>
     </section>    
 
     <section class="col-3 d-flex flex-column gap-4">
         <div class="bg-light rounded p-3">
-            <h4 class="mb-3">Apartamento</h4>
+            <h4 class="mb-3">@Model.PropertyType</h4>
 
             <div class="d-flex flex-column">
                 <h6 class="text-muted">Código</h6>
-                <h6 class="fw-bold">889767</h6>
+                <h6 class="fw-bold">@Model.Code</h6>
             </div>
 
             <div class="d-flex flex-column mt-3">
                 <h6 class="text-muted">Venta amueblado</h6>
-                <h4 class="text-danger fw-bold">RD$ 250,000.00</h4>
+                <h4 class="text-danger fw-bold">RD$ @(Model.Price + ".00")</h4>
             </div>
 
-            <div class="d-flex justify-content-start align-items-center gap-3 mt-4">
-                <section class="d-flex justify-content-center align-items-center bg-secondary rounded p-2 gap-2">
+            <div class="row justify-content-center gap-3 mt-4">
+                <section class="col-4 bg-secondary rounded p-2 gap-2">
                     <img src="~/images/bed.png"/>
-                    <h6 class="m-0"> 6 Habitaciones </h6>
+                    <h6 class="m-0"> @Model.RoomQty Habitaciones </h6>
                 </section>
-                <section class="d-flex justify-content-center align-items-center bg-secondary rounded p-2 gap-2">
+                <section class="col-3 bg-secondary rounded p-2 gap-2">
                     <img src="~/images/bathtub.png"/>
-                    <h6 class="m-0"> 4 baños</h6>
+                    <h6 class="m-0"> @Model.RestRoomQty baños</h6>
                 </section>
-                <section class="d-flex justify-content-center align-items-center bg-secondary rounded p-2 gap-2">
+                <section class="col-3 bg-secondary rounded p-2 gap-2">
                     <img src="~/images/tape-measure.png"/>
-                    <h6 class="m-0"> 156 mt </h6>
+                    <h6 class="m-0"> @Model.ParcelSize mt </h6>
                 </section>
             </div>
         </div>
 
         <div class="d-flex flex-column bg-light rounded gap-3 p-3">
              <h5 class="fw-bold">Agente</h5>
-            <section class="d-flex align-items-center gap-2">
-                <img src="~/images/Users/80ad96cd-ff65-4238-b8f7-7c42d401054e/4bc52b0f-0418-4c6a-9be3-e6390846199e.jpeg" class="img-cover" style="width: 50px;height: 50px; border-radius: 50%;" alt="img">
-                <h6>Davinci Montas</h6>
-            </section>
-            <section class="d-flex flex-column">
-                <h6 class="text-muted">Celular</h6>
-                <h6 class="btn-link">8097768321</h6>
-            <section class="d-flex flex-column">
-                <h6 class="text-muted">Correo</h6>
-                <h6 class="btn-link">elagente@gmail.com</h6>
-            </section>
-            </section>
+            @foreach (UserViewModel item in ViewBag.Agent)
+            {                
+                <section class="d-flex align-items-center gap-2">
+                    <img src="@item.ProfilePicture" class="img-cover" style="width: 50px;height: 50px; border-radius: 50%;" alt="img">
+                    <h6>@item.FirstName @item.LastName</h6>
+                </section>
+                <section class="d-flex flex-column">
+                    <h6 class="text-muted">Celular</h6>
+                    <h6 class="fw-bold">@item.PhoneNumber</h6>
+                    <section class="d-flex flex-column">
+                        <h6 class="text-muted">Correo</h6>
+                        <h6 class="fw-bold">@item.Email</h6>
+                    </section>
+                </section>
+            }
         </div>
     </section>
 </div>
 
-<div class="row justify-content-center m-5 ">
-    <div class="col-10 bg-light rounded gap-3 p-3">
+<div class="row justify-content-center my-5">
+    <div class="col-9 bg-light rounded gap-3 p-3">
         <h5 class="fw-bold">Mejoras</h5>
          <div class="d-flex justify-content-start align-items-center gap-3 mt-4">
             <section class="d-flex justify-content-center align-items-center bg-secondary rounded p-2">
