@@ -6,6 +6,7 @@ using RealEstate.Core.Application.Helpers;
 using RealEstate.Core.Application.Interfaces.Services;
 using RealEstate.Core.Application.ViewModels.Property;
 using RealEstate.Core.Application.ViewModels.User;
+using RealEstate.Core.Domain.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,8 +22,10 @@ namespace WebApp.RealEstate.Controllers
         private readonly IMapper _mapper;
         private readonly IUploadFileService _uploadFileService;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IPropertyImprovementService _propImproveSvc;
 
         public PropertyController(
+            IPropertyImprovementService propImproveSvc,
             IPropertyService propertyService,
             IPropertyTypeService propertyTypeService,
             ISaleTypeService saleTypeService,
@@ -32,6 +35,7 @@ namespace WebApp.RealEstate.Controllers
             IMapper mapper, 
             IHttpContextAccessor httpContextAccessor)
         {
+            _propImproveSvc = propImproveSvc;
             _propertyService = propertyService;
             _propertyTypeService = propertyTypeService;
             _saleTypeService = saleTypeService;

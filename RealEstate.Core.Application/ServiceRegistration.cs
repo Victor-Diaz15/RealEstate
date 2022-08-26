@@ -23,6 +23,7 @@ namespace RealEstate.Core.Application
             service.AddTransient<IPropertyTypeService, PropertyTypeService>();
             service.AddTransient<IPropertyService, PropertyService>();
             service.AddTransient<IPropertyFavoriteService, PropertyFavoriteService>();
+            service.AddTransient<IPropertyImprovementService, PropertyImprovementService>();
 
             #endregion
         }

@@ -19,10 +19,12 @@ namespace RealEstate.Core.Application.Services
         private readonly PropertyCodeGenerator _codeGenerator = new();
         private readonly IPropertyRepository _repo;
         private readonly IMapper _mapper;
-        public PropertyService(IPropertyRepository repo, IMapper mapper) : base(repo, mapper)
+        private readonly IPropertyImprovementRepository _propImprovementRepo;
+        public PropertyService(IPropertyRepository repo, IMapper mapper, IPropertyImprovementRepository propImprovementRepo) : base(repo, mapper)
         {
             _repo = repo;
             _mapper = mapper;
+            _propImprovementRepo = propImprovementRepo;
         }
 
         public async Task<List<PropertyViewModel>> GetAllWithInclude()
@@ -163,7 +165,20 @@ namespace RealEstate.Core.Application.Services
                 var newCodeNumber = _codeGenerator.PropertyCodeGen();
                 vm.Code = newCodeNumber;
             }
-            return await base.AddAsync(vm);
+
+            var propCreated = await base.AddAsync(vm);
+
+            foreach (var item in vm.ListImprovement)
+            {
+                var propImproment = new PropertyImprovement()
+                {
+                    PropId = propCreated.Id,
+                    ImprovementId = item,
+                };
+                await _propImprovementRepo.AddAsync(propImproment);
+            }
+
+            return propCreated;
         }
 
         private async Task<bool> ExistCodeNumber(string code)

@@ -21,8 +21,8 @@ namespace RealEstate.Core.Application.ViewModels.Property
         [Range(1, int.MaxValue, ErrorMessage = "Debe especificar el tipo de venta")]
         public int SaleTypeId { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Debe especificar al menos una mejora")]
-        public int ImprovementId { get; set; }
+        //public int ImprovementId { get; set; }
+        public List<int> ListImprovement { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "Debe especificar el precio de venta")]
         public double Price { get; set; }
