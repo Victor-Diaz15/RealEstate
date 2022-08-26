@@ -50,6 +50,11 @@ namespace RealEstate.Core.Application.Mappings
                 //.ForMember(x => x.Error, opt => opt.Ignore())
                 .ReverseMap();
 
+            
+            CreateMap<RegisterManagerRequest, RegisterManagerDevRequest>()
+                .ReverseMap()
+                .ForMember(x => x.IsVerified, opt => opt.Ignore());
+
             CreateMap<RegisterManagerRequest, ManagerSaveViewModel>()
                 //.ForMember(x => x.HasError, opt => opt.Ignore())
                 //.ForMember(x => x.Error, opt => opt.Ignore())
@@ -108,6 +113,12 @@ namespace RealEstate.Core.Application.Mappings
             CreateMap<ChangeAgentStatusCommand, ChangeAgentStatusResponse>()
               .ReverseMap();
 
+            CreateMap<UpdateResponse, ChangeAgentStatusResponse>()
+                .ForMember(x => x.Id, opt => opt.Ignore())
+                .ForMember(x => x.Status, opt => opt.Ignore())
+                .ReverseMap()
+                .ForMember(x => x.Error, opt => opt.Ignore())
+                .ForMember(x => x.HasError, opt => opt.Ignore());
 
             #endregion
 

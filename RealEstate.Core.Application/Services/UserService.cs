@@ -65,7 +65,8 @@ namespace RealEstate.Core.Application.Services
         public async Task<RegisterManagerResponse> RegisterDevAsync(ManagerSaveViewModel vm)
         {
             RegisterManagerRequest request = _mapper.Map<RegisterManagerRequest>(vm);
-            return await _accountService.RegisterDevUserAsync(request);
+            var devRequest = _mapper.Map<RegisterManagerDevRequest>(request);
+            return await _accountService.RegisterDevUserAsync(devRequest);
         }
 
         public async Task<UpdateResponse> UpdateUserAsync(UserSaveViewModel vm, string id)

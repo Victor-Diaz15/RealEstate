@@ -9,9 +9,12 @@ using RealEstate.Core.Application.Features.Improvements.Queries.GetAllImprovemen
 using RealEstate.Core.Application.Features.Improvements.Commands.CreateImprovement;
 using RealEstate.Core.Application.Features.Improvements.Commands.UpdateImprovement;
 using RealEstate.Core.Application.Features.Improvements.Commands.DeleteImprovements;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RealEstateAPI.WebApi.Controllers.v1
 {
+
+    [Authorize(Roles = "Admin, Developer")]
     [ApiVersion("1.0")]
     public class ImprovementController : GeneralController
     {
@@ -48,6 +51,7 @@ namespace RealEstateAPI.WebApi.Controllers.v1
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -71,6 +75,7 @@ namespace RealEstateAPI.WebApi.Controllers.v1
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ImprovementDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -96,6 +101,7 @@ namespace RealEstateAPI.WebApi.Controllers.v1
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

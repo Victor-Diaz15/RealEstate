@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RealEstate.Core.Application.Dtos.PropertyTypeDtos;
 using RealEstate.Core.Application.Features.PropertyTypes.Commands.CreatePropertyType;
@@ -11,6 +12,8 @@ using System.Threading.Tasks;
 
 namespace RealEstateAPI.WebApi.Controllers.v1
 {
+
+    [Authorize(Roles = "Admin, Developer")]
     [ApiVersion("1.0")]
     public class PropertyTypeController : GeneralController
     {
@@ -47,6 +50,8 @@ namespace RealEstateAPI.WebApi.Controllers.v1
             }
         }
 
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -70,6 +75,8 @@ namespace RealEstateAPI.WebApi.Controllers.v1
             }
         }
 
+
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PropTypeDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -95,6 +102,8 @@ namespace RealEstateAPI.WebApi.Controllers.v1
             }
         }
 
+
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
