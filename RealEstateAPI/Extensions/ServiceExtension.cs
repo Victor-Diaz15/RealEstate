@@ -26,7 +26,7 @@ namespace RealEstateAPI.WebApi.Extensions
                         Name = "Dav M.M. y los BDM (banco davinci montas)"
                     }
                 });
-
+                opt.EnableAnnotations();
                 opt.DescribeAllParametersInCamelCase();
                 opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {

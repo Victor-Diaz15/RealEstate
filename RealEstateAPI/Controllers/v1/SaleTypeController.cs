@@ -9,11 +9,14 @@ using RealEstate.Core.Application.Features.SaleTypes.Queries.GetSaleTypeById;
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using System.Net.Mime;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace RealEstateAPI.WebApi.Controllers.v1
 {
 
     [Authorize(Roles = "Admin, Developer")]
+    [SwaggerTag("Sale type Manager")]
     [ApiVersion("1.0")]
     public class SaleTypeController : GeneralController
     {
@@ -22,6 +25,10 @@ namespace RealEstateAPI.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SaleTypeDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [SwaggerOperation(
+            Summary = "Sale Type List",
+            Description = "Get all sale types that are stored in the database"
+            )]
         public async Task<IActionResult> GetAll()
         {
             try
@@ -38,6 +45,10 @@ namespace RealEstateAPI.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SaleTypeDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [SwaggerOperation(
+            Summary = "Sale Type",
+            Description = "Get a sale type by its id"
+            )]
         public async Task<IActionResult> GetSaleById(int id)
         {
             try
@@ -55,6 +66,11 @@ namespace RealEstateAPI.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [SwaggerOperation(
+            Summary = "new sale type",
+            Description = "requires some parmas to create a new sale type"
+            )]
         public async Task<IActionResult> Create([FromBody] CreateSaleTypeCommand command)
         {
             try
@@ -79,6 +95,11 @@ namespace RealEstateAPI.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SaleTypeDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [SwaggerOperation(
+            Summary = "update sale type",
+            Description = "Update a sale type by its id"
+            )]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateSaleTypeCommand command)
         {
             try
@@ -104,6 +125,10 @@ namespace RealEstateAPI.WebApi.Controllers.v1
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [SwaggerOperation(
+            Summary = "SaleType delete",
+            Description = "delete a sale type by its id"
+            )]
         public async Task<IActionResult> Delete(int id)
         {
             try

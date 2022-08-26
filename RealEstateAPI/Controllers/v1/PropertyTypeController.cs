@@ -7,13 +7,16 @@ using RealEstate.Core.Application.Features.PropertyTypes.Commands.DeleteProperty
 using RealEstate.Core.Application.Features.PropertyTypes.Commands.UpdatePropertyType;
 using RealEstate.Core.Application.Features.PropertyTypes.Queries.GetAllPropertyType;
 using RealEstate.Core.Application.Features.PropertyTypes.Queries.GetPropertyTypeById;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
+using System.Net.Mime;
 using System.Threading.Tasks;
 
 namespace RealEstateAPI.WebApi.Controllers.v1
 {
 
     [Authorize(Roles = "Admin, Developer")]
+    [SwaggerTag("Property types Manager")]
     [ApiVersion("1.0")]
     public class PropertyTypeController : GeneralController
     {
@@ -22,6 +25,10 @@ namespace RealEstateAPI.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PropTypeDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [SwaggerOperation(
+            Summary = "Property type List",
+            Description = "Get all Improvements stored in the database"
+            )]
         public async Task<IActionResult> GetAll()
         {
             try
@@ -38,6 +45,10 @@ namespace RealEstateAPI.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PropTypeDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [SwaggerOperation(
+            Summary = "Property Type",
+            Description = "Get a property type by its id"
+            )]
         public async Task<IActionResult> GetPropById(int id)
         {
             try
@@ -56,6 +67,11 @@ namespace RealEstateAPI.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [SwaggerOperation(
+            Summary = "new property type",
+            Description = "requires some parmas to create a new property type"
+            )]
         public async Task<IActionResult> Create([FromBody] CreatePropertyTypeCommand command)
         {
             try
@@ -81,6 +97,11 @@ namespace RealEstateAPI.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PropTypeDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [SwaggerOperation(
+            Summary = "update property type",
+            Description = "Update a property type by its id"
+            )]
         public async Task<IActionResult> Update(int id, [FromBody] UpdatePropertyTypeCommand command)
         {
             try
@@ -107,6 +128,10 @@ namespace RealEstateAPI.WebApi.Controllers.v1
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [SwaggerOperation(
+            Summary = "property delete",
+            Description = "delete a property type by its id"
+            )]
         public async Task<IActionResult> Delete(int id)
         {
             try

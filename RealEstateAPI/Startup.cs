@@ -39,7 +39,15 @@ namespace RealEstateAPI
             services.AddSharedInfrastructure(Configuration);
 
 
-            services.AddControllers();
+            services.AddControllers(opt =>
+            {
+                opt.Filters.Add(new ProducesAttribute("application/json"));
+            }).ConfigureApiBehaviorOptions(opt =>
+            {
+                opt.SuppressInferBindingSourcesForParameters = true;
+                opt.SuppressMapClientErrors = true;
+            });
+
             services.AddHealthChecks();
             services.AddSwaggerExtension();
             services.AddApiVersioningExtension();
