@@ -37,8 +37,6 @@ namespace RealEstate.Core.Application.Services
                 Code = prop.Code,
                 IdAgent = prop.IdAgent,
                 ParcelSize = prop.ParcelSize,
-                //PropertyType = prop.PropertyType.Name,
-                //SaleType = prop.SaleType.Name,
                 Price = prop.Price,
                 Description = prop.Description,
                 RestRoomQty = prop.RestRoomQty,
@@ -54,16 +52,6 @@ namespace RealEstate.Core.Application.Services
         {
             List<Property> properties = await _repo.GetAllWithIncludeAsync(new List<string> { "Improvements", "PropertyType", "SaleType" });
 
-            //List<Improvement> result = new();
-
-            //foreach (var prop in properties)
-            //{
-            //    foreach (var imp in prop.Improvements)
-            //    {
-            //        result.Add(imp);
-            //    }
-            //}
-
             return properties.Select(prop => new PropertyViewModel()
             {
                 Id = prop.Id,
@@ -73,7 +61,6 @@ namespace RealEstate.Core.Application.Services
                 IdAgent = prop.IdAgent,
                 ParcelSize = prop.ParcelSize,
                 PropertyType = prop.PropertyType.Name,
-                //Improvements = (List<ImprovementViewModel>)prop.Improvements,
                 SaleType = prop.SaleType.Name,
                 Price = prop.Price,
                 Description = prop.Description,
@@ -83,7 +70,6 @@ namespace RealEstate.Core.Application.Services
                 PropertyImgUrl2 = prop.PropertyImgUrl2,
                 PropertyImgUrl3 = prop.PropertyImgUrl3,
                 PropertyImgUrl4 = prop.PropertyImgUrl4,
-               // IsFavourite = prop.IsFavourite
 
             }).ToList();
         }
@@ -92,7 +78,7 @@ namespace RealEstate.Core.Application.Services
         {
             List<Property> properties = await _repo.GetAllWithIncludeAsync(new List<string> { "Improvements", "PropertyType", "SaleType" });
 
-            var listVm = properties.Select(prop => new PropertyViewModel()
+            var listVm = properties.OrderByDescending(prop => prop.Created).Select(prop => new PropertyViewModel()
             {
                 Id = prop.Id,
                 AgentName = prop.AgentName,
@@ -104,7 +90,6 @@ namespace RealEstate.Core.Application.Services
                 PropertyType = prop.PropertyType.Name,
                 SaleTypeId = prop.SaleType.Id,
                 SaleType = prop.SaleType.Name,
-                //Improvements = (List<ImprovementViewModel>)prop.Improvements,
                 Price = prop.Price,
                 Description = prop.Description,
                 RestRoomQty = prop.RestRoomQty,
@@ -113,7 +98,6 @@ namespace RealEstate.Core.Application.Services
                 PropertyImgUrl2 = prop.PropertyImgUrl2,
                 PropertyImgUrl3 = prop.PropertyImgUrl3,
                 PropertyImgUrl4 = prop.PropertyImgUrl4,
-                //IsFavourite = prop.IsFavourite
 
             }).ToList();
 

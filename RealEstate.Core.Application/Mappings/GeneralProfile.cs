@@ -218,10 +218,15 @@ namespace RealEstate.Core.Application.Mappings
 
             CreateMap<Property, PropertyViewModel>()
               .ForMember(x => x.IsFavourite, opt => opt.Ignore())
-              .ReverseMap();
+              .ReverseMap()
+              .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+              .ForMember(dest => dest.LastModified, opt => opt.Ignore())
+              .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore());
 
             CreateMap<Property, PropertySaveViewModel>()
-                .ReverseMap();
+                .ReverseMap()
+                .ForMember(dest => dest.LastModified, opt => opt.Ignore())
+                .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore());
 
             CreateMap<Property, PropertyDto>()
                 .ForMember(x => x.ImprovementList, opt => opt.Ignore())
