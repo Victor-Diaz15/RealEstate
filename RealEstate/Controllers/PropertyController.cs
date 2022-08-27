@@ -9,6 +9,7 @@ using RealEstate.Core.Application.ViewModels.Property;
 using RealEstate.Core.Application.ViewModels.User;
 using RealEstate.Core.Domain.Entities;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -153,6 +154,26 @@ namespace WebApp.RealEstate.Controllers
         public async Task<IActionResult> DeleteProperty(PropertySaveViewModel vm)
         {
             await _propertyService.DeleteAsync(vm.Id);
+
+            //get directory path
+            string basePath = $"/Images/Property/{vm.Id}";
+            string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot{basePath}");
+
+            //Create a folder if not exist
+            if (Directory.Exists(path))
+            {
+                DirectoryInfo directoryInfo = new(path);
+                foreach (FileInfo file in directoryInfo.GetFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo folder in directoryInfo.GetDirectories())
+                {
+                    folder.Delete(true);
+                }
+
+                Directory.Delete(path);
+            }
             return RedirectToRoute(new { controller = "Property", action = "AgentProperties" });
         }
 

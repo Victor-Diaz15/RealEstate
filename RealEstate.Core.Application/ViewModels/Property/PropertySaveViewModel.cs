@@ -57,6 +57,8 @@ namespace RealEstate.Core.Application.ViewModels.Property
         [DataType(DataType.Upload)]
         public IFormFile PropertyImg4 { get; set; }
         public string PropertyImgUrl4 { get; set; }
+        public DateTime Created { get; set; }
+        public string CreatedBy { get; set; }
 
     }
 }

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace RealEstate.Core.Application.Services
 {
-    public class PropertyService : 
+    public class PropertyService :
         GenericService<PropertySaveViewModel, PropertyViewModel, Property>,
         IPropertyService
     {
@@ -37,8 +37,6 @@ namespace RealEstate.Core.Application.Services
                 Code = prop.Code,
                 IdAgent = prop.IdAgent,
                 ParcelSize = prop.ParcelSize,
-                //PropertyType = prop.PropertyType.Name,
-                //SaleType = prop.SaleType.Name,
                 Price = prop.Price,
                 Description = prop.Description,
                 RestRoomQty = prop.RestRoomQty,
@@ -54,16 +52,6 @@ namespace RealEstate.Core.Application.Services
         {
             List<Property> properties = await _repo.GetAllWithIncludeAsync(new List<string> { "Improvements", "PropertyType", "SaleType" });
 
-            //List<Improvement> result = new();
-
-            //foreach (var prop in properties)
-            //{
-            //    foreach (var imp in prop.Improvements)
-            //    {
-            //        result.Add(imp);
-            //    }
-            //}
-
             return properties.Select(prop => new PropertyViewModel()
             {
                 Id = prop.Id,
@@ -73,7 +61,6 @@ namespace RealEstate.Core.Application.Services
                 IdAgent = prop.IdAgent,
                 ParcelSize = prop.ParcelSize,
                 PropertyType = prop.PropertyType.Name,
-                //Improvements = (List<ImprovementViewModel>)prop.Improvements,
                 SaleType = prop.SaleType.Name,
                 Price = prop.Price,
                 Description = prop.Description,
@@ -92,7 +79,7 @@ namespace RealEstate.Core.Application.Services
         {
             List<Property> properties = await _repo.GetAllWithIncludeAsync(new List<string> { "Improvements", "PropertyType", "SaleType" });
 
-            var listVm = properties.Select(prop => new PropertyViewModel()
+            var listVm = properties.OrderByDescending(prop => prop.Created).Select(prop => new PropertyViewModel()
             {
                 Id = prop.Id,
                 AgentName = prop.AgentName,
@@ -104,7 +91,6 @@ namespace RealEstate.Core.Application.Services
                 PropertyType = prop.PropertyType.Name,
                 SaleTypeId = prop.SaleType.Id,
                 SaleType = prop.SaleType.Name,
-                //Improvements = (List<ImprovementViewModel>)prop.Improvements,
                 Price = prop.Price,
                 Description = prop.Description,
                 RestRoomQty = prop.RestRoomQty,
@@ -113,7 +99,6 @@ namespace RealEstate.Core.Application.Services
                 PropertyImgUrl2 = prop.PropertyImgUrl2,
                 PropertyImgUrl3 = prop.PropertyImgUrl3,
                 PropertyImgUrl4 = prop.PropertyImgUrl4,
-                //IsFavourite = prop.IsFavourite
 
             }).ToList();
 
@@ -171,7 +156,7 @@ namespace RealEstate.Core.Application.Services
             if (filters.propertyTypeId != 0 && filters.roomQty != 0 && filters.restRoomQty != 0)
             {
                 listVm = listVm
-                    .Where(prop => prop.PropertyTypeId == filters.propertyTypeId 
+                    .Where(prop => prop.PropertyTypeId == filters.propertyTypeId
                     && prop.RoomQty == filters.roomQty && prop.RestRoomQty == filters.restRoomQty)
                     .ToList();
                 return listVm;
@@ -179,10 +164,27 @@ namespace RealEstate.Core.Application.Services
 
             if (filters.MinPrice != 0 || filters.MaxPrice != 0)
             {
-                listVm = listVm
-                    .Where(prop => prop.Price >= filters.MinPrice || prop.Price <= filters.MaxPrice)
+                if (filters.MinPrice != 0 && filters.MaxPrice != 0)
+                {
+                    listVm = listVm
+                    .Where(prop => prop.Price >= filters.MinPrice && prop.Price <= filters.MaxPrice)
                     .ToList();
-                return listVm;
+                    return listVm;
+                }
+                if (filters.MinPrice == 0 && filters.MaxPrice != 0)
+                {
+                    listVm = listVm
+                    .Where(prop => prop.Price <= filters.MaxPrice)
+                    .ToList();
+                    return listVm;
+                }
+                if (filters.MaxPrice == 0 && filters.MinPrice != 0)
+                {
+                    listVm = listVm
+                    .Where(prop => prop.Price >= filters.MinPrice)
+                    .ToList();
+                    return listVm;
+                }
             }
 
             return listVm;

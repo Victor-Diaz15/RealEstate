@@ -20,12 +20,12 @@
                     <option value="@item.Id">@item.Name</option>
                 }
             </select>
-            <select class="form-select w-100" name="">
-                <option disabled selected>Filtrar por precio...</option>
-                <option value="null">Todas</option>
-                    <option value="1">Precio mínimo</option>
-                    <option value="2">Precio máximo</option>
-            </select>
+            <div class="form-group w-100">
+                <input class="form-control" name="MinPrice" id="MinPrice" placeholder="Precio Min.">
+            </div>
+            <div class="form-group w-100">
+                <input class="form-control" name="MaxPrice" id="MaxPrice" placeholder="Precio Max.">
+            </div>
             <div class="form-group w-100">
                 <input class="form-control" name="roomQty" id="roomQty" placeholder="Cantidad de habitaciones">
             </div>
