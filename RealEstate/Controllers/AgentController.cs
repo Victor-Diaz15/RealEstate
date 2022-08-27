@@ -47,8 +47,8 @@ namespace WebApp.RealEstate.Controllers
             List<UserViewModel> users = await _userService.GetAllVmAsync();
             users = users.Where(user => user.TypeUser == (int)Roles.Agent).ToList();
 
-
-            var listUsers = users.Select(user => new UserViewModel() {
+            var listUsers = users.Select(user => new UserViewModel()
+            {
                 Id = user.Id,
                 CardId = user.CardId,
                 FirstName = user.FirstName,
@@ -61,23 +61,13 @@ namespace WebApp.RealEstate.Controllers
                 HasError = user.HasError,
                 Error = user.Error,
                 IsVerified = user.IsVerified,
-                PropQty = PropertyQuantity(user.Id) //tu ta claro de que no
+                PropQty = PropertyQuantity(user.Id)
             }).ToList();
 
-            ////searching all properties of an agent
-            //List<PropertyViewModel> properties = await _propertyService.GetAllWithInclude();
-            //foreach (var user in users)
-            //{
-            //    properties = properties.Where(prop => prop.IdAgent == user.Id).ToList();
-            //}
-            //ViewBag.PropertyQty = properties.Count;
-
-
-            listUsers = listUsers.Where(user => user.IsVerified == true).OrderBy(user => user.FirstName).ToList();
             return View(listUsers);
         }
 
-        private int PropertyQuantity(string agentId) 
+        private int PropertyQuantity(string agentId)
         {
             var listAgent = _userService.GetAllUsers();
             var agent = listAgent.FirstOrDefault(x => x.Id == agentId);
@@ -88,9 +78,10 @@ namespace WebApp.RealEstate.Controllers
             return result;
         }
 
-    public async Task<IActionResult> Agents(FiltersViewModel filters) 
+        public async Task<IActionResult> Agents(FiltersViewModel filters)
         {
             var agents = await _userService.GetAllAgentsWithFilters(filters);
+            agents = agents.Where(user => user.IsVerified).OrderBy(user => user.FirstName).ToList();
             return View(agents);
         }
 

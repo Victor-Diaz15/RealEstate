@@ -24,8 +24,8 @@ namespace RealEstate.Core.Application.ViewModels.Filters
         #endregion
 
         #region filter price
-        public double MaxPrice { get; set; }
-        public double MinPrice { get; set; }
+        public double MaxPrice { get; set; } = 0;
+        public double MinPrice { get; set; } = 0;
         #endregion
 
 
