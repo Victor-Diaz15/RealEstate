@@ -13,6 +13,40 @@
             </h3>
         </section>
     </div>
+
+     <div class="col-sm-3 w-100 d-flex align-items-center gap-4 mb-3">
+        <form asp-controller="Client" asp-action="MyProperties" class="d-flex align-items-center gap-2 w-100">
+            <select class="form-select w-100" name="propertyTypeId" id="propertyTypeId">
+                @if (ViewBag.PropertyTypes.Count == 0)
+                {
+                    <option disabled selected>No existen propiedad...</option>
+                }
+                <option disabled selected> Seleccionar propiedad...</option>
+                <option value="null">Todas</option>
+                @foreach (PropertyTypeViewModel item in ViewBag.PropertyTypes)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+            <div class="form-group w-100">
+                <input class="form-control" name="MinPrice" id="MinPrice" placeholder="Precio Min.">
+            </div>
+            <div class="form-group w-100">
+                <input class="form-control" name="MaxPrice" id="MaxPrice" placeholder="Precio Max.">
+            </div>
+            <div class="form-group w-100">
+                <input class="form-control" name="roomQty" id="roomQty" placeholder="Cantidad de habitaciones">
+            </div>
+            <div class="form-group w-100">
+                <input class="form-control" name="restRoomQty" id="restRoomQty" placeholder="Cantidad de baños">
+            </div>
+            <button class="btn btn-success" type="submit">Filtrar</button>
+        </form>
+        <form asp-controller="Home" asp-action="Index" class="d-flex align-items-center gap-2 w-25"> 
+            <input class="form-control w-100" type="text" name="code" id="code" placeholder="Buscar por código">
+            <button class="btn btn-success" type="submit">Buscar</button>
+        </form>
+    </div>
    
     @if (Model.Count == 0 || Model == null)
     {

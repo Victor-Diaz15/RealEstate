@@ -10,7 +10,7 @@
 <div class="row mx-5">
 
     <div class="col-sm-3 w-100 d-flex align-items-center gap-4 mb-3">
-        <form asp-controller="Home" asp-action="Index" class="d-flex align-items-center gap-2 w-100">
+        <form asp-controller="Client" asp-action="Index" class="d-flex align-items-center gap-2 w-100">
             <select class="form-select w-100" name="propertyTypeId" id="propertyTypeId">
                 @if (ViewBag.PropertyTypes.Count == 0)
                 {
@@ -23,12 +23,12 @@
                     <option value="@item.Id">@item.Name</option>
                 }
             </select>
-            <select class="form-select w-100" name="">
-                <option disabled selected>Filtrar por precio...</option>
-                <option value="null">Todas</option>
-                    <option value="1">Precio mínimo</option>
-                    <option value="2">Precio máximo</option>
-            </select>
+            <div class="form-group w-100">
+                <input class="form-control" name="MinPrice" id="MinPrice" placeholder="Precio Min.">
+            </div>
+            <div class="form-group w-100">
+                <input class="form-control" name="MaxPrice" id="MaxPrice" placeholder="Precio Max.">
+            </div>
             <div class="form-group w-100">
                 <input class="form-control" name="roomQty" id="roomQty" placeholder="Cantidad de habitaciones">
             </div>
