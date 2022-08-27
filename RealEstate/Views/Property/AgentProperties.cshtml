@@ -3,6 +3,7 @@
 @using Microsoft.AspNetCore.Http
 @using RealEstate.Core.Application.Dtos.Account
 @using RealEstate.Core.Application.Helpers
+@using RealEstate.Core.Application.ViewModels.PropertyType
 @using RealEstate.Core.Application.ViewModels.User
 @model List<PropertyViewModel>
 
@@ -19,12 +20,46 @@
 
 <div class="row mx-5">
 
-    <div class="col-sm-3 w-100 d-flex align-items-center gap-4">
+    <div class="col-sm-3 mx-auto w-100 d-flex align-items-center gap-4">
         <section class="w-100 mx-auto rounded-3 text-center p-3">
             <a asp-controller="Property" asp-action="AddProperty" class="btn btn-outline-success text-uppercase w-100 py-3">
                 Agregar Propiedad
             </a>
         </section>
+    </div>
+
+    <div class="col-sm-3 w-100 d-flex align-items-center gap-4 mb-3">
+        <form asp-controller="Property" asp-action="AgentProperties" class="d-flex align-items-center gap-2 w-100">
+            <select class="form-select w-100" name="propertyTypeId" id="propertyTypeId">
+                @if (ViewBag.PropertyTypes.Count == 0)
+                {
+                    <option disabled selected>No existen propiedad...</option>
+                }
+                <option disabled selected> Seleccionar propiedad...</option>
+                <option value="null">Todas</option>
+                @foreach (PropertyTypeViewModel item in ViewBag.PropertyTypes)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+            <select class="form-select w-100" name="">
+                <option disabled selected>Filtrar por precio...</option>
+                <option value="null">Todas</option>
+                    <option value="1">Precio mínimo</option>
+                    <option value="2">Precio máximo</option>
+            </select>
+            <div class="form-group w-100">
+                <input class="form-control" name="roomQty" id="roomQty" placeholder="Cantidad de habitaciones">
+            </div>
+            <div class="form-group w-100">
+                <input class="form-control" name="restRoomQty" id="restRoomQty" placeholder="Cantidad de baños">
+            </div>
+            <button class="btn btn-success" type="submit">Filtrar</button>
+        </form>
+        <form asp-controller="Home" asp-action="Index" class="d-flex align-items-center gap-2 w-25"> 
+            <input class="form-control w-100" type="text" name="code" id="code" placeholder="Buscar por código">
+            <button class="btn btn-success" type="submit">Buscar</button>
+        </form>
     </div>
    
     @if (Model.Count == 0 || Model == null)

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using RealEstate.Core.Application.Dtos.Account;
 using RealEstate.Core.Application.Helpers;
 using RealEstate.Core.Application.Interfaces.Services;
+using RealEstate.Core.Application.ViewModels.Filters;
 using RealEstate.Core.Application.ViewModels.Property;
 using RealEstate.Core.Application.ViewModels.User;
 using RealEstate.Core.Domain.Entities;
@@ -50,10 +51,10 @@ namespace WebApp.RealEstate.Controllers
             return View(await _propertyService.GetAllVmAsync());
         }
 
-        public async Task<IActionResult> AgentProperties(string id)
+        public async Task<IActionResult> AgentProperties(FiltersViewModel filters, string id)
         {
             UserViewModel user = _httpContextAccessor.HttpContext.Session.Get<UserViewModel>("user");
-            var props = await _propertyService.GetAllWithInclude();
+            var props = await _propertyService.GetAllWithFilters(filters);
             List<PropertyViewModel> agentProps = new();
 
             if (id == null)
@@ -64,6 +65,8 @@ namespace WebApp.RealEstate.Controllers
             {
                 agentProps = props.Where(prop => prop.IdAgent == id).ToList();
             }
+
+            ViewBag.PropertyTypes = await _propertyTypeService.GetAllVmAsync();
 
             return View(agentProps);
         }

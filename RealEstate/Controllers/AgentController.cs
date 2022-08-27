@@ -19,25 +19,33 @@ namespace WebApp.RealEstate.Controllers
         private readonly IPropertyService _propertyService;
         private readonly IUserService _userService;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IPropertyTypeService _propertyTypeService;
         private readonly IMapper _mapper;
         private readonly IUploadFileService _uploadFileService;
 
-        public AgentController(IPropertyService propertyService, IUserService userService, IHttpContextAccessor httpContextAccessor, IMapper mapper,
+        public AgentController(
+            IPropertyService propertyService, 
+            IUserService userService,
+            IPropertyTypeService propertyTypeService,
+            IHttpContextAccessor httpContextAccessor, 
+            IMapper mapper,
             IUploadFileService uploadFileService)
         {
             _propertyService = propertyService;
+            _propertyTypeService = propertyTypeService;
             _httpContextAccessor = httpContextAccessor;
             _userService = userService;
             _mapper = mapper;
             _uploadFileService = uploadFileService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(FiltersViewModel filters)
         {
             UserViewModel user = _httpContextAccessor.HttpContext.Session.Get<UserViewModel>("user");
-
-            List<PropertyViewModel> properties = await _propertyService.GetAllWithInclude();
+            List<PropertyViewModel> properties = await _propertyService.GetAllWithFilters(filters);
             properties = properties.Where(prop => prop.IdAgent == user.Id).ToList();
+
+            ViewBag.PropertyTypes = await _propertyTypeService.GetAllVmAsync();
 
             return View(properties);
         }
