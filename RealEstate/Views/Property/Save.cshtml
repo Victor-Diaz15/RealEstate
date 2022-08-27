@@ -35,30 +35,9 @@
                         </h3>
                     </div>
                     <section class="col-8 mx-auto mt-2">
-                        <select asp-for="PropertyTypeId" class="form-select w-100" name="PropertyTypeId">
-                            <option disabled selected>Seleccionar tipo de propiedad...</option>
-                            @foreach (PropertyTypeViewModel item in ViewBag.PropTypes)
-                            {
-                                <option value="@item.Id">@item.Name</option>
-                            }
-                        </select>
-                        <select asp-for="SaleTypeId" class="form-select w-100" name="SaleTypeId">
-                            <option disabled selected>Seleccionar tipo de venta...</option>
-                            @foreach (SaleTypeViewModel item in ViewBag.SaleTypes)
-                            {
-                                <option value="@item.Id">@item.Name</option>
-                            }
-                        </select>
-                        <select multiple asp-for="ListImprovement" class="form-select w-100" name="ListImprovement">
-                            <option disabled selected>Seleccionar Mejoras...</option>
-                            @foreach (ImprovementViewModel item in ViewBag.Improvements)
-                            {
-                                <option value="@item.Id">@item.Name</option>
-                            }
-                        </select>
                         <div class="form-floating mb-3">
                             <input asp-for="Ubication" class="form-control" placeholder="Ubicacion" />
-                            <label asp-for="Ubication">Ej: San Juan, Puerto Rico</label>
+                            <label asp-for="Ubication">Ubicación</label>
                             <span asp-validation-for="Ubication" class="text-danger"></span>
                         </div>
 
@@ -80,6 +59,18 @@
                             <span asp-validation-for="RoomQty" class="text-danger"></span>
                         </div>
 
+                        <div class="form-floating mb-3">
+                            <input type="number" asp-for="RestRoomQty" class="form-control" placeholder="Cantidad de baños"/>
+                            <label asp-for="RestRoomQty" class="form-label">Cantidad de baños</label>
+                            <span asp-validation-for="RestRoomQty" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <textarea asp-for="Description" class="form-control" placeholder="Descripción"></textarea> 
+                            <label asp-for="Description" class="form-label">Descripción</label>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
                         <div class="form-group mb-3">
                             <label asp-for="PropertyImg1" class="form-label text-muted fw-bold">Selecciona las imágenes</label>
                             @if (editMode)
@@ -95,16 +86,29 @@
                             <input asp-for="PropertyImg4" class="form-control">
                         </div>
 
-                        <div class="form-floating mb-3">
-                            <input type="number" asp-for="RestRoomQty" class="form-control" placeholder="Cantidad de baños"/>
-                            <label asp-for="RestRoomQty" class="form-label">Cantidad de baños</label>
-                            <span asp-validation-for="RestRoomQty" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-floating mb-3">
-                            <textarea asp-for="Description" class="form-control" placeholder="Descripción"></textarea> 
-                            <label asp-for="Description" class="form-label">Descripción</label>
-                            <span asp-validation-for="Description" class="text-danger"></span>
+                        <div class="form-group mb-3">
+                            <label class="form-label text-muted fw-bold">Opciones</label>
+                            <select asp-for="PropertyTypeId" class="form-select mb-2 w-100" name="PropertyTypeId">
+                                <option disabled selected>Seleccionar tipo de propiedad...</option>
+                                @foreach (PropertyTypeViewModel item in ViewBag.PropTypes)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            </select>
+                            <select asp-for="SaleTypeId" class="form-select mb-2 w-100" name="SaleTypeId">
+                                <option disabled selected>Seleccionar tipo de venta...</option>
+                                @foreach (SaleTypeViewModel item in ViewBag.SaleTypes)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            </select>
+                            <select multiple asp-for="ListImprovement" class="form-select mb-2 w-100" name="ListImprovement">
+                                <option disabled>Seleccionar Mejoras...</option>
+                                @foreach (ImprovementViewModel item in ViewBag.Improvements)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            </select>
                         </div>
                     </section>
 

@@ -1,10 +1,26 @@
 ﻿@using RealEstate.Core.Application.ViewModels.Property
+@using RealEstate.Core.Application.Enums
+@using Microsoft.AspNetCore.Http
+@using RealEstate.Core.Application.Dtos.Account
+@using RealEstate.Core.Application.Helpers
+@using RealEstate.Core.Application.ViewModels.User
 @model List<PropertyViewModel>
+
+@inject IHttpContextAccessor httpContextAccesor
+@{
+    var user = httpContextAccesor.HttpContext.Session.Get<AuthenticationResponse>("user");
+    bool isAgent = false;
+    if (user != null)
+    {
+        isAgent = user.Roles.Contains(Roles.Agent.ToString());
+    }
+}
+
 
 <div class="row mx-5">
 
-    <div class="col-8 mx-auto">
-        <section class="w-100 d-flex mx-auto justify-content-between gap-3 align-items-center pb-5">
+    <div class="col-sm-3 w-100 d-flex align-items-center gap-4">
+        <section class="w-100 mx-auto rounded-3 text-center p-3">
             <a asp-controller="Property" asp-action="AddProperty" class="btn btn-outline-success text-uppercase w-100 py-3">
                 Agregar Propiedad
             </a>
@@ -22,7 +38,7 @@
         <section class="col-3 my-4 mx-auto slide-up">
             <a asp-controller="Home" asp-action="Details" asp-route-id="@item.Id" class="card bg-light border-0 shadow" asp-route-id="">
                 <section class="card-body">
-                    <img src="@item.PropertyImgUrl1" class="card-img-top img-fluid img-cover" alt="pokemon">
+                    <img src="@item.PropertyImgUrl1" class="card-img-top img-fluid img-cover-2" alt="pokemon">
                     <div class="d-flex flex-column gap-2 mt-3">
                         <div class="d-flex flex-column">
                             <h6 class="fw-bold">
@@ -56,21 +72,24 @@
                             <img src="~/images/bed.png" />
                             <h6 class="fw-bold m-0"> @item.RoomQty </h6>
                         </section>
-                    <section class="d-flex justify-content-center align-items-center gap-2">
+                        <section class="d-flex justify-content-center align-items-center gap-2">
                             <img src="~/images/bathtub.png"/>
                             <h6 class="fw-bold m-0"> @item.RestRoomQty </h6>
                         </section>
-                    <section class="d-flex justify-content-center align-items-center gap-2">
+                        <section class="d-flex justify-content-center align-items-center gap-2">
                             <img src="~/images/tape-measure.png" />
                             <h6 class="fw-bold m-0"> @item.ParcelSize mts </h6>
                         </section>
                     </div>
                 </section>
-                <section class="d-flex gap-2 bg-primary">
-                    <a asp-controller="Property" asp-action="UpdateProperty" asp-route-id="@item.Id" class="btn btn-info">Editar</a>
-                    <a asp-controller="Property" asp-action="DeleteProperty" asp-route-id="@item.Id" class="btn btn-danger">Borrar</a>
-                </section>
             </a>
+            <div class="d-flex justify-content-center bg-light rounded gap-2 p-2">
+                @if (isAgent)
+                {                        
+                    <a asp-controller="Property" asp-action="UpdateProperty" asp-route-id="@item.Id" class="btn btn-info w-100">Editar</a>
+                    <a asp-controller="Property" asp-action="DeleteProperty" asp-route-id="@item.Id" class="btn btn-danger w-100">Borrar</a>
+                }
+            </div>
         </section>
     }
 
