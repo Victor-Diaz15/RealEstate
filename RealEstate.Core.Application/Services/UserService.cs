@@ -55,14 +55,11 @@ namespace RealEstate.Core.Application.Services
             List<AuthenticationResponse> users = await _accountService.GetAllUsers();
             return users;
         }
-
         public List<AuthenticationResponse> GetAllUsers()
         {
             List<AuthenticationResponse> users = _accountService.GetAll();
             return users;
         }
-
-
         public async Task<UserSaveViewModel> GetUserByIdAsync(string id)
         {
             AuthenticationResponse user = await _accountService.GetUserById(id);

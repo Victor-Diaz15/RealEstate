@@ -42,6 +42,13 @@ namespace WebApp.RealEstate.Controllers
 
             if (response != null && !response.HasError)
             {
+                if (response.TypeUser == (int)Roles.Developer)
+                {
+                    vm.HasError = true;
+                    vm.Error = "Desarrollador no tiene acceso permitido a la web app.";
+                    return View(vm);
+                }
+
                 HttpContext.Session.Set<AuthenticationResponse>("user", response);
 
                 if (response.Roles.Contains(Roles.Admin.ToString()))

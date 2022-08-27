@@ -507,7 +507,7 @@ namespace RealEstate.Infrastructure.Identity.Services
 
             return res;
         }
-        //Method to get all users
+        //Method to get an user by id
         public async Task<AuthenticationResponse> GetUserById(string id)
         {
             AuthenticationResponse res = new();
@@ -534,8 +534,6 @@ namespace RealEstate.Infrastructure.Identity.Services
             res.Error = $"Not user exists with this id: {id}";
             return res;
         }
-
-
 
         #region private methods
 
