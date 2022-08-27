@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace RealEstate.Core.Application.Services
 {
-    public class PropertyService : 
+    public class PropertyService :
         GenericService<PropertySaveViewModel, PropertyViewModel, Property>,
         IPropertyService
     {
@@ -83,7 +83,7 @@ namespace RealEstate.Core.Application.Services
                 PropertyImgUrl2 = prop.PropertyImgUrl2,
                 PropertyImgUrl3 = prop.PropertyImgUrl3,
                 PropertyImgUrl4 = prop.PropertyImgUrl4,
-               // IsFavourite = prop.IsFavourite
+                // IsFavourite = prop.IsFavourite
 
             }).ToList();
         }
@@ -171,7 +171,7 @@ namespace RealEstate.Core.Application.Services
             if (filters.propertyTypeId != 0 && filters.roomQty != 0 && filters.restRoomQty != 0)
             {
                 listVm = listVm
-                    .Where(prop => prop.PropertyTypeId == filters.propertyTypeId 
+                    .Where(prop => prop.PropertyTypeId == filters.propertyTypeId
                     && prop.RoomQty == filters.roomQty && prop.RestRoomQty == filters.restRoomQty)
                     .ToList();
                 return listVm;
@@ -179,10 +179,27 @@ namespace RealEstate.Core.Application.Services
 
             if (filters.MinPrice != 0 || filters.MaxPrice != 0)
             {
-                listVm = listVm
-                    .Where(prop => prop.Price >= filters.MinPrice || prop.Price <= filters.MaxPrice)
+                if (filters.MinPrice != 0 && filters.MaxPrice != 0)
+                {
+                    listVm = listVm
+                    .Where(prop => prop.Price >= filters.MinPrice && prop.Price <= filters.MaxPrice)
                     .ToList();
-                return listVm;
+                    return listVm;
+                }
+                if (filters.MinPrice == 0 && filters.MaxPrice != 0)
+                {
+                    listVm = listVm
+                    .Where(prop => prop.Price <= filters.MaxPrice)
+                    .ToList();
+                    return listVm;
+                }
+                if (filters.MaxPrice == 0 && filters.MinPrice != 0)
+                {
+                    listVm = listVm
+                    .Where(prop => prop.Price >= filters.MinPrice)
+                    .ToList();
+                    return listVm;
+                }
             }
 
             return listVm;
