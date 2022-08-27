@@ -50,11 +50,20 @@ namespace WebApp.RealEstate.Controllers
             return View(await _propertyService.GetAllVmAsync());
         }
 
-        public async Task<IActionResult> AgentProperties()
+        public async Task<IActionResult> AgentProperties(string id)
         {
             UserViewModel user = _httpContextAccessor.HttpContext.Session.Get<UserViewModel>("user");
             var props = await _propertyService.GetAllWithInclude();
-            List<PropertyViewModel> agentProps = props.Where(prop => prop.IdAgent == user.Id).ToList();
+            List<PropertyViewModel> agentProps = new();
+
+            if (id == null)
+            {
+                agentProps = props.Where(prop => prop.IdAgent == user.Id).ToList();
+            }
+            else
+            {
+                agentProps = props.Where(prop => prop.IdAgent == id).ToList();
+            }
 
             return View(agentProps);
         }
