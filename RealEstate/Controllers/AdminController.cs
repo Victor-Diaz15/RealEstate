@@ -5,6 +5,7 @@ using RealEstate.Core.Application.Dtos.Account;
 using RealEstate.Core.Application.Enums;
 using RealEstate.Core.Application.Helpers;
 using RealEstate.Core.Application.Interfaces.Services;
+using RealEstate.Core.Application.ViewModels.Property;
 using RealEstate.Core.Application.ViewModels.User;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,18 +16,49 @@ namespace WebApp.RealEstate.Controllers
     public class AdminController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IPropertyService _propertyService;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public AdminController(IUserService userService, IMapper mapper, IHttpContextAccessor http)
+
+        public AdminController(
+            IUserService userService,
+            IPropertyService propertyService,
+            IMapper mapper, 
+            IHttpContextAccessor http)
         {
             _userService = userService;
+            _propertyService = propertyService;
             _mapper = mapper;
             _httpContextAccessor = http;
         }
-        public IActionResult Index()
+        public async  Task<IActionResult> Index()
         {
+            List<PropertyViewModel> props = await _propertyService.GetAllWithInclude();
+            List<UserViewModel> users = await _userService.GetAllVmAsync();
+
+            var activeClients = users.Where(us => us.TypeUser == (int)Roles.Client && us.IsVerified).ToList();
+            var disabledClients = users.Where(us => us.TypeUser == (int)Roles.Client && !us.IsVerified).ToList();
+
+            var activeAgents = users.Where(us => us.TypeUser == (int)Roles.Agent && us.IsVerified).ToList();
+            var disabledAgents = users.Where(us => us.TypeUser == (int)Roles.Agent && !us.IsVerified).ToList();
+
+            var activeDevs = users.Where(us => us.TypeUser == (int)Roles.Developer && us.IsVerified).ToList();
+            var disabledDevs = users.Where(us => us.TypeUser == (int)Roles.Developer && !us.IsVerified).ToList();
+
+            ViewData["ActiveClients"] = activeClients.Count();
+            ViewData["DisabledClients"] = disabledClients.Count();
+
+            ViewData["ActiveAgents"] = activeAgents.Count();
+            ViewData["DisabledAgents"] = disabledAgents.Count();
+
+            ViewData["ActiveDevs"] = activeDevs.Count();
+            ViewData["DisabledDevs"] = disabledDevs.Count();
+
+            ViewData["Properties"] = props.Count();
+
             return View();
         }
+
         public async Task<IActionResult> AdminList()
         {
             List<UserViewModel> users = await _userService.GetAllVmAsync();
