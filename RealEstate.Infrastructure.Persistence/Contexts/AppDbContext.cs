@@ -49,8 +49,8 @@ namespace RealEstate.Infrastructure.Persistence.Context
                     case EntityState.Added:
                         entry.Entity.Created = DateTime.Now;
                         entry.Entity.CreatedBy = user.UserName;
-
                         break;
+
                     case EntityState.Modified:
                         entry.Entity.LastModified = DateTime.Now;
                         entry.Entity.ModifiedBy = user.UserName;

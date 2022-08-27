@@ -176,6 +176,15 @@ namespace RealEstate.Core.Application.Services
                     .ToList();
                 return listVm;
             }
+
+            if (filters.MinPrice != 0 || filters.MaxPrice != 0)
+            {
+                listVm = listVm
+                    .Where(prop => prop.Price >= filters.MinPrice || prop.Price <= filters.MaxPrice)
+                    .ToList();
+                return listVm;
+            }
+
             return listVm;
         }
 
@@ -189,7 +198,8 @@ namespace RealEstate.Core.Application.Services
                 vm.Code = newCodeNumber;
             }
 
-            var propCreated = await base.AddAsync(vm);
+            Property prop = _mapper.Map<Property>(vm);
+            var propCreated = await _repo.AddAsync(prop);
 
             foreach (var item in vm.ListImprovement)
             {
@@ -201,7 +211,8 @@ namespace RealEstate.Core.Application.Services
                 await _propImprovementRepo.AddAsync(propImproment);
             }
 
-            return propCreated;
+            var property = _mapper.Map<PropertySaveViewModel>(propCreated);
+            return property;
         }
 
         private async Task<bool> ExistCodeNumber(string code)

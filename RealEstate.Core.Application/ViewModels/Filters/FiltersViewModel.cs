@@ -20,8 +20,14 @@ namespace RealEstate.Core.Application.ViewModels.Filters
         #region filter Agents
 
         public string name { get; set; }
-        
+
         #endregion
+
+        #region filter price
+        public double MaxPrice { get; set; }
+        public double MinPrice { get; set; }
+        #endregion
+
 
     }
 }

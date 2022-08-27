@@ -64,16 +64,16 @@ namespace WebApp.RealEstate.Controllers
                 PropQty = PropertyQuantity(user.Id) //tu ta claro de que no
             }).ToList();
 
+            ////searching all properties of an agent
+            //List<PropertyViewModel> properties = await _propertyService.GetAllWithInclude();
+            //foreach (var user in users)
+            //{
+            //    properties = properties.Where(prop => prop.IdAgent == user.Id).ToList();
+            //}
+            //ViewBag.PropertyQty = properties.Count;
 
-            //searching all properties of an agent
-            List<PropertyViewModel> properties = await _propertyService.GetAllWithInclude();
-            foreach (var user in users)
-            {
-                properties = properties.Where(prop => prop.IdAgent == user.Id).ToList();
-            }
 
-            ViewBag.PropertyQty = properties.Count;
-
+            listUsers = listUsers.Where(user => user.IsVerified == true).OrderBy(user => user.FirstName).ToList();
             return View(listUsers);
         }
 
