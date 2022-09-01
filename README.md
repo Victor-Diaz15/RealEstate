@@ -38,6 +38,7 @@ various applications to use our already created services.
   <li>Bootstrap 5</li>
   <li>Swagger</li>
   <li>JWT</li>
+  <li>Identity</li>
 </ul>
 <hr></hr>
 <h2>Architecture</h2>
